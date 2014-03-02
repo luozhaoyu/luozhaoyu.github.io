@@ -6,23 +6,23 @@
 		<link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 	</head>
 	<body>
-		<div class="span9">
+        <div class="container">
 			<div class="page-header row">
 				<h1>罗照宇的个人简历<small>系统开发/运维开发</small></h1>
 				<address class="">
 					Tel: 15311767363 Mail:<a href="mailto:luozhaoyu90@gmail.com"> luozhaoyu90@gmail.com</a>
 					<strong>Blog: <a href="http://luozhaoyu.iteye.com">luozhaoyu.iteye.com</a></strong>
 				</address>
-				<div class="span6">
+				<div class="col-md-6">
 					<table class="table talbe-striped table-condensed">
 						<thead>
 							<tr>
-								<th class="span1">姓名</th>
-								<th class="span1">性别</th>
-								<th class="span1">年龄</th>
-								<th class="span1">大学本科</th>
-								<th class="span1">专业</th>
-								<th class="span1">工龄</th>
+								<th class="col-md-1">姓名</th>
+								<th class="col-md-1">性别</th>
+								<th class="col-md-1">年龄</th>
+								<th class="col-md-1">大学本科</th>
+								<th class="col-md-1">专业</th>
+								<th class="col-md-1">工龄</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -37,16 +37,16 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="span2">
+				<div class="col-md-6">
 					<img class="thumbnails" src="img/portrait.jpg" alt="ALA!图片没有显示出来╮(╯_╰)╭" height="200" width="150"/>
 				</div>
-			</div>
-			<div class="row show-grid">
+			</div> <!-- end of page-header -->
+			<div class="row">
 
-				<section class="span9">
+				<section>
 					<h3>工作经验与折腾经验</h3>
 					<div class="progress">
-						<div class="bar" style="width: 20%;"></div>
+						<div class="progress-bar" style="width: 20%;"></div>
 					</div>
 					<dl class="dl-horizontal">
 						<dt>
@@ -124,12 +124,12 @@
 						</dd>
 					</dl>
 				</section>
-				<section class="span9">
+				<section>
 					<h3>求职意向<span class="label label-important">Important</span></h3>
 					<div class="progress">
-						<div class="bar" style="width: 50%;"></div>
+						<div class="progress-bar" style="width: 50%;"></div>
 					</div>
-					<div class="span8">
+					<div>
 						<ul>
 							<li>
 								现在做：系统开发、web后端开发(python php ruby)、devops系统运维开发
@@ -143,38 +143,39 @@
 						</ul>
 					</div>
 				</section>
-				<section class="span9">
+				<section>
 					<h3>一年内阅读的部分IT相关的书</h3>
 					<div class="progress">
-						<div class="bar" style="width: 80%;"></div>
+						<div class="progress-bar" style="width: 80%;"></div>
 					</div>
 					<p>
 						《Java编程思想》《Effective Java》《Javascript高级程序设计》《企业应用架构模式》《Python核心编程》《鸟哥的Linux私房菜》《深入理解计算机系统》《Unix环境高级编程》《Progmatic Programmer》《Unix网络编程》《C程序设计语言》《浪潮之巅》《编程珠玑》
 					</p>
 				</section>
-				<section class="span9">
+				<section>
 					<h3>学生时代</h3>
 					<div class="progress">
-						<div class="bar" style="width: 95%;"></div>
+						<div class="progress-bar" style="width: 95%;"></div>
 					</div>
 					<dl class="dl-horizontal">
 						<dt class="lead">
 							外语水平
 						</dt>
 						<dd>
-							英语六级 507分 专业四级 合格
-							<br />
-							日本语能力试验(JLPT) N1
+                            <ul>
+                                <li>英语六级 507分 专业四级 合格</li>
+                                <li>日本语能力试验(JLPT) N1</li>
+                            </ul>
 						</dd>
 						<dt class="lead">
 							学习成绩
 						</dt>
 						<dd>
-							2007~2010年度国际关系学院系三好学生(10%)->院三好学生(5%)
-							<br />
-							2011年度毕业生优秀论文
-							<br />
-							大学总成绩 全年级第三 GPA 3.59
+                            <ul>
+                                <li>2007~2010年度国际关系学院系三好学生(10%)->院三好学生(5%)</li>
+                                <li>2011年度毕业生优秀论文</li>
+                                <li>大学总成绩 全年级第三 GPA 3.59</li>
+                            </ul>
 						</dd>
 						<dt class="lead">
 							竞赛荣誉
@@ -183,11 +184,11 @@
 							2009年全国大学生数学竞赛全国一等奖
 						</dd>
 					</dl>
-				</section>				
-				<section class="span9">
+				</section>
+				<section>
 					<h3>求职信兼备注</h3>
 					<div class="progress">
-						<div class="bar" style="width: 100%;"></div>
+						<div class="progress-bar" style="width: 99%;"></div>
 					</div>
 					<dl class="dl-horizontal">
 						<dt>
@@ -217,12 +218,12 @@
 						</dd>
 					</dl>
 				</section>
-			</div>
+			</div> <!-- end of row -->
 			<div class="modal-footer">
 				<button class="btn btn-primary">
 					<i class="icon-ok"></i>聊聊吧
 				</button>
 			</div>
-		</div>
+        </div>
 	</body>
 </html>

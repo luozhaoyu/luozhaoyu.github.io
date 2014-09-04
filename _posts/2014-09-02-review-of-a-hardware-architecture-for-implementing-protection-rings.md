@@ -20,7 +20,7 @@ Access Control in a Computer Utility
 Controlling Access in a Segmented Virtual Memory
 ----------
 ### Three specific assumptions true of Multics
-- new process created when user login
+1. new process created when user login
     * username is associated with the process
     * active agent & only means of referencing and manipulating on-line information
 - on-line storage is a collection of segments. A process can reference a segment of on-line storage only if the segment is first added to the virtual memory of the process
@@ -47,16 +47,16 @@ Call and Return
 ----------
 ### hardware does not implement upward calls and downward returns without software intervention
 #### Problems of called procedures
-- called procedure must have a way of finding a new stack area without calling procedure
+1. called procedure must have a way of finding a new stack area without calling procedure
     * A fixed word of each stack segment
     * Processor provides the stack segment number
-- called procedure must have a way of validating references to arguments to prevent from being tricked into accessing unaccessible argument
+- called procedure must have a way of validating references to arguments to prevent from being tricked into accessing inaccessible argument
     * let the called procedure runs as though in a higher ring
 - called procedure must have a way of knowing it would not return to a ring higher than the calling procedure
     * let the processor leave the ring number in an accessible register
 
 #### Problem Upward call in returning back
-- calling procedure may specify unaccessible arguments(HARDWARE solution is straightforward)
+1. calling procedure may specify inaccessible arguments(HARDWARE solution is straightforward)
     * require calling procedure specify only accessible arguments(compromises programming generality)
     * dynamically include in the ring of the called procedure(compromises programming generality, expensive)
     * copy arguments to accessible segments(restricts parallel processes)
@@ -66,4 +66,38 @@ HARDWARE solution: generating a trap to a supervisor procedure which performs th
 
 Hardware Implementation of Rings
 ----------
+* SDW(SDW.R1, SDW.R2, SDW.R3) each is 3-bit and flags(SDW.R, SDW.W, SDW.E) is single-bit
+    * write: [0, SDW.R1]
+    * execute: [SDW.R1, SDW.R2]
+    * read: [0, SDW.R2]
+    * gate extension: [SDW.R2+1, SDW.R3]
+* SDW.GATE, single fixed-length, beginning at location 0 of a segment, the list of gate locations of a segment is compressed here(requiring all gate locations to be gathered together), contains the number of gate locations present
+* IPR: instruction pointer register, specifies the current ring of execution and the two-part address of the next instruction to be executed
+* TPR: temporary pointer register, to form the two-part address of each virtual memory reference, program inaccessible
 
+Rings implementation
+* access checking logic, to validate each virtual memory reference(how to describe: trace the processor instruction cycle)
+* special instructions for changing the ring of execution
+
+Processor Instruction Cycle
+1. retrieving the next instruction to be executed
+- calculating in TPR the effective address of the instruction's operand
+* perform the instruction
+
+Use of Rings
+----------
+* Implicit invocation of certain ring 0 supervisor procedures: trap
+* Explicit invocation of ring 0 1 supervisor procedures by procedures in rings 2~5: to gates by standard subroutine calls
+* Procedures in rings 6 7 are inaccessible tosupervisor gates
+
+Conclusions
+----------
+The hardware mechanisms solves three problems in a system, which equip with supervisor/user protection scheme and a shared virtual memory based on segmentation
+* users can create arbitrary, but protected, subsystems for use by others
+* the supervisor can be implemented in layers which are enforced
+* the user can protect himself while debugging his own(or borrowed) programs *debug in a higher ring*
+
+Benefits of Protection Rings
+* let designer to implement his own system or subsystem
+* hardware implementation requires very small additional costs in hardware logci and processor speed
+* make it possible of calling protected subsystems or other procedures to use a same mechanism(let the developer gets rid of the idea that supervisor call is expensive)

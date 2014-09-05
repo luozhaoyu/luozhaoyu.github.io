@@ -69,14 +69,31 @@ HARDWARE solution: generating a trap to a supervisor procedure which performs th
 * IPR: instruction pointer register, specifies the current ring of execution and the two-part address of the next instruction to be executed
 * TPR: temporary pointer register, to form the two-part address of each virtual memory reference, program inaccessible
 
-Rings implementation
+#### Rings implementation
 * access checking logic, to validate each virtual memory reference(how to describe: trace the processor instruction cycle)
 * special instructions for changing the ring of execution
 
-Processor Instruction Cycle
+#### Processor Instruction Cycle
 1. retrieving the next instruction to be executed
 - calculating in TPR the effective address of the instruction's operand
 * perform the instruction
+    * do read
+    * do write
+    * does not reference operand(so no access validation is required)
+        * EAP-type instruction, Effective Address to Pointer Register, load the RING, SEGNO, WORDNO fields of PRn, the only way to load PR's
+        * other transfer instruction, though needs not validation, an advance check is performed before reloading IPR from TPR
+        * call and return instructions, software intervention would occur when perform an upward call or downward return
+            * CALL
+                1. CALL must be directed at a gate location, even the called procedure has the same ring
+                    * this provides protection against accidental calls to locations that are not entry points
+
+#### other considerations
+1. trap, processor would change the ring to 0 and transfer control to a fixed location in the supervisor when trap detected
+- privileged instructions(load DBR, start I/O, restore processor state) could only be executed in ring 0
+
+### Call and Return Revisisted
+* arguments. All arguments >= caller ring
+* a return to the proper ring is accomplished. RETURN instruction is guaranteed to generate an effective ring number >= calling procedure
 
 ### Use of Rings
 * Implicit invocation of certain ring 0 supervisor procedures: trap
@@ -85,11 +102,13 @@ Processor Instruction Cycle
 
 ### Conclusions
 The hardware mechanisms solves three problems in a system, which equip with supervisor/user protection scheme and a shared virtual memory based on segmentation
+
 * users can create arbitrary, but protected, subsystems for use by others
 * the supervisor can be implemented in layers which are enforced
 * the user can protect himself while debugging his own(or borrowed) programs *debug in a higher ring*
 
 Benefits of Protection Rings
+
 * let designer to implement his own system or subsystem
 * hardware implementation requires very small additional costs in hardware logci and processor speed
 * make it possible of calling protected subsystems or other procedures to use a same mechanism(let the developer gets rid of the idea that supervisor call is expensive)
@@ -97,3 +116,5 @@ Benefits of Protection Rings
 ### Reviews
 * Modern Linux is using virtual memory management. When process is swithed, the process's TLB would be loaded into MMU's TLB. If the process specifies an inaccessible address, the MMU would raise an interrupt to notify the OS
 * Everything is a segment(on-line storage)
+* what is WORDNO(offset)? descriptor segment(Global Descriptor Table)? DBR(GDT register)?
+* what is PR(pointer register), IPR and TPR, two-part address?

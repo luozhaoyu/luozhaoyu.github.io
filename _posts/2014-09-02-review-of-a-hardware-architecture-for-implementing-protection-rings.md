@@ -83,9 +83,8 @@ HARDWARE solution: generating a trap to a supervisor procedure which performs th
         * EAP-type instruction, Effective Address to Pointer Register, load the RING, SEGNO, WORDNO fields of PRn, the only way to load PR's
         * other transfer instruction, though needs not validation, an advance check is performed before reloading IPR from TPR
         * call and return instructions, software intervention would occur when perform an upward call or downward return
-            * CALL
-                1. CALL must be directed at a gate location, even the called procedure has the same ring
-                    * this provides protection against accidental calls to locations that are not entry points
+            1. CALL must be directed at a gate location, even the called procedure has the same ring
+                * this provides protection against accidental calls to locations that are not entry points
 
 #### other considerations
 1. trap, processor would change the ring to 0 and transfer control to a fixed location in the supervisor when trap detected
@@ -98,7 +97,7 @@ HARDWARE solution: generating a trap to a supervisor procedure which performs th
 ### Use of Rings
 * Implicit invocation of certain ring 0 supervisor procedures: trap
 * Explicit invocation of ring 0 1 supervisor procedures by procedures in rings 2~5: to gates by standard subroutine calls
-* Procedures in rings 6 7 are inaccessible tosupervisor gates
+* Procedures in rings 6 7 are inaccessible to supervisor gates
 
 ### Conclusions
 The hardware mechanisms solves three problems in a system, which equip with supervisor/user protection scheme and a shared virtual memory based on segmentation
@@ -118,3 +117,8 @@ Benefits of Protection Rings
 * Everything is a segment(on-line storage)
 * what is WORDNO(offset)? descriptor segment(Global Descriptor Table)? DBR(GDT register)?
 * what is PR(pointer register), IPR and TPR, two-part address?
+
+### Notes
+* paraphrase: delegation "trust" between layeres. TRUST, what is the boundary
+* Computer Utility=OS, Supervisor Program=kernal, IPR=PC Instruction Pointer, Segment Descriptor=Segment Table, SDW=Segment Table Entry
+* [ROP] (http://en.wikipedia.org/wiki/Return-oriented_programming)

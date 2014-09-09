@@ -4,6 +4,7 @@ title: "Review of Communicating Sequential Processes"
 ---
 ### Introduction
 Essential Proposals
+
 1. Dijkstra's guarded commands are adopted as sequential control structures(nondeterminism)
 - Parallel command is based on Dijkstra's parbegin. All the processes start simultaneously, and the parallel command ends only when they are all finished
 - Input and output command are used between concurrent processes
@@ -13,7 +14,8 @@ Essential Proposals
 - A pattern-matching feature is used to inhibit input of mismatched messages
 
 Serious Problems
-1. Fails to suggest any proff method to assist in the development and verification of correct programs
+
+1. Fails to suggest any proof method to assist in the development and verification of correct programs
 - It may be slow on a traditional sequential computer
     * imposition of restrictions in the proposed features
     * reintroduction of distinctive notations for the most common and useful special cases
@@ -53,4 +55,5 @@ Serious Problems
 * [Share Memory By Communicating] (http://blog.golang.org/share-memory-by-communicating)
 
 ### Notes
-about paper: do average, minimum value(noise), how about fail?
+* messages has types
+* how to implement output guard when deal with multiple clients in system view?

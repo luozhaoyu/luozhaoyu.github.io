@@ -57,3 +57,5 @@ Serious Problems
 ### Notes
 * messages has types
 * how to implement output guard when deal with multiple clients in system view?
+* any timeout is bad
+* message just for simple communication, others for threads

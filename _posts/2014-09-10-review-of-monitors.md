@@ -21,3 +21,4 @@ title: "Reviews of Monitors"
 
 ### Notes
 * busy waiting is evil: waste resources
+* stay away from code block synchronization

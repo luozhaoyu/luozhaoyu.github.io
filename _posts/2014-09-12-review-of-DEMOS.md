@@ -6,6 +6,7 @@ title: "Reviews of DEMOS"
 ### DEMOS
 * links provide both message paths and optional data sharing between tasks
 * Switchboard task is provided to allow mutually consenting arbitrary tasks to communicate
+* security is a big issue to Los Alamos
 
 
 ### DEMOS/MP
@@ -23,8 +24,10 @@ title: "Reviews of DEMOS"
 * A centralized recorder reliably stores all messages that are transmitted
 
 ### Reviews
-* links are pipes, channels are sockets?
+* channels are sockets? is just a way to provide multiplex
+* will the switchboard and the centralized recorder be the whole system's bottleneck?
 
 
 ### Notes
-about paper: do average, minimum value(noise), how about fail? lmbench starts here.
+* everything is a link
+* link is equivalant to file descriptor(stdin, stdout, switchboard, processmanager, memorymanager), link a handle to object

@@ -3,10 +3,20 @@ layout: post
 title: "Review of MACH"
 ---
 
+### vm_allocate
+1. **User Process**call **Kernel** with vm_allocate()
+- **Kernel**call **Pager** about page initialization
+- **User Process** meets page fault interrupt
+- **Kernel** request **Pager**
+- **Pager** provide page
+- **Kernel** resumes **User Process**
+
 ### IPC
 * task, thread, port, message
 * the concept of thread at time ensure the ability of concurrency
+
 #### port
+* likes FDs, each process has a port table
 * representing each endpoint of a two-way IPC
 * system call
     1. ask the kernel for access to a port
@@ -34,9 +44,3 @@ title: "Review of MACH"
 
 
 ### Notes
-
-MACH is another mechanism of message passing
-see the internal virtual memory
-
-about paper: do average, minimum value(noise), how about fail? lmbench starts here.
-time_value subtract may not be precise

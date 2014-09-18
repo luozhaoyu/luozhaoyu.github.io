@@ -26,6 +26,8 @@ title: "Reviews of DEMOS"
 ### Reviews
 * channels are sockets? is just a way to provide multiplex
 * will the switchboard and the centralized recorder be the whole system's bottleneck?
+    * it would, if the number exceeds 1000
+    * SB and recorder is fast, there will be hierachy SBs
 
 
 ### Notes

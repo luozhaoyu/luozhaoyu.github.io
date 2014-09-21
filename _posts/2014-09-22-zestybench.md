@@ -16,9 +16,9 @@ Source code in [available] (https://github.com/luozhaoyu/zestybench)
     * maxium read/write buffer size, net.core.rmem_max=122K net.core.rmem_max=122K
     * tcp threshold, net.ipv4.tcp_mem = 1521600 2028800 3043200, data > second value would let kernel buffer as much as possible, data > thrid value would cause packets loss
     * tcp read/write buffer size, net.ipv4.tcp_rmem = 4096 87380 4194304(unit is page size, which is usually 4KB), net.ipv4.tcp_wmem = 4096 16384 4194304
-        * first value is the minimum buffer for each TCP **connection**
-        * second value is default buffer for each TCP **socket** and **overrides** net.core.[r|w]mem_default
-        * thrid value is the maxium buffer and **is overridden** by net.core.[r|w]mem_max.
+        - first value is the minimum buffer for each TCP **connection**
+        - second value is default buffer for each TCP **socket** and **overrides** net.core.[r|w]mem_default
+        - thrid value is the maxium buffer and **is overridden** by net.core.[r|w]mem_max.
     * udp thresholds, net.ipv4.udp_mem = 1521600 2028800 3043200
     * udp minimal receive/send buffer size, net.ipv4.udp_[r|w]mem_min = 4096
 * bandwidth: 100MB/s, regulated by upper switch

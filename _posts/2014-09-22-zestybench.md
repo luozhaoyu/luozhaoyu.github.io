@@ -38,8 +38,10 @@ Source code in [available] (https://github.com/luozhaoyu/zestybench)
 * TCP_NODELAY, disable the [Nagle algorithm] (http://en.wikipedia.org/wiki/Nagle's_algorithm), because of the need of real time responses
 * server is using epoll_wait
 * system default tcp buffer is enough
+
 ###### latency
 * server echos the received data immediately
+
 ###### throughput
 * server only ack the number of received data immediately
 
@@ -47,8 +49,10 @@ Source code in [available] (https://github.com/luozhaoyu/zestybench)
 * System default udp buffer is 122K, which should be enough. But packets may still get lost over the ethernet. Splitted packets would become worse
 * server is using epoll_wait
 * client could adjust its send buffer size
+
 ###### latency
 * ensure the success delivery of data, client send X data, server received Y data and reply, client would receive Z data in the end. loop until SUM(Z) >= total data
+
 ###### throughput
 * regardless of receiving, client just throw piles of data to the server directly, and then read all the responds
     * client should not use block reading in this situation, since the responds is unpredictable. So client will epoll_wait for 10milliseconds before its exit and the last respond time will be recorded

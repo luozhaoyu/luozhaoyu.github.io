@@ -70,3 +70,8 @@ Allocator strategy:
 * less wastage
 * [Thrashing] (http://en.wikipedia.org/wiki/Thrashing_(computer_science))
 * [Block suballocation] (http://en.wikipedia.org/wiki/Block_suballocation)
+* [fsck] (http://en.wikipedia.org/wiki/Fsck), the right sequence of writing:
+    1. allocate block
+    - write data
+    - update inode
+

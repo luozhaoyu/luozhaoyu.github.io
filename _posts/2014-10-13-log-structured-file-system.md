@@ -16,19 +16,32 @@ observations in 1990s:
 
 ### Log-structured file systems
 * segment == large chunk
+
 #### segment cleaning
 * read M existing segments, compact into N new segments (N < M), write N segments to new locations to avoid fragmentations
+* clean code segment rather than hot (frequently used), but it is not the best approach
 
 ### Crash recovery
+LFS will choose the most recent check point that is consistent, the check point region update procedure:
+
+1. write the header, timestamp
+- the body of check point region
+- one last block (with a timestamp)
+
 #### Checkpoints
+* LFS writes check point region every 30s, so the last seconds of updates would be lost in crash
 
 #### Roll-forward
+* start with the last check point region, find the log, read through next segment to find valid update. Update as much as possible
 
 
 
 ### Reviews
 * [OSTEP-LFS] (http://pages.cs.wisc.edu/~remzi/OSTEP/file-lfs.pdf)
 * inode map solves the recursive update problem by updating only the directory? (is this a problem in other FS?)
+* conventional file system normally keep files contiguously with in-place writes, while LSF tends to use unused disk (Copy-on-write)
+    * this is called [Shadow paging] (http://en.wikipedia.org/wiki/Shadow_paging) in database
+* in SSD, many flash based devices can not rewrite part of a block, so they have to erase cycle of each block before being able to re-write. This fits the Copy-on-write feature which circumvents in-place rewrite
+
 #### disadvantage
-* conventional file system normally keep files contiguously with in-place writes, while LSF fragmentes files
-* in SSD, many flash based devices can not rewrite part of a block, so they have to erase cycle of each block before being able to re-write
+* old copies are scattered throughout the disk, continuous cleaning is important

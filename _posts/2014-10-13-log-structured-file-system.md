@@ -16,6 +16,7 @@ observations in 1990s:
 
 ### Log-structured file systems
 * segment == large chunk
+* How much to buffer: Data_in_memory_size = F / (1 - F) * Rpeak * Tseek
 
 #### segment cleaning
 * read M existing segments, compact into N new segments (N < M), write N segments to new locations to avoid fragmentations
@@ -29,11 +30,11 @@ LFS will choose the most recent check point that is consistent, the check point 
 - one last block (with a timestamp)
 
 #### Checkpoints
+* Checkpoints is the summary of every segment
 * LFS writes check point region every 30s, so the last seconds of updates would be lost in crash
 
 #### Roll-forward
 * start with the last check point region, find the log, read through next segment to find valid update. Update as much as possible
-
 
 
 ### Reviews
@@ -45,3 +46,9 @@ LFS will choose the most recent check point that is consistent, the check point 
 
 #### disadvantage
 * old copies are scattered throughout the disk, continuous cleaning is important
+
+### Notes
+* Why LFS could lose data?
+    * LFS does not want a transaction
+    * It is not in a high reliable situation, it is ok to lose some seconds, it is loose reliable
+* [Name mangling] (http://en.wikipedia.org/wiki/Name_mangling)

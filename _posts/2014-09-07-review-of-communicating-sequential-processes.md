@@ -41,6 +41,7 @@ Serious Problems
 * Is the square symbol represent the nondeterministic choice?
 * CSP is superior, because it forms a view from the problem other than the machines
 * what forms event? event=(channel, source, destination, message)
+
 #### Why CSP
 * It could be included in a programming language(Go) as a special notation
 * Expressibility
@@ -49,7 +50,6 @@ Serious Problems
 #### about Hoare
 * We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil
 * There are two ways of constructing a software design: One way is to make it so simple that there are obviously no deficiencies, and the other way is to make it so complicated that there are no obvious deficiencies. The first method is far more difficult
-
 * [CSP] (http://en.wikipedia.org/wiki/Communicating_sequential_processes)
 * Slogan of Go: Do not communicate by sharing memory; instead, share memory by communicating.
 * [Share Memory By Communicating] (http://blog.golang.org/share-memory-by-communicating)

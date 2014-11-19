@@ -131,7 +131,20 @@ Three Key Ideas
     * min COST = 0.5 ||**w**|| ** 2 + 0.5 lambda sum[(TEACHERi - PREDICTEDi) ** 2]
         * **w** want big margin
         * lambda: a weighting term (use tune set to choose good value)
+        * min COST = model_complexity + error_rate
 - Switch (via "similarity" functions, a.k.a. kernels) to a different representation, where percei suffice
+
+We will find a good setting for the weights using gradient descent (instead of linear|[quadratic programming] (http://en.wikipedia.org/wiki/Quadratic_programming))
+
+* kernels (similarity)
+* math logic
+
+#### Third SVM Idea - kernels
+* create new features NEW_FEATUREi = similarity(NEW_EXAMPLE, TRAINING_EXAMPLEi) of new example
+* then run SVM in this new feature set
+* Note this is also Hidden Units did
+
+A simple, but compelling example of the Power of Kernels
 
 ##### Reference
 * [The Art of Programming] (https://github.com/luozhaoyu/The-Art-Of-Programming-By-July/blob/master/ebook/zh/07.02.svm.md)

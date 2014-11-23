@@ -27,8 +27,18 @@ Use tune set! [Cross-validation] (http://en.wikipedia.org/wiki/Cross-validation_
     * Several layers of Hidden Units: DEEP Neural Network
 * Activation Functions (except for input units)
 
+* forward propagation ("reasoning")
+* train the threshold
+* delta (learning) rule
+* weight space
+* early stopping
+* epoch is one cycle through all training examples
+* [cs540 Jim Gast@1999] (http://pages.cs.wisc.edu/~jgast/cs540/slides/19NeuralNets/)
+* [cs540 Chuck Dyer@2014] (http://pages.cs.wisc.edu/~dyer/cs540/notes/nn.html)
+
 #### Training/Learning the **-** (aka, bias)
-Treating the bias as the n+1 feature (input)
+Treating the bias as the n+1 feature (a special weight with input 1)
+
     # i = [1, N]
     #: THETA is bias
     If sum(Wi * OUTi) >= theta: # the step function
@@ -43,19 +53,6 @@ Treating the bias as the n+1 feature (input)
     else:
         return 0
 
-##### ANNs
-* forward propagation ("reasoning")
-* train the threshold
-* delta (learning) rule
-* weight space
-* early stopping
-* epoch is one cycle through all training examples
-* [cs540 slide@1999] (http://pages.cs.wisc.edu/~jgast/cs540/slides/19NeuralNets/)
-
-
-#### Rosenblatt 1950 theorem, Perceptron convergence theorem
-* if a set of examples is linearly separable then the delta rule will learn the concept (i.e. get all the training examples correct)
-
 #### [Linear separability] (http://en.wikipedia.org/wiki/Linear_separability)
 * If we can N features, can an N-1 dimensional hyperplane separate the **+** and **-** example
 * Rewriting the "body" of the IF
@@ -66,6 +63,10 @@ Treating the bias as the n+1 feature (input)
             X2 = (THETA - W1X1) / W2 = (-W1/W2)X1 + THETA
 
 * XOR is not linearly separable
+
+##### [Perceptron convergence theorem] (http://annet.eeng.nuim.ie/intro/course/chpt2/convergence.shtml) by Rosenblatt
+* If there is a set of weights that correctly classify the ( linearly seperable ) training patterns, then the learning algorithm will find one such weight set, w* in a finite number of iterations (Rosenblatt)
+* if a set of examples is linearly separable then the delta rule will learn the concept (i.e. get all the training examples correct)
 
 #### [backward propagation] (http://en.wikipedia.org/wiki/Backpropagation) ("learning")
 * How to define the error or discrepency E of ANN?
@@ -89,16 +90,18 @@ Treating the bias as the n+1 feature (input)
 - Error = 0.5 * sum[(TEACHi - f(sum(Wi,j * f(sum(Wj,k * OUTk))))) ** 2]
 
 ##### [Delta rule] (http://en.wikipedia.org/wiki/Delta_rule)
-For a single-layer network, its derivative of the error becomes the Delta Rule
+In machine learning, the delta rule is a gradient descent learning rule for updating the weights of the inputs to artificial neurons in single-layer neural network.
+
+In single-layer network, its Delta Rule is the derivative of the error
 
 Can improve by:
 
 1. decreasing threshold
 - if OUTj < 0: then lessen reduce the weight on this "negative" evidence
 
-
 #### Weight Space (one point in weight space labels **all** points in feature space)
-* 算Error on TRAIN在weight上的微分，得到slope
+* the space of all possible values of all of the neuron's weights
+* the *gradient descent* is performed in weight space
 
 #### Four Views of Hidden Units (not disjoint)
 1. perceptron
@@ -107,12 +110,19 @@ Can improve by:
 - Learn a set of good basis functions for learning complex functions
 
 #### Drop Out (Network)
-During each forward propagation & back propagation, for each input unit and Hidden Unit with probability:
-**P**(e.g. 0.5) set its activation to zero
+The idea is simple: During the training process, hidden nodes and their connections are randomly dropped from the neural network.
 
-During testing, multiply each weight by (1 - P) since that is its expected value during training
+It adresses the main problem in machine learning, that is **overfitting**. It does so by “dropping out” some unit activations in a given layer, that is setting them to zero. Thus it prevents co-adaptation of units and can also be seen as a method of ensembling many networks sharing the same weights.
+
+The idea has a biological inspiration. When a child is conceived, it receives half its genes from each parent. Because of this the genes cannot rely on a presence of any other particular genes and it forces them to be useful on their own and play well with **unknown others**.
+
+1. During each forward propagation & back propagation, for each input example, each Hidden Unit has an independent probability **P**(e.g. 0.5) to set its activation to zero (which means dropout)
+- During testing, multiply each weight by (1 - P) since that is its expected value during training
 
 Viewing as an Ensemble. All of these reped in our full ANN, with one selected during drop out
+
+* [Neural Network Dropout Training] (http://visualstudiomagazine.com/articles/2014/05/01/neural-network-dropout-training.aspx)
+* [Regularizing neural networks with dropout and with DropConnect] (http://fastml.com/regularizing-neural-networks-with-dropout-and-with-dropconnect/)
 
 #### ANN wrap up
 * lots of current excitement & success
@@ -122,7 +132,7 @@ Viewing as an Ensemble. All of these reped in our full ANN, with one selected du
 * hard to understand what was learned ("rule extraction")
 
 
-### Support Vector Machines
+### [Support Vector Machines] (http://en.wikipedia.org/wiki/Support_vector_machine)
 Three Key Ideas
 
 1. Pick the *best* separating line
@@ -131,13 +141,10 @@ Three Key Ideas
     * min COST = 0.5 ||**w**|| ** 2 + 0.5 lambda sum[(TEACHERi - PREDICTEDi) ** 2]
         * **w** want big margin
         * lambda: a weighting term (use tune set to choose good value)
-        * min COST = model_complexity + error_rate
-- Switch (via "similarity" functions, a.k.a. kernels) to a different representation, where percei suffice
+        * In fact, min COST = model_complexity + error_rate
+- Switch (via "similarity" functions, a.k.a. [kernels] (http://en.wikipedia.org/wiki/Kernel_method)) to a different representation, where percei suffice
 
 We will find a good setting for the weights using gradient descent (instead of linear|[quadratic programming] (http://en.wikipedia.org/wiki/Quadratic_programming))
-
-* kernels (similarity)
-* math logic
 
 #### Third SVM Idea - kernels
 * create new features NEW_FEATUREi = similarity(NEW_EXAMPLE, TRAINING_EXAMPLEi) of new example

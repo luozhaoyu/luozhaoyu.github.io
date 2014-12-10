@@ -26,7 +26,6 @@ Use tune set! [Cross-validation] (http://en.wikipedia.org/wiki/Cross-validation_
     * No Hidden Unit: perceptron
     * Several layers of Hidden Units: DEEP Neural Network
 * Activation Functions (except for input units)
-
 * forward propagation ("reasoning")
 * train the threshold
 * delta (learning) rule
@@ -61,7 +60,6 @@ Treating the bias as the n+1 feature (a special weight with input 1)
         W1X1 + W2X2 = THETA is the "decision boundary"
         Solving for X2
             X2 = (THETA - W1X1) / W2 = (-W1/W2)X1 + THETA
-
 * XOR is not linearly separable
 
 ##### [Perceptron convergence theorem] (http://annet.eeng.nuim.ie/intro/course/chpt2/convergence.shtml) by Rosenblatt

@@ -52,6 +52,8 @@ Treating the bias as the n+1 feature (a special weight with input 1)
     else:
         return 0
 
+For each neural layer in an MLP network, there is also a bias term. Note that unlike MLP networks, the bias term of an RBF neural network connects to the output neurons only. (http://documentation.statsoft.com/STATISTICAHelp.aspx?path=SANN/Overview/SANNOverviewsNetworkTypes)
+
 #### [Linear separability] (http://en.wikipedia.org/wiki/Linear_separability)
 * If we can N features, can an N-1 dimensional hyperplane separate the **+** and **-** example
 * Rewriting the "body" of the IF

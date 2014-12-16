@@ -52,7 +52,8 @@ Treating the bias as the n+1 feature (a special weight with input 1)
     else:
         return 0
 
-For each neural layer in an MLP network, there is also a bias term. Note that unlike MLP networks, the bias term of an RBF neural network connects to the output neurons only. (http://documentation.statsoft.com/STATISTICAHelp.aspx?path=SANN/Overview/SANNOverviewsNetworkTypes)
+For each neural layer in an MLP network, there is also a bias term.
+Note that unlike MLP networks, the bias term of an RBF neural network connects to the [output neurons only] (http://documentation.statsoft.com/STATISTICAHelp.aspx?path=SANN/Overview/SANNOverviewsNetworkTypes).
 
 #### [Linear separability] (http://en.wikipedia.org/wiki/Linear_separability)
 * If we can N features, can an N-1 dimensional hyperplane separate the **+** and **-** example
@@ -65,7 +66,7 @@ For each neural layer in an MLP network, there is also a bias term. Note that un
 * XOR is not linearly separable
 
 ##### [Perceptron convergence theorem] (http://annet.eeng.nuim.ie/intro/course/chpt2/convergence.shtml) by Rosenblatt
-* If there is a set of weights that correctly classify the ( linearly seperable ) training patterns, then the learning algorithm will find one such weight set, w* in a finite number of iterations (Rosenblatt)
+* If there is a set of weights that correctly classify the ( linearly seperable ) training patterns, then the learning algorithm will find one such weight set, *w* in a finite number of iterations (Rosenblatt)
 * if a set of examples is linearly separable then the delta rule will learn the concept (i.e. get all the training examples correct)
 
 #### [backward propagation] (http://en.wikipedia.org/wiki/Backpropagation) ("learning")

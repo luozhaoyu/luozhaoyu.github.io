@@ -75,3 +75,24 @@ Summary:
 * isZero: lambda m.m (lambda x.fls) tru
 
 
+### Fiexed-point Combinators
+OR = how to do recursion without recursion
+
+    fact = \x.if (isZero x) then 1 else x*f(x-1)
+        \f.\x.if (isZero x) then 1 else x*(ff)(x-1)
+    fact` = fact fact
+    U = \x.x x
+
+We want a function Y such that: Y(F) -> T   F(T) = T
+
+    Solve Y (what do we know?)
+    Y(F) = F(Y(F))
+    Y = \F.F(Y(F))
+    Y = \F.F(\x.(Y(F)(x))) # just insert a variable
+
+    Y = U(\h.\F.F(\x.((hh)(F)(x))))
+    \f.(\x.f(\y.x x y))
+        (\x.f(\y.x x y))
+
+    F(f) = 
+    factorial = Y(F)

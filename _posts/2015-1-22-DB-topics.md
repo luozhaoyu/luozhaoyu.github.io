@@ -22,6 +22,8 @@ title: "Topics in Database Management Systems"
                     * edge from T1 to T2 if there is a RW, WR, WW conflict from T1 to T2
                 * Schedule is **conflict serializable** if and only if the serialization graph has no cycles
 
+#### [Serializability] (http://courses.cs.vt.edu/~cs5204/fall99/distributedDBMS/serial.html)
+
 ### 2 Phase Locking
 * S: Shared (read anything without any **more** locks)
 * X: eXclusive
@@ -135,9 +137,9 @@ deadlock resolution
     * youngest transaction
 
 How do granularity decide to do
-lock deletion, start at record level, a page scan transaction
-if transaction locks 3 records in a page, escalate to page lock
-pages in the file escalate to a file lock
+* lock deletion, start at record level, a page scan transaction
+* if transaction locks >=3 records in a page, escalate to page lock
+* if locks >= pages in a file, escalate to a file lock
 
 ### Optimisitc CC
 * build serialization graph, validate: is anything unserializable
@@ -178,7 +180,7 @@ global transaction number, tnc:
         if WS(t) INTERSECT RS(this transaction) != empty:
             then valid = False
     if valid:
-        then {write phase, currentTN++, tn = currentTN}
+        then {write-phase, currentTN++, tn = currentTN}
     >
 
 #### Parallel Validation
@@ -213,3 +215,52 @@ would handle the third scenario
     } else
     < active = active - {this transaction} >
 
+Note: write-phase() should be done before currentTN++ to prevent new transaction from skipping check this transaction which is still in write phase
+
+1. Locking good in high-contention workloads
+    * reason: with locking XACTs wait, rather than executing & aborting (optimistic would abort frequently, it is a waste of time)
+- Low contention is good for optimistic
+    * reason: but maybe not as good as hope, since cost of getting lock is not that much worse than maintaining RS & WS, RS & WS costs
+
+### Timestamp CC
+* each XACT gets a timestamp when it starts
+* each data item X has
+    * RTS(X): read timestamp of most recent read
+    * WTS(X): write timestamp of most recent write
+
+    if a XACT with timestamp T wants to read X:
+        if T < WTS(X):
+            T aborts
+        else:
+            read proceeds;
+            set RTS(X) = max(RTS(X), T) # because there is younger read
+    if XACT with timestamp T wants to write X:
+        if T < RTS(X):
+            T aborts
+        if T < WTS(X):
+            T aborts* # * can also just ignore write, XACT would proceed after it
+        else:
+            write proceeds;
+            set WTS(X) = T
+
+#### Multiversion
+multiple version of data items
+
+* RTS(Xi): read timestamp of transaction Xi
+* WTS(Xi): write timestamp of transaction Xi
+
+read of X by transaction with timestamp T
+
+1. find version Xi with largest write timestamp <= T (most recent write timestamp)
+- read it & set RTS(Xi) = max(RTS(Xi), T)
+
+Write of X by transaction with timestamp T
+
+1. find most recent version of Xi with WTS(Xi) < T
+
+        if RTS(Xi) > T:
+            abort
+        else:
+            # even if T < largest WTS(Xi)
+            create new version Xj
+            RTS(Xj) = WTS(Xj) = T

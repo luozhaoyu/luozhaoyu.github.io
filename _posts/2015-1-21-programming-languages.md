@@ -83,7 +83,7 @@ OR = how to do recursion without recursion
     fact` = fact fact
     U = \x.x x
 
-We want a function Y such that: Y(F) -> T   F(T) = T
+We want a magic function Y such that: Y(F) -> T   F(T) = T
 
     Solve Y (what do we know?)
     Y(F) = F(Y(F))
@@ -94,5 +94,10 @@ We want a function Y such that: Y(F) -> T   F(T) = T
     \f.(\x.f(\y.x x y))
         (\x.f(\y.x x y))
 
-    F(f) = 
-    factorial = Y(F)
+### The Church-Rosser Theorem
+* proof of coloaries
+* proof of Church-Rosser
+    * import about walks, walk is similar to call-by-value
+        1. walk can not be got by concatenate two walks
+        - Two walks that reduce non-overlapping redexes can be concatenated to form a walk
+

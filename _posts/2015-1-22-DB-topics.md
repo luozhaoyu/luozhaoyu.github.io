@@ -45,9 +45,14 @@ title: "Topics in Database Management Systems"
 
 * before reading a data item, get on S-lock on it
 * before writing, get an X-lock (like read-write lock)
-* once a transaction releases a lock, it can never get another lock
+* once a transaction releases a lock, it can **never** get another lock
+    * Proglems: e.g., T1-W(X), T2-R(X), T1-abort, which could T2 read wrong data
+        * workaround, cascading killing everyone touch X; T2 should not commit before T1; Strict 2PL
 
 Theorem: 2 Phase Locking means only conflict serializable schedules result
+
+#### Strict 2PL
+Hold all locks untim commit or abort. Releasing phase only lasts for the last moment
 
 ### Granularity of Locks
 #### granularity
@@ -243,7 +248,7 @@ Note: write-phase() should be done before currentTN++ to prevent new transaction
             write proceeds;
             set WTS(X) = T
 
-#### Multiversion
+#### Multiversion CC
 multiple version of data items
 
 * RTS(Xi): read timestamp of transaction Xi
@@ -264,3 +269,40 @@ Write of X by transaction with timestamp T
             # even if T < largest WTS(Xi)
             create new version Xj
             RTS(Xj) = WTS(Xj) = T
+
+##### What if dirty read occurs? Read new version X, while it aborts afterwards
+* New version are "private" until transaction commits, not let others see it
+* At commit time, transaction gets a "commit-timestamp"
+    * want to create new versions of updated objects with WTS = commit-timestamp (the WTS is postponed)
+* if any other T2 with commit-timestamp in (start, commit) interval of this XACT, abort (first commit wins)
+    * However, Oracle insists on first locker wins
+* else commit, make updates visible
+
+###### If the problem could be solved by NFA, then we can get DFA, then the algorithm
+
+### A Critique of ANSI SQL Isolation Levels
+ANSI phenomena
+
+* P1(dirty read): T1 modifies X, T2 reads X, T1 aborts
+* P2(non-repeatable reads): T1 reads X, T2 write X, T1 re-reads X
+* P3(phantom): T1 reads data items satisfying predicate P; T2 inserts record satisfying P; T1 re-reads items satisfying P
+
+Annotations
+* w1[x] XACT 1 writes x
+* r2[y] XACT 2 reads y
+* c1 XACT 1 commits
+* a1 XACT 1 aborts
+
+#### Problems
+* P* is wide interpretation, is not precise English, proposed by ANSI
+* A* is strict interpretation
+* A1: dirty read: w1[x] r2[x] (a1 and c2 in either order)
+* P1: w1[x] r2[x] ((c1 or a1) and (c2 or a2) in either order)
+* A2: r1[x] w2[x] c2 r1[x] c1
+* P2: r1[x] w2[x] ((c1 or a1) and (c2 or a2) in either order)
+* A3: r1[P] w2[y in P] c2 r1[P] c1
+* P3: r1[P] w2[y in P] ((c1 or a1) and (c2 or a2) any order)
+* P0: dirty write: w1[x] w2[x] ((c1 or a1) or (c2 or a2) in any order)
+
+#### Cursor stability
+cursor never goes back

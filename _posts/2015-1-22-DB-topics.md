@@ -33,7 +33,8 @@ title: "Topics in Database Management Systems"
 * S conflicts with IX: S holds the read, IX will never acquire X later
 * IS would not conflicts with IX: they will deal the lock later
 
-    Compatibility:
+Compatibility:
+
         NL  IS  IX  S   SIX X
     NL  Y   Y   Y   Y   Y   Y
     IS  Y   Y   Y   Y   Y   N
@@ -142,6 +143,7 @@ deadlock resolution
     * youngest transaction
 
 How do granularity decide to do
+
 * lock deletion, start at record level, a page scan transaction
 * if transaction locks >=3 records in a page, escalate to page lock
 * if locks >= pages in a file, escalate to a file lock
@@ -175,7 +177,7 @@ global transaction number, tnc:
 * unneccesasary to assign transaction number to read-only transactions
 * at the end of read phase, tnc is assigined to finish_tn
 
-    < Critical Section Code:
+    << Critical Section Code:
     #: next transaction would have currentTransactionNumber, indicates who after who
     finish_tn = currentTransactionNumber
     valid = true
@@ -186,17 +188,17 @@ global transaction number, tnc:
             then valid = False
     if valid:
         then {write-phase, currentTN++, tn = currentTN}
-    >
+    >>
 
 #### Parallel Validation
 would handle the third scenario
 
-    < Critical Section Code:
+    << Critical Section Code:
     finish_TN = currentTN
     finish_active = copy of active
     #: transactions completed read phase but not write phase
     active = active UNION this transaction
-    >
+    >>
 
     # This part is concurrent
     valid = True
@@ -212,13 +214,13 @@ would handle the third scenario
             then valid = False
     if valid then {
         write-phase();
-        <
+        <<
             currentTN++
             tn = currentTN
             active = active - {this transaction}
-        >
+        >>
     } else
-    < active = active - {this transaction} >
+    << active = active - {this transaction} >>
 
 Note: write-phase() should be done before currentTN++ to prevent new transaction from skipping check this transaction which is still in write phase
 
@@ -304,5 +306,34 @@ Annotations
 * P3: r1[P] w2[y in P] ((c1 or a1) and (c2 or a2) any order)
 * P0: dirty write: w1[x] w2[x] ((c1 or a1) or (c2 or a2) in any order)
 
-#### Cursor stability
-cursor never goes back
+#### Isolation Levels
+* Degree 0: no read locks, short write locks
+* Degree 1: Locking Read Uncommited - no read locks, long write locks
+* Degree 2: Locking Read Commited - short read locks, long write locks
+* cursor never goes back
+    * Cursor Stability: short read locks on current of cursor, short predicate read locks, long write locks
+        * what's the difference from Degree 2's short read locks
+* Locking repeatable read, long read locks, short predicate locks, long write locks
+* Degree 3 = Locking serializable = long read locks on items & predicates, long write locks
+
+Relations:
+
+    Serializable A5B - write skew
+    | P3 phantoms
+    Repeatable read A5B A3
+    | P2
+    Cursor Stability
+    | P4C (loss update) (ANSI miss this)
+    Read Committed (Degree 2) - A5A - Snapshot Isolation
+    | P1
+    Read Uncommitted
+    | P0
+    Degree 0
+
+#### Snapshot Isolation
+A5A(Read Skew):
+r1[x] w2[x] w2[y] c2 r1[y] (c1 or a1): r1[y] reads the old snpashot version before XACT2
+
+A5B(Write Skew):
+r1[x] r2[y] w1[y] w2[x] (c1 and c2)
+e.g., r1[x=50] r2[y=50] r2[x=50] r2[y=50] w1[y=-40] (c1) w2[x=-40] (c1) c2 (constraint x+y>0) This would happen since XACTs use the same version

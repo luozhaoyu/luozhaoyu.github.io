@@ -18,11 +18,12 @@ title: "Topics in Database Management Systems"
             * certain "conflicts" enforce another on the transactions
                 * WR, RW, WW
                 * Techniques: build serialization graph
-                    * nodes for transactions
-                    * edge from T1 to T2 if there is a RW, WR, WW conflict from T1 to T2
                 * Schedule is **conflict serializable** if and only if the serialization graph has no cycles
 
 #### [Serializability] (http://courses.cs.vt.edu/~cs5204/fall99/distributedDBMS/serial.html)
+* Serialization graph
+    * nodes for transactions
+    * edge from T1 to T2 if there is a RW, WR, WW conflict from T1 to T2
 
 ### 2 Phase Locking
 * S: Shared (read anything without any **more** locks)
@@ -177,18 +178,18 @@ global transaction number, tnc:
 * unneccesasary to assign transaction number to read-only transactions
 * at the end of read phase, tnc is assigined to finish_tn
 
-    << Critical Section Code:
-    #: next transaction would have currentTransactionNumber, indicates who after who
-    finish_tn = currentTransactionNumber
-    valid = true
-    # for all the transactions are running during my validation phase
-    for t from start_tn + 1 to finish_tn do
-        # there is WR conflict
-        if WS(t) INTERSECT RS(this transaction) != empty:
-            then valid = False
-    if valid:
-        then {write-phase, currentTN++, tn = currentTN}
-    >>
+        << Critical Section Code:
+        #: next transaction would have currentTransactionNumber, indicates who after who
+        finish_tn = currentTransactionNumber
+        valid = true
+        # for all the transactions are running during my validation phase
+        for t from start_tn + 1 to finish_tn do
+            # there is WR conflict
+            if WS(t) INTERSECT RS(this transaction) != empty:
+                then valid = False
+        if valid:
+            then {write-phase, currentTN++, tn = currentTN}
+        >>
 
 #### Parallel Validation
 would handle the third scenario
@@ -235,20 +236,20 @@ Note: write-phase() should be done before currentTN++ to prevent new transaction
     * RTS(X): read timestamp of most recent read
     * WTS(X): write timestamp of most recent write
 
-    if a XACT with timestamp T wants to read X:
-        if T < WTS(X):
-            T aborts
-        else:
-            read proceeds;
-            set RTS(X) = max(RTS(X), T) # because there is younger read
-    if XACT with timestamp T wants to write X:
-        if T < RTS(X):
-            T aborts
-        if T < WTS(X):
-            T aborts* # * can also just ignore write, XACT would proceed after it
-        else:
-            write proceeds;
-            set WTS(X) = T
+        if a XACT with timestamp T wants to read X:
+            if T < WTS(X):
+                T aborts
+            else:
+                read proceeds;
+                set RTS(X) = max(RTS(X), T) # because there is younger read
+        if XACT with timestamp T wants to write X:
+            if T < RTS(X):
+                T aborts
+            if T < WTS(X):
+                T aborts* # * can also just ignore write, XACT would proceed after it
+            else:
+                write proceeds;
+                set WTS(X) = T
 
 #### Multiversion CC
 multiple version of data items
@@ -290,21 +291,22 @@ ANSI phenomena
 * P3(phantom): T1 reads data items satisfying predicate P; T2 inserts record satisfying P; T1 re-reads items satisfying P
 
 Annotations
+
 * w1[x] XACT 1 writes x
 * r2[y] XACT 2 reads y
 * c1 XACT 1 commits
 * a1 XACT 1 aborts
 
 #### Problems
-* P* is wide interpretation, is not precise English, proposed by ANSI
-* A* is strict interpretation
-* A1: dirty read: w1[x] r2[x] (a1 and c2 in either order)
-* P1: w1[x] r2[x] ((c1 or a1) and (c2 or a2) in either order)
-* A2: r1[x] w2[x] c2 r1[x] c1
-* P2: r1[x] w2[x] ((c1 or a1) and (c2 or a2) in either order)
-* A3: r1[P] w2[y in P] c2 r1[P] c1
-* P3: r1[P] w2[y in P] ((c1 or a1) and (c2 or a2) any order)
-* P0: dirty write: w1[x] w2[x] ((c1 or a1) or (c2 or a2) in any order)
+    P* is wide interpretation, is not precise English, proposed by ANSI
+    A* is strict interpretation
+    A1: dirty read: w1[x] r2[x] (a1 and c2 in either order)
+    P1: w1[x] r2[x] ((c1 or a1) and (c2 or a2) in either order)
+    A2: r1[x] w2[x] c2 r1[x] c1
+    P2: r1[x] w2[x] ((c1 or a1) and (c2 or a2) in either order)
+    A3: r1[P] w2[y in P] c2 r1[P] c1
+    P3: r1[P] w2[y in P] ((c1 or a1) and (c2 or a2) any order)
+    P0: dirty write: w1[x] w2[x] ((c1 or a1) or (c2 or a2) in any order)
 
 #### Isolation Levels
 * Degree 0: no read locks, short write locks
@@ -332,8 +334,10 @@ Relations:
 
 #### Snapshot Isolation
 A5A(Read Skew):
-r1[x] w2[x] w2[y] c2 r1[y] (c1 or a1): r1[y] reads the old snpashot version before XACT2
+`r1[x] w2[x] w2[y] c2 r1[y] (c1 or a1): r1[y] reads the old snpashot version before XACT2`
 
 A5B(Write Skew):
-r1[x] r2[y] w1[y] w2[x] (c1 and c2)
-e.g., r1[x=50] r2[y=50] r2[x=50] r2[y=50] w1[y=-40] (c1) w2[x=-40] (c1) c2 (constraint x+y>0) This would happen since XACTs use the same version
+`r1[x] r2[y] w1[y] w2[x] (c1 and c2)
+e.g., r1[x=50] r2[y=50] r2[x=50] r2[y=50] w1[y=-40] w2[x=-40] (c1) c2 (constraint x+y>0) This would happen since XACTs use the same version`
+
+Snapshot isolation is multiversion CC, which prevents dirty reads/writes, A5A but not A5B. So READ COMMITTED << Snapshot Isolation

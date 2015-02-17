@@ -341,3 +341,80 @@ A5B(Write Skew):
 e.g., r1[x=50] r2[y=50] r2[x=50] r2[y=50] w1[y=-40] w2[x=-40] (c1) c2 (constraint x+y>0) This would happen since XACTs use the same version`
 
 Snapshot isolation is multiversion CC, which prevents dirty reads/writes, A5A but not A5B. So READ COMMITTED << Snapshot Isolation
+
+### B-Trees
+Look for the right sibiling if the target key is greater than hi-key which stores the biggest value of this slot
+
+Algorithm for modifying a page x:
+
+    lock(x)
+    A = get(x) // read x into memory
+    modify data in A
+    put(A, x) // write changes to disk
+    unlock(x)
+
+Search for v (always keeps an eye on the right hi-key):
+
+    current = root
+    A = get(current)
+    while (current is not a leaf) {
+        # "scannode" finds appropriate pointer in A when looking for v
+        current = scannode(v, A)
+        A = get(current)
+    }
+    while ((t = scannode(v, A)) is a linkpointer) {
+        current = t
+        A = get(current)
+    }
+    if v is in A:
+        return SUCCESS
+    else:
+        return FALSE
+
+Insert (lock chaining: require 2 locks at the same, throw one and get new one):
+
+    Initialize stack
+    current = root
+    A = get(current)
+    while (current is not a leaf) {
+        t = current
+        current = scannode(v, A)
+        if (current is not a linkpointer)
+            push t
+    }
+    lock(current)
+    A = get(current)
+    move_right()
+
+DoInsertion:
+
+    if A is safe: # A has room
+        insert new key/ptr pair on A
+        put(A, current)
+        unlock(current)
+    else: # has to split
+        u = allocate new page for B
+        redistribute A over A & B
+        y = max value on A now
+        make high key of B equal old high key of A # strech node A into two nodes, but the maximum remains the same
+        make right link of B equal old right link to A
+        make high key of A equal y
+        make right link of A point to B
+        put(B, u)
+        put(A, current)
+
+        # update the parent to prevent the horizontal link lists from becoming too big
+        oldnode = current
+        new key/pointer pair = (y, u)
+        current = pop(stack) # picking the parent
+        lock(current)
+        A = get(current)
+        move_right() // might hold 3 locks
+        unlock(oldnode)
+        goto DoInsertion
+
+#### Problems
+* Why needs to check the right sibiling after checking the hi-key?
+    * if new data is bigger than hi-key, it should check if current node has not been splitted
+* What if not requiring 2 locks before insert?
+    * current node may be splitted by other XACT, then the new data may fail to find the right node to insert(not simply the right sibling)

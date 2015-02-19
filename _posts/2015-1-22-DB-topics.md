@@ -235,7 +235,6 @@ Note: write-phase() should be done before currentTN++ to prevent new transaction
 * each data item X has
     * RTS(X): read timestamp of most recent read
     * WTS(X): write timestamp of most recent write
-
         if a XACT with timestamp T wants to read X:
             if T < WTS(X):
                 T aborts
@@ -418,3 +417,62 @@ DoInsertion:
     * if new data is bigger than hi-key, it should check if current node has not been splitted
 * What if not requiring 2 locks before insert?
     * current node may be splitted by other XACT, then the new data may fail to find the right node to insert(not simply the right sibling)
+
+### Summary
+#### Locks
+* Why non-strict 2PL is not equivalent to the four levels consistency
+    * Level 0, 1 do not have read locks
+    * Level 2 allows short read, which means you could acquire it later
+    * Level 3 only releases write lock after commit
+* Importan things about lock paths
+    * writers have to lock all paths, while readers only have to lock 1 path
+    * implicit locks should be considered
+        * to get implicit X lock on a node, all of its parents must be locked in X mode
+            * if the node is record, it would affect all the pages and indexes
+        * if only lock in IX mode, another XACT may get IS then request S lock
+* Does it make sense to use SIX on a record?
+    * No, if record is the lowest granularity. Normal S or X would help
+* When upgrades an SIX to X lock on a file, where should this upgrade request go in the requests queue?
+    * This request should go immediately after current "granted group" which include the SIX and some IS locks
+
+#### Multiversion CC
+* When is it safe to delete an old version?
+    * When there is no active transaction that could use it – that is, the timestamp of the oldest active transaction is greater than the timestamp of the oldest version of the record.
+    * A version can be deleted when the oldest transaction has a newer version that it can read
+* How can a reader reads without blocks?
+    * readers would read version matches current start time which would be checked by CC
+* Give an example allowed in multi-version CC but not in strict 2PL
+    * S2PL release its write (exclusive) locks only after it has ended. read (shared) locks are released regularly during phase 2
+
+#### Optimisitc CC
+* Three validation conditions ensure safe. Ti has already commited
+    1. Ti completed write before Tj starts read
+    - Ti completed write before Tj starts write. And WS(Ti) has no overlap on RS(Tj)
+    - Ti completed read before Tj completes read. And WS(Ti) has no overlap with RS(Tj) or WS(Tj)
+* If Ti proceeds Tj, can TNC of Ti > Tj?
+    * Not possible in serial validation
+    * Possible in parrallel validation
+        * validation phases are not serialized. Ti could enter validation before Tj and exit after Tj
+        * So that Ti will get larger TNC
+* Where parallel validation is better than serial validation
+    * validation and write phases could be overlapped if their RS WS has no conflicts
+* Compared with 2PL, what is the extra information needs by Optimistic CC
+    * read, write sets of transactions
+    * private writer buffers for updates
+    * "finish acitve" sets for parallel validation
+    * current transaction number
+
+#### B-link tree
+* How can updates go wrong with only one lock during move_right?
+    * If holds one lock, XACT would holds no lock during "move_right". Another transaction could insert or split previous nodes.
+* What if there is no lock when performing read?
+    * XACT may wait for read lock. After a while, it wakes up and finds the target item is gone(splitted)
+    * How to prevent above anomaly?
+        * if a key moves, it only moves to the right
+        * adding right link pointers and high keys to access right siblings
+* Why B-link could achieve high concurrency?
+    * The key is not simply stay in a subtree or a leaf. They are connected by right-links and indicated by high keys
+* Since index pages are not shared or updated in an arbitrary way, is there any requirments on them?
+    * On updating, the page is read into private storage atomically. The reads only see a completed write or not see them at all. Writes so that can not conflict
+* When will get 3 locks?
+    * one on a sibling in a just-split node, and two at the next level up as it looks for the proper insertion point

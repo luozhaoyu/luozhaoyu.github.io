@@ -236,21 +236,21 @@ Note: write-phase() should be done before currentTN++ to prevent new transaction
     * RTS(X): read timestamp of most recent read
     * WTS(X): write timestamp of most recent write
 
-
-        if a XACT with timestamp T wants to read X:
-            if T < WTS(X):
-                T aborts
-            else:
-                read proceeds;
-                set RTS(X) = max(RTS(X), T) # because there is younger read
-        if XACT with timestamp T wants to write X:
-            if T < RTS(X):
-                T aborts
-            if T < WTS(X):
-                T aborts* # * can also just ignore write, XACT would proceed after it
-            else:
-                write proceeds;
-                set WTS(X) = T
+***
+    if a XACT with timestamp T wants to read X:
+        if T < WTS(X):
+            T aborts
+        else:
+            read proceeds;
+            set RTS(X) = max(RTS(X), T) # because there is younger read
+    if XACT with timestamp T wants to write X:
+        if T < RTS(X):
+            T aborts
+        if T < WTS(X):
+            T aborts* # * can also just ignore write, XACT would proceed after it
+        else:
+            write proceeds;
+            set WTS(X) = T
 
 #### Multiversion CC
 multiple version of data items

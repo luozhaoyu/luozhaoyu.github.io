@@ -4,6 +4,7 @@ title: "DB topics - Recovery"
 ---
 
 ### Recovery
+[ARIES] (http://en.wikipedia.org/wiki/Algorithms_for_Recovery_and_Isolation_Exploiting_Semantics)
 #### Buffer manager
 1. force or no force? (when XACT commits, do you write its dirty pages to disk?)
     * force: write dirty pages to disk (simple, slow)
@@ -36,3 +37,24 @@ no force on flushing the page rather than force flushing the log records
 * do not have to go beyond certain point (rather than go back from the very start)
 * it is written periodically
 * XACT table, DPT
+
+### Summary
+* The difference between locking records, latching data structures and pinning pages in DBMS
+
+#### ARIES
+* What is "redo", and why needs it?
+    * redo to what actually happened, not just successful transactions. This allows for CLR during recovery and helps with enabling logical redo/undo
+* How about do no logging during UNDO?
+    * There maybe subsequent crash, system would not know how many UNDOs have been performed
+* How about writing normal log instead of CLR?
+    * If repeated crashes happend, the log space will become unbound
+* How ARIES uses bounded space for recovery even in repeated crashes?
+    * ARIES writes only and at most one log record per undo (due to the use of CLRs) during UNDO phase, so the space is bounded
+* Two conditions that there is no need to redo an update to a data page without even examining the page in question
+    1. the page is not in DPT
+    - the recoveryLST in DPT of this page > LogRecLSN
+* Why not writes any log during REDO phase?
+* How transactions could be ignored during recovery without causing a problem?
+    * Some transactions start before crash but write no log records into disk
+* Does the pageLSN of a page modified during the REDO phase need to be updated to account for this modification? Why or why not?
+    * Yes. If not, there is no record of whether or not the REDO has been performed, which can lead to errors if there are subsequent crashes.

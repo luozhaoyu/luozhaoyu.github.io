@@ -3,13 +3,16 @@ layout: post
 title: "DB topics - Recovery"
 ---
 
-### Recovery
-[ARIES] (http://en.wikipedia.org/wiki/Algorithms_for_Recovery_and_Isolation_Exploiting_Semantics)
+### [ARIES] (http://en.wikipedia.org/wiki/Algorithms_for_Recovery_and_Isolation_Exploiting_Semantics)
+ARIES is complex because it combines no force and steal
 #### Buffer manager
 1. force or no force? (when XACT commits, do you write its dirty pages to disk?)
     * force: write dirty pages to disk (simple, slow)
+        * it avoids the need to REDO on restart
 - steal or no steal? (can you evict a dirty page from a running XACT?)
     * no steal: you can not deprive dirty page from a running XACT (simple, slow)
+    * steal: write uncommitted page into disk
+        * it needs UNDO to correct the data in the disk
 
 #### Basic idea1: Write Ahead Log(WAL)
 no force on flushing the page rather than force flushing the log records
@@ -21,9 +24,45 @@ no force on flushing the page rather than force flushing the log records
 
 
 #### 3 phases of recovery
+
+* **commit != write to disk && uncommitted != not write to disk**
+* REDO is fixing that some XACTs have committed, but they do not exist on the disk
+* UNDO is fixing that some XACTs have not committed, but they have been written to the disk
+
+------start of oldest "failed" XACT--------"firstLSN"----------most recent CKP--------end of log
+
+start of oldest "failed" XACT, "firstLSN"(DPT), most recent CKP could be **arbitrary order**
+
 1. analysis
+    * determine starting point for Redo
+    * identify set of "might have been dirty at crash" pages
+    * identify "loser" XACTs (which did not make it at commit point)
+    * scans log forward from most recent CheckPoint
+        * initialize XACT table & DPT to values in CheckPoint (Recover from CPT state)
+        * process log records
+            * adding/deleting XACTs as they come and go (remove XACT from TT if XACT commited)
+            * add entries to the DPT for additional pages being updated (update DPT)
+                * we add all these pages because ARIES does not log whether a page is dirty, so the DPT is now a super set
+            * "firstLSN" = earliest recovery_LSN in DPT, is place to begin REDO pass
+                * recovery_LSN could be before CKP (arbitrary order)
 - redo: bring the crashed system to normal (what it wanted to do)
+    * scans log forward from firstLSN
+    * for each log record, redo operation
+        1. apply logged update to the page it applies to
+        - set pageLSN of the page to that of the log record
 - undo: undo the failed transaction
+    * scan backwards from end of log, undoing updates of uncommited transactions
+    * To apply an undo
+        * apply undo from log record
+        * write a CLR (compensation log record) with:
+            * undo information (what was done)
+            * undoNextLSN = LSN of next older log record that must be undone for XACT
+        * When CLRs are encountered during REDO, redo the undo log
+        * When CLRs are encountered during UNDO, ignore, follow undoNextLSN to find next log record to undo
+            * so the CLR is bounded
+        * "nested top action": something that should not be undone(dangerous), even if XACT fails
+            * skip them
+
 
 #### key data structure
 1. XACT table
@@ -36,10 +75,19 @@ no force on flushing the page rather than force flushing the log records
 #### Checkpoint records
 * do not have to go beyond certain point (rather than go back from the very start)
 * it is written periodically
-* XACT table, DPT
+* save current XACT table, DPT
+
+##### Cases
+                        start_before_CKP    start_after_CKP
+finish_before_crash
+not_yet_finished
+
 
 ### Summary
 * The difference between locking records, latching data structures and pinning pages in DBMS
+    * latching is like semaphore, physical lock
+    * locking provides multi granularity, logical lock
+    * TODO
 
 #### ARIES
 * What is "redo", and why needs it?
@@ -52,8 +100,10 @@ no force on flushing the page rather than force flushing the log records
     * ARIES writes only and at most one log record per undo (due to the use of CLRs) during UNDO phase, so the space is bounded
 * Two conditions that there is no need to redo an update to a data page without even examining the page in question
     1. the page is not in DPT
-    - the recoveryLST in DPT of this page > LogRecLSN
+    - the recovery_LSN in DPT of this page > LogRecLSN (if logRecLSN <= pageLSN at affected page)
+        * this is for efficiency, not neccessary
 * Why not writes any log during REDO phase?
+    * because previous log has recorded what have been done, log for REDO phase would just be duplicated
 * How transactions could be ignored during recovery without causing a problem?
     * Some transactions start before crash but write no log records into disk
 * Does the pageLSN of a page modified during the REDO phase need to be updated to account for this modification? Why or why not?

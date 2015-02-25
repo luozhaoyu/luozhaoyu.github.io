@@ -77,10 +77,7 @@ start of oldest "failed" XACT, "firstLSN"(DPT), most recent CKP could be **arbit
 * it is written periodically
 * save current XACT table, DPT
 
-##### Cases
-                        start_before_CKP    start_after_CKP
-finish_before_crash
-not_yet_finished
+Think Cases: start_before_CKP/start_after_CKP & finish_before_crash/not_yet_finished
 
 
 ### Summary

@@ -80,6 +80,26 @@ start of oldest "failed" XACT, "firstLSN"(DPT), most recent CKP could be **arbit
 Think Cases: start_before_CKP/start_after_CKP & finish_before_crash/not_yet_finished
 
 
+### [2 Phase Commit] (http://en.wikipedia.org/wiki/Two-phase_commit_protocol)
+[Message flow] (http://en.wikipedia.org/wiki/Two-phase_commit_protocol#Message_flow)
+
+* force: the same term in ARIES means flush to disk
+
+#### handling coordinator failure
+* case1: before forcing commit/abort -> XACT is aborted
+* case2: after forcing commit/abort -> recovery process drives to commit/abort
+
+#### subordinate fails
+* before forcing prepare/abort -> outcome is abort
+* after forcing abort(means vote no) -> outcome is abort
+* after forcing prepare(means vote yes) -> contact coordinator
+* after forcing commit/abort -> commit or abort (send a ACK)
+    * coordinator may forget about the XACT, so it would ignore
+
+is the force same with AREIS?
+is the prepare log needs force?
+
+
 ### Summary
 * The difference between locking records, latching data structures and pinning pages in DBMS
     * latching is like semaphore, physical lock
@@ -105,3 +125,7 @@ Think Cases: start_before_CKP/start_after_CKP & finish_before_crash/not_yet_fini
     * Some transactions start before crash but write no log records into disk
 * Does the pageLSN of a page modified during the REDO phase need to be updated to account for this modification? Why or why not?
     * Yes. If not, there is no record of whether or not the REDO has been performed, which can lead to errors if there are subsequent crashes.
+
+#### 2PC
+* What if coordinator fails before make commit/abort decision? Does it need to force log a "begin" log?
+    * In presume abort, we do not need force "begin" log, coordinator just abort in default

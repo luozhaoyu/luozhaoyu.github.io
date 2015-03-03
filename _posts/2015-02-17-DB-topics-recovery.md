@@ -85,19 +85,55 @@ Think Cases: start_before_CKP/start_after_CKP & finish_before_crash/not_yet_fini
 
 * force: the same term in ARIES means flush to disk
 
-#### handling coordinator failure
+#### Normal 2PC
+There is no default answer in this protocol, since it forces all the logs, the subordinate and coordinator know what is the status of transaction
+
+It would lost memory about the transaction when the coordinator logs "end"
+##### handling coordinator failure
 * case1: before forcing commit/abort -> XACT is aborted
 * case2: after forcing commit/abort -> recovery process drives to commit/abort
 
-#### subordinate fails
+##### subordinate fails
 * before forcing prepare/abort -> outcome is abort
 * after forcing abort(means vote no) -> outcome is abort
 * after forcing prepare(means vote yes) -> contact coordinator
 * after forcing commit/abort -> commit or abort (send a ACK)
     * coordinator may forget about the XACT, so it would ignore
 
-is the force same with AREIS?
-is the prepare log needs force?
+#### Read-only
+1. coordinator "prepare"
+- read-only subordinate write no log record, vote "read"
+- coordinator ignores read-only sites during 2nd phase
+
+#### Presumed-abort 2PC
+default reply is abort when it has no memory about it
+##### abort case
+1. coordinator "prepare"
+- subordinate abort, no force, since not neccessary
+- coordinator abort, no force, if it fails, it would just recover with abort
+- other subordinate abort, no force, since coordinator default answer is abort
+
+##### commit case
+1. coordinator "prepare"
+- subordinate prepare, force, since it records the start
+- coordinator commit, force
+- other subordinate commit, force, since coordinator may finish the transaction and forget about it, then it would say abort
+
+#### Presumed-commit
+default reply is commit when it has no memory about it
+##### abort case
+1. coordinator "collect", "prepare", force
+    * collect is the **begin** log log all participants, when coordinator recovers, it would not know the transaction and answer "commit"
+- subordinate abort, force
+- coordinator abort, force
+- subordinate abort, force
+
+##### commit case
+1. coordinator "collect", "prepare", force
+    * collect is the **begin** log log all participants, since if there is no such log, when coordinator recovers, it would not know the transaction and answer "commit"
+- subordinate prepare, force
+- coordinator commit, force, since it indicates whether this transaction passes this phase
+- subordinate commit, no force, since the default answer is "commit"
 
 
 ### Summary
@@ -129,3 +165,15 @@ is the prepare log needs force?
 #### 2PC
 * What if coordinator fails before make commit/abort decision? Does it need to force log a "begin" log?
     * In presume abort, we do not need force "begin" log, coordinator just abort in default
+* Why it is OK to not force end record of coordinator?
+    * if end record is flushed before coordinator crash, everything is fine
+    * if end record is not flushed before crashing, coordinator would recovery and find out it has instructed commit/abort so it would resend "commit/abort" message to ensure all subordinate know
+* Any impact on turning on force end record?
+    * During normal operation, it would slow down, since it would have extra flushes into disk
+    * During recovery operation, it would speed up, since it would skip resend the commit/abort message
+* Why 2PC is a blocking protocol, how can a participant get blocked by others?
+    * If the participant vote YES and the coordinator crashes, the participant has to be blocked until it recovers
+* Why "collecting" record is required in presumed-commit 2PC but not in presumed-commit 2PC?
+* In "read-only" optimization, if a subordinate is read-only, then why can’t the coordinator just ignore it during the commit protocol, because it really doesn’t matter whether the read-only subordinate commits or not
+    * the coordinator may not know ahead of time which subordinate is read-only
+    * the subordinate may not know if it is read-only, since they could have a unsatisfied conditional update so that there would be no update

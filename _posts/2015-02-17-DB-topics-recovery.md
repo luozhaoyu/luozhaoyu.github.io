@@ -105,3 +105,17 @@ Think Cases: start_before_CKP/start_after_CKP & finish_before_crash/not_yet_fini
     * Some transactions start before crash but write no log records into disk
 * Does the pageLSN of a page modified during the REDO phase need to be updated to account for this modification? Why or why not?
     * Yes. If not, there is no record of whether or not the REDO has been performed, which can lead to errors if there are subsequent crashes.
+
+#### 2PC
+* Why it is OK to not force end record of coordinator?
+    * if end record is flushed before coordinator crash, everything is fine
+    * if end record is not flushed before crashing, coordinator would recovery and find out it has instructed commit/abort so it would resend "commit/abort" message to ensure all subordinate know
+* Any impact on turning on force end record?
+    * During normal operation, it would slow down, since it would have extra flushes into disk
+    * During recovery operation, it would speed up, since it would skip resend the commit/abort message
+* Why 2PC is a blocking protocol, how can a participant get blocked by others?
+    * If the participant vote YES and the coordinator crashes, the participant has to be blocked until it recovers
+* Why "collecting" record is required in presumed-commit 2PC but not in presumed-commit 2PC?
+* In "read-only" optimization, if a subordinate is read-only, then why can’t the coordinator just ignore it during the commit protocol, because it really doesn’t matter whether the read-only subordinate commits or not
+    * the coordinator may not know ahead of time which subordinate is read-only
+    * the subordinate may not know if it is read-only, since they could have a unsatisfied conditional update so that there would be no update

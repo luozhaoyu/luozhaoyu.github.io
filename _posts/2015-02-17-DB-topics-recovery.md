@@ -133,7 +133,29 @@ default reply is commit when it has no memory about it
     * collect is the **begin** log log all participants, since if there is no such log, when coordinator recovers, it would not know the transaction and answer "commit"
 - subordinate prepare, force
 - coordinator commit, force, since it indicates whether this transaction passes this phase
+    * TODO
 - subordinate commit, no force, since the default answer is "commit"
+
+### Buffer management
+#### Query Locality Set Model (QLSM)
+* sequential patterns
+    * straight sequential (file scan)
+        * need one page
+        * replace with next one
+    * clustered sequential
+        * example: like inner relation in merge join (seq + backup)
+        * number of pages in largest cluster
+        * LRU (kick out the oldest)
+
+##### Love/Hate hints
+Love: I would expect to come back; Hate: I would rather not see them again
+
+2 LRU chains, 1 love chain, 1 hate chain
+
+##### [LRU-k (Least Recent Used)] (http://en.wikipedia.org/wiki/Page_replacement_algorithm#Variants_on_LRU)
+LRU-2: pick the next most recent pages among Pi; LRU-k: pick the kth most recent pages among Pi
+
+
 
 
 ### Summary

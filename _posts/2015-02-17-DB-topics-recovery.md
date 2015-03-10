@@ -126,6 +126,7 @@ default reply is commit when it has no memory about it
     * collect is the **begin** log log all participants, when coordinator recovers, it would not know the transaction and answer "commit"
 - subordinate abort, force
 - coordinator abort, force
+    * another paper says you could no force: Since you find collecting but nothing further (abort/end log), you abort
 - subordinate abort, force
 
 ##### commit case
@@ -156,6 +157,46 @@ Love: I would expect to come back; Hate: I would rather not see them again
 LRU-2: pick the next most recent pages among Pi; LRU-k: pick the kth most recent pages among Pi
 
 
+### Join algorithms
+#### [Nested loop join] (http://en.wikipedia.org/wiki/Nested_loop_join)
+    for each r in R:
+        for each s in S:
+            if r.A == s.B:
+                output(r, s)
+    # O(Time) = len(R) + number_of_R_rows_per_page * len(R) * len(S)
+
+An optimization is [page-oriented nested loops join] (http://www.dis.uniroma1.it/~catarci/DBslides/Mod5L1LT/tsld005.htm) by reading a block(a thousand of pages) of R and checking S: we could get rid of the number_of_R_rows_per_page
+
+    for each block of R:
+        - build a hash table in memory on R.A for all the rows of R in the block
+        - for each s in current S page probe hash table for matches
+    # O(Time) = len(R) + len(R) * len(S)
+
+Notice hash table only works for equal join, not good at random comparison
+
+#### Index nested loops
+if you have an index on S.B then:
+
+    for each r in R:
+        lookup r.A in index on S.B
+    # O(Time) = len(R) + number_of_R_rows_per_page * len(R) * cost_of_index_lookup
+    # cost_of_index_lookup could just be 1.2 for hash index, 2-4 for B+ tree
+
+#### Sort-Merge
+1. sort R on R.A
+- sort S on S.B
+- merge
+
+#### External Sorting
+1. form runs the size of the buffer pool (n)
+- merge runs n-1 at a time to form runs of length n * (n-1)
+
+How big a file can you sort in 2-passes? n * (n-1)
+
+    if len(R) < n * n, len(S) < n * n:
+        sort R: 4 * len(R) 这里是指I/O次数而不是内存时间。因为len(R) > n，所以一次不能排完，只能用外部排序，每轮需要read/write1次，共计4次
+        sort S: 4 * len(S)
+        merge: len(R) + len(S)
 
 
 ### Summary

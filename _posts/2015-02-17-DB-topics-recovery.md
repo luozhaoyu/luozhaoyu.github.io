@@ -165,7 +165,7 @@ LRU-2: pick the next most recent pages among Pi; LRU-k: pick the kth most recent
                 output(r, s)
     # O(Time) = len(R) + number_of_R_rows_per_page * len(R) * len(S)
 
-An optimization is [page-oriented nested loops join] (http://www.dis.uniroma1.it/~catarci/DBslides/Mod5L1LT/tsld005.htm) by reading a block(a thousand of pages) of R and checking S: we could get rid of the number_of_R_rows_per_page
+An optimization is [page-oriented nested loops join] (http://www.dis.uniroma1.it/~catarci/DBslides/Mod5L1LT/tsld005.htm) by reading a block(a thousand of pages) of R and checking S: we could get rid of the `number_of_R_rows_per_page`
 
     for each block of R:
         - build a hash table in memory on R.A for all the rows of R in the block
@@ -197,6 +197,58 @@ How big a file can you sort in 2-passes? n * (n-1)
         sort R: 4 * len(R) 这里是指I/O次数而不是内存时间。因为len(R) > n，所以一次不能排完，只能用外部排序，每轮需要read/write1次，共计4次
         sort S: 4 * len(S)
         merge: len(R) + len(S)
+
+#### [GRACE Hash Join] (http://en.wikipedia.org/wiki/Hash_join#Grace_hash_join)
+This is a parrallel idea.
+
+* partition R into R1, R2, ... , Rk using hashing on R.a
+* partition S into S1, S2, ... , Sk using hashing on S.b
+
+        for i = 1 to k:
+            Ri join Si
+
+* sub-join:
+    1. read Ri into memory
+    - build hash table on Ri tuples
+        * a different hash function for partitioning & in-memory join
+            * partitioning hash: with "big" range `h1(x) = (h(x) mod k) + 1`, k ensure each Ri fits in memory (pick k big enough)
+            * in-memory hash: `h2(x) = (h(x) mod kk) + 1`, kk ensure 1 row in 1 bucket
+    - stream Si, probing hash table on R
+
+How big can R be to do this in 2 passes? Suppose you have M memory pages:
+
+1. k <= M - 1 (fit into page, and one for input for R)
+- len(R) / k <= M - 2 (one page for input for Si, one page for output of join)
+- we can get len(R) <= (M-1)(M-2)
+
+#### Simple Hash Join
+    # k is bad if k is big, because you have to write some row back to disk again
+    for i = 1 to k:
+        read R, hashing each row r
+            if r hashes to bucket i:
+                leave in memory
+              else:
+                write to disk
+        read s
+            if s hashes to bucket i:
+                probe in-memory R partition
+            else:
+                write to disk
+
+#### Hybrid Hash
+1. scan smaller relation R, partitioning into k buckets but leave bucket 1 in memory
+- scan larger relation S, partitioning into k buckets, except for bucket 1 just probe R1 in memory
+- (GRACE Hash Join) for i = 2 to k: Ri join Si
+
+#### Symmetric Hash Join
+Do not need study much as others
+
+1. assume everything fits in memory, build 2 hash table
+- read r, check in hash table s
+- read s, check in hash table r
+
+How to ensure it is write? <Ri, Si>, it is symmetric, no matter Ri or Si comes first, it would finally find this pair
+
 
 
 ### Summary

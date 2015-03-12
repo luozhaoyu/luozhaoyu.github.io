@@ -240,3 +240,10 @@ How big a file can you sort in 2-passes? n * (n-1)
 * In "read-only" optimization, if a subordinate is read-only, then why can’t the coordinator just ignore it during the commit protocol, because it really doesn’t matter whether the read-only subordinate commits or not
     * the coordinator may not know ahead of time which subordinate is read-only
     * the subordinate may not know if it is read-only, since they could have a unsatisfied conditional update so that there would be no update
+* State 3 different 2PC versions. Why coordinator could **forget** a transaction and when
+
+#### Join Algorithm
+* Descirbe symmetric hash join algorithm and why it is correct
+* GRACE hash join algorithm can be accomplished with one partitioning pass and one join pass if len(R) < M * M. Can Hybrid hash join? If not, how?
+* Compare block nested loops and hybrid hash
+* bitmap indices vs B-tree indices

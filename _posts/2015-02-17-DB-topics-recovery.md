@@ -212,8 +212,8 @@ This is a parrallel idea.
     1. read Ri into memory
     - build hash table on Ri tuples
         * a different hash function for partitioning & in-memory join
-            * partitioning hash: with "big" range `h1(x) = (h(x) mod k) + 1`, k ensure each Ri fits in memory (pick k big enough)
-            * in-memory hash: `h2(x) = (h(x) mod kk) + 1`, kk ensure 1 row in 1 bucket
+            * partitioning hash: with "big" range `h1(x) = (h(x) mod k) + 1`, k ensure each Ri fits in memory (pick k big enough), k is N.O. of partition
+            * in-memory hash: `h2(x) = (h(x) mod kk) + 1`, kk ensure 1 row in 1 bucket, kk is N.O. of in-memory bucket
     - stream Si, probing hash table on R
 
 How big can R be to do this in 2 passes? Suppose you have M memory pages:
@@ -241,6 +241,29 @@ How big can R be to do this in 2 passes? Suppose you have M memory pages:
 - scan larger relation S, partitioning into k buckets, except for bucket 1 just probe R1 in memory
 - (GRACE Hash Join) `for i = 2 to k: Ri join Si`
 
+##### Cost Model of Hybrid Hash
+
+* {R}, {S}: # tuples in R and S
+* |R|, |S|: # of pages in R and S
+* hash: time to hash a tuple
+* move: time to move a tuple to buffer
+* comp: cost of comparing 2 tuples
+* I/O: cost of reading or writing a page
+* F: > 1 (usually 1.1); a universal fudge factor
+* q: fraction of R in first partition
+    * if q is 1: all R fits into memory, there is only one partition
+    * if there are 1000 records, 100 memory, the biggest q is 0.1, because we need to ensure one partion could fit into memory
+
+Total cost:
+
+    ({R} + {S}) * hash +            // partition cost, determine which partition a tuple falls in
+    ({R} + {S}) * (1 - q) * move +  // move tuples to output buffers
+    ({R} + {S}) * (1 - q) * I/O  +  // write from output buffers to disk
+    ({R} + {S}) * (1 - q) * I/O  +  // read back into memory
+    ({R} + {S}) * (1 - q) * hash +  // build & probe hash tables for partition 2-n
+    {R} * move                   +  // move tuples to hash table for R
+    {S} * comp * F                  // probe each tuple in S; more than one comparison
+
 #### Symmetric Hash Join
 Do not need study much as others
 
@@ -250,6 +273,15 @@ Do not need study much as others
 
 How to ensure it is write? "<Ri, Si>", it is symmetric, no matter Ri or Si comes first, it would finally find this pair
 
+#### Comparison
+GraceJoin is faster:
+
+    GraceJoin                           SortMerge
+    read(seq) R, write(rand) R          read(seq) R, write(seq) R (initial runs) # random write, because there are different output files(hashed), seq write, because you read from one file, sort, then write it back
+    read(seq) S, write(rand) S          read(seq) S, write(seq) S (initial runs)
+    read(seq) R, read(seq) S            read R, write R (finish sort) # However, you can skip these two steps
+                                        read S, write S (finish sort) # because you need not get a fully sorted R S, you could join the smallest R and S during heap sort
+                                        read(rand) R, read(rand) S  (merge-join)
 
 
 ### Summary

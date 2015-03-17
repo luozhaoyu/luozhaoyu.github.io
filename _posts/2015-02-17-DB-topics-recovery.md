@@ -128,6 +128,7 @@ default reply is commit when it has no memory about it
 - coordinator abort, force
     * another paper says you could no force: Since you find collecting but nothing further (abort/end log), you abort
 - subordinate abort, force
+    * why force and why coordinator would block to receive ack here? See summary below
 
 ##### commit case
 1. coordinator "collect", "prepare", force
@@ -238,7 +239,7 @@ How big can R be to do this in 2 passes? Suppose you have M memory pages:
 #### Hybrid Hash
 1. scan smaller relation R, partitioning into k buckets but leave bucket 1 in memory
 - scan larger relation S, partitioning into k buckets, except for bucket 1 just probe R1 in memory
-- (GRACE Hash Join) for i = 2 to k: Ri join Si
+- (GRACE Hash Join) `for i = 2 to k: Ri join Si`
 
 #### Symmetric Hash Join
 Do not need study much as others
@@ -247,7 +248,7 @@ Do not need study much as others
 - read r, check in hash table s
 - read s, check in hash table r
 
-How to ensure it is write? <Ri, Si>, it is symmetric, no matter Ri or Si comes first, it would finally find this pair
+How to ensure it is write? "<Ri, Si>", it is symmetric, no matter Ri or Si comes first, it would finally find this pair
 
 
 
@@ -293,9 +294,18 @@ How to ensure it is write? <Ri, Si>, it is symmetric, no matter Ri or Si comes f
     * the coordinator may not know ahead of time which subordinate is read-only
     * the subordinate may not know if it is read-only, since they could have a unsatisfied conditional update so that there would be no update
 * State 3 different 2PC versions. Why coordinator could **forget** a transaction and when
+* In presumed-commit:
+    * In abort case, why coordinator needs to block on receiving ACKs and subordinate needs to force abort?
+        * if not force abort, subordinate would wake up and ask then get a "commit" (since coordinator would have already got the ack from it previously and already forget about it) (so coordinator should also block on receiving "forced" ACK)
+    * In commit case, in contrast, why coordinator needs not block on ACKs and subordinate needs not to force?
+        * because even if the coordinator forget about this transaction, the default behavior is "commit"
 
 #### Join Algorithm
 * Descirbe symmetric hash join algorithm and why it is correct
 * GRACE hash join algorithm can be accomplished with one partitioning pass and one join pass if len(R) < M * M. Can Hybrid hash join? If not, how?
-* Compare block nested loops and hybrid hash
+* Compare block nested loops and hybrid hash, when block nestsed loops would be faster?
+    * the key point of hybrid hash is to read all into buckets, but leave only 1 bucket to match at each time
+    * considering only 0.5R would fit into memory:
+        * block nested loops: read 0.5R, read S, join; read 0.5R, read S, join; total R + 2S
+        * hybrid hash: read R, write 0.5R, read S, write 0.5S, join; read 0.5R, read 0.5S, join; total 2R + 2S
 * bitmap indices vs B-tree indices

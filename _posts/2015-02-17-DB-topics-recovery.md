@@ -271,7 +271,7 @@ Do not need study much as others
 - read r, check in hash table s
 - read s, check in hash table r
 
-How to ensure it is write? "<Ri, Si>", it is symmetric, no matter Ri or Si comes first, it would finally find this pair
+How to ensure it is write? "(Ri, Si)", it is symmetric, no matter Ri or Si comes first, it would finally find this pair
 
 #### Comparison
 GraceJoin is faster:
@@ -326,6 +326,14 @@ GraceJoin is faster:
     * the coordinator may not know ahead of time which subordinate is read-only
     * the subordinate may not know if it is read-only, since they could have a unsatisfied conditional update so that there would be no update
 * State 3 different 2PC versions. Why coordinator could **forget** a transaction and when
+    * **forget** means delete a transaction from in-memory data structure while still could give the right answer
+    * Standard 2PC: after receiving all "ACK" from subordinates (all are forced)
+    * Presumed-Abort:
+        * commit case: after receiving all "ACK", if not the subordinate would ask again, the coordinator may forget
+        * abort case: after sending out "abort"
+    * Presumed-Commit:
+        * commit case: after coordinator forcing commit record
+        * abort case: after receiving all "ACK"
 * In presumed-commit:
     * In abort case, why coordinator needs to block on receiving ACKs and subordinate needs to force abort?
         * if not force abort, subordinate would wake up and ask then get a "commit" (since coordinator would have already got the ack from it previously and already forget about it) (so coordinator should also block on receiving "forced" ACK)
@@ -341,3 +349,9 @@ GraceJoin is faster:
         * block nested loops: read 0.5R, read S, join; read 0.5R, read S, join; total R + 2S
         * hybrid hash: read R, write 0.5R, read S, write 0.5S, join; read 0.5R, read 0.5S, join; total 2R + 2S
 * bitmap indices vs B-tree indices
+* Since in GRACE, len(R) <= M * M, how about in Hybrid?
+    * In GRACE, assume we divide R into k buckets, so len(R)/k <= M and k <= M
+    * In Hybrid, aside from the first bucket, we need another k buffer. So, len(R) / k + k <= M, so len(R) < M * M / 4
+* Describe symmetric hash join and argue why it is corret
+    * scanning both R and S concurrently, when process R, insert into R hash table then probe S; the same as S
+    * assume (r, s), if r comes first, it is in R, and it would be generated when s comes; the same as s comes first

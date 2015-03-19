@@ -283,6 +283,32 @@ GraceJoin is faster:
                                         read S, write S (finish sort) # because you need not get a fully sorted R S, you could join the smallest R and S during heap sort
                                         read(rand) R, read(rand) S  (merge-join)
 
+### Parallel DB
+#### Goals for parallelism
+* linear speedup, system with 2X nodes is 2X as fast
+* linear scale up, system 2X as big solves problem 2X as big in same time
+
+#### Barries to these
+* startup time could not be parallelised
+* interference: "slow down each new process adds to other processors"
+* skew (there are straggler or unbalance work load)
+
+#### Types of systems
+* shared-memory: does not scale up so far
+* shared disk: scale better
+* shared-nothing: Teradata(Gamma), DB2 PE, Oracle Exadata, MS PDW
+
+#### [DATAllegro] (http://en.wikipedia.org/wiki/DATAllegro)
+It designs a Glue Layer to connect multiple Ingres instances
+
+#### Type of parallel joins
+1. redistribute 2 relations
+- redistribute 1 relation
+- redistribute none
+
+##### broadcast join
+broadcast smaller relation, then do local joins: do not need do full join everywhere (but bad if both R and S are equal big)
+
 
 ### Summary
 * The difference between locking records, latching data structures and pinning pages in DBMS

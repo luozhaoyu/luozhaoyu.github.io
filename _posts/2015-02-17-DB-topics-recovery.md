@@ -322,6 +322,8 @@ GraceJoin is faster:
 * Why 2PC is a blocking protocol, how can a participant get blocked by others?
     * If the participant vote YES and the coordinator crashes, the participant has to be blocked until it recovers
 * Why "collecting" record is required in presumed-commit 2PC but not in presumed-commit 2PC?
+    * In presumed-commit, it recorded the begin. So if coordinator crashed after sending "prepare", it would recover and find out which subordinate were participating and should abort. Otherwise, they would commit by default
+    * In presumed-abort, if coordinator crashed and there is no collecting record, it would not know the transaction and answer abort which is right
 * In "read-only" optimization, if a subordinate is read-only, then why can’t the coordinator just ignore it during the commit protocol, because it really doesn’t matter whether the read-only subordinate commits or not
     * the coordinator may not know ahead of time which subordinate is read-only
     * the subordinate may not know if it is read-only, since they could have a unsatisfied conditional update so that there would be no update

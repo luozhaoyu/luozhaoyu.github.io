@@ -309,6 +309,47 @@ It designs a Glue Layer to connect multiple Ingres instances
 ##### broadcast join
 broadcast smaller relation, then do local joins: do not need do full join everywhere (but bad if both R and S are equal big)
 
+###### skew problem
+* Suppose S is highly skewed on S.b: if we do a repartitioning join, some nodes will be heavily loaded => skew in execution time
+* If we do broadcast R join => no skew
+
+How to solve: Split R info (assume R is not skewed):
+
+* RfrequentIn S: broadcast
+* RnofrequentIn S: partition join
+* SfrequentIn S: leave in place
+* SnofrequentIn S: repartition
+
+
+#### Partitioning strategies
+* round-robin
+    * no skew
+    * no useful properties (such as scheme)
+* hash on some attribute
+    * might be skew (some happens more frequently than others)
+    * useful for query processing
+* range partitioning
+    * still might be skew
+
+How about R use round-robin, S use hash partition? R needs repartition in the end
+
+* If R is hash partitioned on R.a, and S is hash partitioned on S.b => no redistribute join (redistribute zero)
+* If neither is partitioned on join attributes => redistribute both
+
+#### Example
+how to `select A, Avg(R.D) FROM R GROUP BY R.A` in parallel?
+
+* first approach
+    1. repartition R.A
+    - compute local group-by
+* second approach
+    1. group by locally (pre-process)
+        * it could not count directly if count median instead of average
+    - repartition
+        * add up all the locally average result to get Avg(R.D)
+    - finish group-by
+
+
 
 ### Summary
 * The difference between locking records, latching data structures and pinning pages in DBMS

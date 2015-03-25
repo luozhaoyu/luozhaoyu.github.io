@@ -101,3 +101,22 @@ We want a magic function Y such that: Y(F) -> T   F(T) = T
         1. walk can not be got by concatenate two walks
         - Two walks that reduce non-overlapping redexes can be concatenated to form a walk
 
+### [SAT] (http://en.wikipedia.org/wiki/Boolean_satisfiability_problem)
+* [CNF] (http://en.wikipedia.org/wiki/Conjunctive_normal_form)
+#### [DPLL] (http://en.wikipedia.org/wiki/DPLL_algorithm)
+* [DPLL algorithm, Pure literal propagation] (http://www.dis.uniroma1.it/~liberato/ar/dpll/dpll.html)
+* Pure literal propagation
+    * if p appear only positively in all clauses, then set p to true
+    * if p only appears !p set it to false
+* [Resolution] (http://en.wikipedia.org/wiki/Resolution_(logic))
+* [Boolean Constraint propagation] (http://en.wikipedia.org/wiki/Unit_propagation)
+    1. Decision variable: variable assigned in Decide Step
+    - decision level: the level/order in which variable assgined
+
+Implication graph: lead to a conflict, subgraph characterizes the conflicts
+
+* labelled DAG
+* Nodes: literals in partial assignment
+* Node label T: indicates assignment and decision level
+* Edges: from l1...lk to l labelled with C Assignments l1...lk caused assignment to l during BCP
+* Special node C: conflict node

@@ -356,6 +356,7 @@ how to `select A, Avg(R.D) FROM R GROUP BY R.A` in parallel?
     * latching is like semaphore, physical lock
     * locking provides multi granularity, logical lock
     * TODO
+* In the DBMin algorithm, consider the case when query Q2 finds a page p in some other query Q1’s locality set. When Q2 accesses the page, DB Min does not update the statistics for this page in Q1’s locality set. Is it good?
 
 #### ARIES
 * What is "redo", and why needs it?
@@ -410,7 +411,6 @@ how to `select A, Avg(R.D) FROM R GROUP BY R.A` in parallel?
         * because even if the coordinator forget about this transaction, the default behavior is "commit"
 
 #### Join Algorithm
-* Descirbe symmetric hash join algorithm and why it is correct
 * GRACE hash join algorithm can be accomplished with one partitioning pass and one join pass if len(R) < M * M. Can Hybrid hash join? If not, how?
 * Compare block nested loops and hybrid hash, when block nestsed loops would be faster?
     * the key point of hybrid hash is to read all into buckets, but leave only 1 bucket to match at each time
@@ -424,3 +424,19 @@ how to `select A, Avg(R.D) FROM R GROUP BY R.A` in parallel?
 * Describe symmetric hash join and argue why it is corret
     * scanning both R and S concurrently, when process R, insert into R hash table then probe S; the same as S
     * assume (r, s), if r comes first, it is in R, and it would be generated when s comes; the same as s comes first
+
+#### Parallel DB
+* Reason for using shared-nothing over shared-disk architecture
+    * shared-disk needs a high speed network compared with directly attached disk
+    * shared-disk needs to ensure data consistency (multiple access and cached)
+*  Give an example of when a repartition operation is required, and describe the three conceptual stages of the repartitioning.
+    * When joining R and S, but neither R nor S is partitioned on the join attribute. Then we need to repartition both R and S before the join.
+    * The three phases:
+        1. split (each node splits its portion of the table into fragments)
+        - shuffle (redistribute the fragments)
+        - merge (combine the shuffled fragments at their destinations.)
+* Define linear scaleup, raise one factor could impede it
+    * a task could be finished in T seconds in single machine, when task grows n times larger it takes the same time in n machines
+    * accessing a shared resource, since this would consume non-linear time
+* Draw a picture of the operators and their connections for a partitioned parallelism, dataflow evaluation of the query “σ(R) Join σ(S)” on two processors.
+    * The idea here is to show the select (or scan) operators for R and S, and the join operators, running on both processors. Also, we need the split operators and merge operators to redistribute the rows to these operators.

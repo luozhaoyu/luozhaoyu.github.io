@@ -103,6 +103,7 @@ We want a magic function Y such that: Y(F) -> T   F(T) = T
 
 ### [SAT] (http://en.wikipedia.org/wiki/Boolean_satisfiability_problem)
 * [CNF] (http://en.wikipedia.org/wiki/Conjunctive_normal_form)
+
 #### [DPLL] (http://en.wikipedia.org/wiki/DPLL_algorithm)
 * [DPLL algorithm, Pure literal propagation] (http://www.dis.uniroma1.it/~liberato/ar/dpll/dpll.html)
 * Pure literal propagation
@@ -112,6 +113,8 @@ We want a magic function Y such that: Y(F) -> T   F(T) = T
 * [Boolean Constraint propagation] (http://en.wikipedia.org/wiki/Unit_propagation)
     1. Decision variable: variable assigned in Decide Step
     - decision level: the level/order in which variable assgined
+* [Unique implication point] (http://www.cs.princeton.edu/courses/archive/fall13/cos402/readings/SAT_learning_clauses.pdf)
+* non-chronological backtracking: backtrack to level d where conflict clause C is an asserting clause
 
 Implication graph: lead to a conflict, subgraph characterizes the conflicts
 
@@ -120,3 +123,27 @@ Implication graph: lead to a conflict, subgraph characterizes the conflicts
 * Node label T: indicates assignment and decision level
 * Edges: from l1...lk to l labelled with C Assignments l1...lk caused assignment to l during BCP
 * Special node C: conflict node
+
+#### MiniSAT
+##### watch points
+* obvious/naive implementation
+    * mark all satisfied clauses
+    * maintain a count of non-false literals (detect literal clauses) in every clause
+    * for each literal, maintain list of obvious if appears in
+* every clause two watch points
+    * `(p v q v r v s)`
+* each variable has two lists
+    1. clauses with a watch pointer to its true literal
+* invariant: if a clause in unsatisfied watch points point to two distinct literals, neither of which have set to false
+    * when new variable assigned only clauses one ahe of its two lists we searched
+    * e.g., if variable assigned T -> clauses with negative watch will be violated
+
+Dynamic largest individuals sum (DLIS): choose literal satisfying largest number of clauses
+
+Variable state independent decaying sum (VSIDS): favor literals occurring in a lot of conflicts: +1 (pick the highest scrore to choose)
+
+#### MaxSAT
+given formula F (CNF): maximize the number of satisfied clauses
+
+#### Partial MaxSAT
+`F ^ Q; m |= F, m |= Q*`

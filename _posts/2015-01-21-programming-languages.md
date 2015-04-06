@@ -147,3 +147,118 @@ given formula F (CNF): maximize the number of satisfied clauses
 
 #### Partial MaxSAT
 `F ^ Q; m |= F, m |= Q*`
+
+### First-order logic
+    C object constants
+    F function constatns -> function f(a) -> b
+    R relation constants -> P(a) > (0, -1)
+    C, F, R -> signature of the logic
+    L(C, F, R) = first-order language
+
+    Basic terms: a constant c belongs to C or a variable (x, y, z ...)
+    Composite terms: f(t1, t2 ... tk), arity of f is k, e.g., age(mother(mvc))
+
+    Formular: atomic predicator: p(t1, t2 ... tk)
+    F1, F2 -> F1 ^ F2, F1 v F2
+    F -> !F
+
+    given F:
+        Vx. F
+        Ex. F # F is scope of quantifier
+        we can nest predicates and functions
+
+    Vy.((Vx.p(x)) -> q(x, y))
+    closed formula: (no free variables)
+    ground formula: (no variables) > (0, -1)
+
+#### Semantics
+* U, universe of discourse: a non-empty set of objects
+* An interpretation I is a mapping from C, F, R to objects from U
+
+        I maps every c belongs to C to I(c) belongs to U
+        I maps every n-arg f belongs to F to fi: Un -> U
+        I maps every n-arg P belongs to R to pi belongs to U
+
+
+    objects {a, b, c}
+    function f (binary)
+    relation r (3-arg)
+    universe = {1, 2, 3}
+    I(a) = 1, I(b) = 2, I(c) = 3
+    I(f) = {1->2, 2->3, 3->1}
+    I(r) = {(1,2,3), (3,2,1)}
+
+
+
+Structure(algebra): S = (U, I) for a first-order laguary L(L, F, R)
+
+A variable assignment: 6
+    mapping from variables to U
+    U = {#, O}, 6(x) = #
+
+#### Evaluation
+    terms: <I, G>(t)
+        Object<I, 6>(a) = I(a)
+        Variable<I, 6>(v) = 6(v)
+        Function<I, G>(f(t1, t2 ... tk)) = I(f)(<I,6>(t1) ... tk)
+
+    evaluation: (satisfy)
+        U, I, 6 |= F
+        U, I, 6 |!= F
+        U, I, 6 |= Va.F iff for all o belongs to U, U,I,6[x->o] |= F
+        U, I, 6 |= Ex.F iff for some o belongs to U, U,I,6[x->o] |= F
+
+    F is SAT iff there exists some S and 6
+        s.t. S,6 |= F
+    A structure S is a model of F if
+        for all 6 we have S,6 |= F
+
+    F is VALID iff !F is UNSAT
+    semantics argument method
+    S,6 |= !F   S,6 |!= !F
+    S,6 |!= F   S,6 |= F
+
+    Universal
+        U,I,6 |= Vx.F
+    --------------------- (for any o belongs to U)
+        U,I,6[x->o] |= F
+
+        U,I,6 |!= Vx.F
+    --------------------- (a fresh o belongs to U) (fresh: new, have not used before)
+        U,I,6[x->o] |!= F
+
+        U,I,6 |= Ex.F
+    --------------------- (a fresh o belongs to U)
+        U,I,6[x->o] |= F
+
+        U,I,6 |!= Ex.F
+    --------------------- (for any o belongs to U)
+        U,I,6[x->o] |!= F
+
+    U,I,6 |= P(s1, s2 ... sn)
+    U,I,6 |!= P(t1, t2 ... tn)
+    <I,6>(si)=<I,6>(ti) Vi belongs [1, n]
+    -------------------------------------
+        U,6,I |= 止
+
+##### Soundness
+if every branch delivers a contradiction then F is valid
+
+##### Complete
+if F is valid then there is a finite length proof of 止
+
+
+##### FOL validity is undecidable
+FOL is semidecidable: if a formula is VALID then we can prove that, otherwise we will go on forever
+
+#### Decidable fragments
+1. quantifier-free FOL -> SAT (NP-complete)
+- monadic FOL
+    * pure: all predicates take 1 argument has functions and letters
+    * impure: allow monadic functions
+- [Bernays–Schönfinkel class] (http://en.wikipedia.org/wiki/Bernays%E2%80%93Sch%C3%B6nfinkel_class)
+    1. no function constants
+    - only formulates of the farm
+
+#### [Datalog] (http://en.wikipedia.org/wiki/Datalog)
+all clauses are [Horn clauses] (http://en.wikipedia.org/wiki/Horn_clause)

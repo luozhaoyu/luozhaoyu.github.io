@@ -43,8 +43,6 @@ Definition:
     * NOT: R.a = S.b
 * A SARG is an expression SARG1 or SARG2 or ... or SARGn (each of these is a conjunction of SARGable predicates)
 * a predicate matches an index when:
-    * predicates a SARGable
-    * columns in predicate are initial substring of index key
 
         index on (A, B, C)
         matches:
@@ -53,6 +51,8 @@ Definition:
         not matches:
             B = "jane" # B is not the prefix initial substring
 
+    * predicates a SARGable
+    * columns in predicate are initial substring of index key
 * an ordering of tuples is "interesting" if it can be used by GroupBy, OrderBy or Join
 
 #### Cost of a query
@@ -92,14 +92,15 @@ Cost of a query: I/O times + Weighting factor * CPU time =
             for each applicable index & segment scan
 
 - what is produced?
-    1. cost C in form (number of pages fetches) + W * RSICARD
-    - ordering of tuples produced (if any)
 
         case cost
         unique index matching predicate    1 + 1 + w # 1 for b-tree search, 1 for buffer pool, RSI call is 1
         clustered index I matching one or more boolean factors F(preds) * (NINDX(I) + TCARD(T)) + W * RSICARD
         # W * RSICARD: product of selectivities for all SARGable preds
         nonclustered index I
+
+    1. cost C in form (number of pages fetches) + W * RSICARD
+    - ordering of tuples produced (if any)
 - find best single-table access plans (for each interesting order)
 - find best way to join pairs from previous step (for each interesting order)
 - find best way to join in one more table with result of previous step

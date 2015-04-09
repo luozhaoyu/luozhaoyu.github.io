@@ -46,6 +46,7 @@ Definition:
             AB = (7, "fred")
         not matches:
             B = "jane" # B is not the prefix initial substring
+
 * an ordering of tuples is "interesting" if it can be used by GroupBy, OrderBy or Join
 
 #### Cost of a query
@@ -82,3 +83,10 @@ Cost of a query: I/O times + Weighting factor * CPU time =
 
 
 ### Summary
+#### Query Optimization
+* Why does the System R optimizer use the “only left deep trees” rule?
+    * given the join algorithms System-R had at the time, left-deep trees can be pipelined but right-deep trees cannot.
+* What are two statistical assumptions that System R makes in doing selectivity estimation?
+* Query optimizers make use of estimates of cardinalities when estimating the cost of plans. Suppose you were able to magically “reach in” and convert some of the cardinality estimates to their true, exact values. Would this necessarily result in better query plans? Why or why not?
+* Why is it important to keep track of “interesting orders” instead of just calculating the single best one-table plan for each table in the query?
+* The query optimizer might not eliminate a suboptimal sub-plan if it generates an “interesting order.” What constitutes an “interesting order” and why are plans that generate them retained?

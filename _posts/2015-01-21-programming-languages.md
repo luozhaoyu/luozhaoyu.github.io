@@ -247,6 +247,35 @@ if every branch delivers a contradiction then F is valid
 ##### Complete
 if F is valid then there is a finite length proof of 止
 
+##### Compactness
+A logic is **compact** if an infinite set of autences Gamma are SAT iff every finite subset of Gamma is SAT
+
+FOL is compact
+
+##### Completeness
+if formula is UNSAT then there exists a finite length proof
+
+<- direction
+
+Proof (by contradiction)
+
+* Assume FOL is not compact
+* there is an infinite set gamma that is UNSAT, but **every finite subset is SAT**
+* By completeness, there is a finite length proof of gamma is **UNSAT**
+* This means 
+* Contradiction
+
+Can we express transitive closure in FOL? **NO**
+
+    G = (V, E)
+    G* = (V, E*)
+    predicate p(t, t`)
+    transitive closure T(t, t`)
+    (t, t`) belongs to T iff there exists
+        p(t, t1) p(tn, t`)
+
+
+
 
 ##### FOL validity is undecidable
 FOL is semidecidable: if a formula is VALID then we can prove that, otherwise we will go on forever
@@ -262,3 +291,31 @@ FOL is semidecidable: if a formula is VALID then we can prove that, otherwise we
 
 #### [Datalog] (http://en.wikipedia.org/wiki/Datalog)
 all clauses are [Horn clauses] (http://en.wikipedia.org/wiki/Horn_clause)
+
+#### First order theories
+* specializing FOL for domain if interest
+* A theory T
+    1. a signature SUM(t) = set of constants, functions, predicates
+    - Axioms At = a set  of FOL sentences
+* Sum(t)formula = a formula over Sum(t) and variables, quantifiers, ^, v, !
+
+Theory of heights
+
+    SUM(H) = {taller}
+    axiom Ah = Vx,y taller(x, y) -> !taller(y, x)
+    S = (U, I) is a node of T
+    if S |= A for every A belongs to At
+
+#### SAT modulo theory T
+F is SAT modulo T if there is F model S and variable assignment 6 s.t. S,6 |= F
+
+F is **VALID** if for all T-models S    S, 6 |= F
+
+A theory is **complete** if for every sentence T |= F or T |= !F
+
+#### [peano axioms] (http://en.wikipedia.org/wiki/Peano_axioms#First-order_theory_of_arithmetic)
+Peano arithmetic, which is Presburger arithmetic augmented with multiplication, is not decidable, as a consequence of the negative answer to the Entscheidungsproblem. By Gödel's incompleteness theorem, Peano arithmetic is incomplete and its consistency is not internally provable (but see Gentzen's consistency proof.)
+
+#### [Presburger arithmetic] (http://en.wikipedia.org/wiki/Presburger_arithmetic)
+[consistent, complete, decidable] (http://en.wikipedia.org/wiki/Presburger_arithmetic#Properties)
+

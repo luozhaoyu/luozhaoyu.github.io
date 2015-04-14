@@ -319,3 +319,27 @@ Peano arithmetic, which is Presburger arithmetic augmented with multiplication, 
 #### [Presburger arithmetic] (http://en.wikipedia.org/wiki/Presburger_arithmetic)
 [consistent, complete, decidable] (http://en.wikipedia.org/wiki/Presburger_arithmetic#Properties)
 
+### Theory of arrays
+Ta decidable for quantifier-free
+
+[SMT solver] (http://en.wikipedia.org/wiki/Satisfiability_modulo_theories#SMT_solvers)
+
+DPLL(T)
+
+1. throw away nomatches of the predicates
+- use theory solver to check results
+
+DPLL(T), input F
+
+1. if B(F) is UNSAT, then UNSAT
+- if B(F) is SAT (A |= B(F))
+- if T-solver says B-1(A) is SAT then return SAT
+- if B-1(A) is UNSAT, B(F) ^ !A
+
+    if B-1(A) is UNSAT
+        F ^ B-1(!A) === F
+    B(F ^ B-1(!A)) = B(F) ^ !A
+    !A is the theory conflict clause
+
+#### Theory propagation clauses
+

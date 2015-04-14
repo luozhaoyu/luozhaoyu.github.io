@@ -111,6 +111,54 @@ The import notion is that: you should have your formula to do estimation
     Cost_of_merge_sort_join = Cost_of_outer(Path1) + N * Cost_of_inner(Path2)
     # However, it is different from nested loop: Cost_of_inner is cheap due to sorting
 
+##### Histograms
+think about the age distribution in uw-madison, someone store age: SELECT(R.a == c)(R), unevenly distributed
+
+people starts to store more statistic information as **histograms**
+
+* equi-width: count for each age bucket (10, 20), (20, 30)
+* equi-depth: each bucket has the same number (15, 17), (17, 18), (18, 19), (24, 28), (50, 100)
+    * in practise, build it by sampling
+
+"end-biased": equi-depth + exact count of k most frequent values
+
+think about joining R.c == S.d:
+
+1. join their histogram!
+- 2-dimensional histogram, vertical is R, horizontal is S (pre-join)
+    * `|R join S| = |R|`
+
+##### Sampling
+take sample of DB, run query over the sample, and measure the selectivity: too slow, if run every time
+
+2 cases, think about their differences:
+
+1. R.a is odd number from 1 to n, S.b is odd number from 1 to n (result it 0)
+- R.a is odd number, S.b is even number (half join half)
+
+Histogram do not know, sampling know it immediately
+
+But it is still a difficult problem: `select distinct R.A from R`
+
+##### Optimizer estimate
+
+    R join S
+                            IndexNestedLoop        NL
+    10,000  ~   10s INL     100units    5000
+    100,000  ~   10s INL    1500units   1,000,000
+    1,000,000  ~   2yrs NL              -1087201831
+
+Current thoughts:
+
+* re-optimization
+    * execute for a while (sampling), then re-involve optimization
+* remember previous results (use it), but not work very well:
+    1. only learn about things you executed: previous may be mistake
+    - old approach: compare estimates to estimate; new approach: compare estimates to true values
+        * new approach is worse
+* robust query optimization: choose reliable plan than risky plan
+
+
 #### Join trees (only use left deep trees)
 right deep tree for data warehouse: assume we would join ABCDF, put hash table of ABCD in memory, then pipeline the F up
 
@@ -134,6 +182,12 @@ Cross product:
     - join C
     - join D
 * You could also do cross product by adding a dummy attribute to each tuple in each table
+
+### ADT
+user defined rich data type
+
+### R-trees
+store spatio data
 
 
 ### Summary

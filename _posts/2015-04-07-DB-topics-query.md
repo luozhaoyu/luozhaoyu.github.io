@@ -187,7 +187,53 @@ Cross product:
 user defined rich data type
 
 ### R-trees
-store spatio data
+    R   id  name    type    box
+        1   dane    county  (lowerleft, lr, ul, upperright)
+
+store spatio data, how to find overlapping rectangles?
+
+1. Approximate shapes by "bonding rectangles"
+- Lookup for overlap is 2-steps:
+    1. find overlapping bounding rectangles (boxes)
+    - verify rectangles using true geometry (if it is trully overlapping)
+
+#### B+ tree
+* flat tree ensures fan out
+* no order in 2 dimensional space (how to decide putting in)
+
+#### R-tree
+Let M be max entries that fit in a node, m <= M/2 be a specified minimum
+
+1. every leaf node contains between m and M records (unless it is the root)
+    * node splits if is more than M, each new node has M/2 records
+- for each index record (I, tid) in a leaf, I is the smallest rectangle containing the object represented by the tuple
+    * tid: tuple id, for one row
+    * I is bounded box
+- every non leaf node has between m and M children (unless it is the root)
+- for each entry (I, tid) in an internal node, I is the smallest rectangle that contains all rectangles in its child
+- the root has at least 2 children (unless it is a leaf)
+- All leaves appear at the same level (it is not unbalanced, it has wide fan out)
+
+##### Search: given an R-tree with root T, find all index records whose rectangles overlap a search rectangle S
+How to find spatio data: search multiple path or replicate to multiple nodes (R* does), there is no way to avoid
+
+1. if T is not a a leaf, check each entry E to see if E.I overlaps S. For all overlapping entries, search E.p
+    * entry is (rectangle, pointer)
+- if T is a leaf, check all entries to find overlaps
+
+##### Insert E into R-tree
+1. Invoke **ChooseLeaf** to select leaf L in which to place E
+    1. why choose: since there are many choices to place an E, while B tree has only one place
+    - set N to be root
+    - if N is a leaf, return N
+    - if N is not a leaf, let F be the entry whose rectangle F.I needs the least enlargement to include E.I
+        * break ties by choosing smallest area rectangle
+        * think about, why we prefer small rectangle?
+            * not for fast access in one rectangle
+            * for fast search of the whole index
+- If L has room, install E. Otherwise, invoke **SplitNode** to obtain L and LL containing E and all the old entires of L
+    * you have to decide which entries to L or LL in SplitNode, since there is no ordering
+- Invoke **AdjustTree** in L, also passing in LL if a split occures
 
 
 ### Summary

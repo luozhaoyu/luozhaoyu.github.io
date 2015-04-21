@@ -234,6 +234,32 @@ How to find spatio data: search multiple path or replicate to multiple nodes (R*
 - If L has room, install E. Otherwise, invoke **SplitNode** to obtain L and LL containing E and all the old entires of L
     * you have to decide which entries to L or LL in SplitNode, since there is no ordering
 - Invoke **AdjustTree** in L, also passing in LL if a split occures
+    * "fixes" bounding boxes after insertion, ensure its parents to enclose the expanded leaf
+
+
+##### Splitting nodes
+* Goal: minimize area of bounding rectangle for the 2 new nodes
+* paper gives exponential(exact) quadratic linear(approximate) algorithm
+
+### [Bit-map indexes] (http://en.wikipedia.org/wiki/Bitmap_index)
+each index use 1 bit to represent the index
+
+    B+ good at:
+    Select S.name
+    From Students S
+    Where Sid=727,536
+
+    has many distinct value, so B+ is good at
+    but bad for bitmap, too many indexes
+
+    B+ not good at:
+    Select count(S.name)
+    From Students S
+    Where S.age=22 AND S.gender=M
+
+    bitmap index is 1 if age=22, otherwise 0
+    use & to combine indexes together, get 1 only
+
 
 
 ### Summary

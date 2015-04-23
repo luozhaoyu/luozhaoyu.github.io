@@ -260,6 +260,68 @@ each index use 1 bit to represent the index
     bitmap index is 1 if age=22, otherwise 0
     use & to combine indexes together, get 1 only
 
+#### Bitmap index on column, say R.A
+1. map from value to bitmap: there are many values and many corresponding bitmaps; we could use hashmap for mapping
+    * one bitmap per value in R.A
+    * bit in bitmap for value v is "1" in bit i if R.A has val "v" in ith tuple
+- Suppose each page or R has K records on it (However, it would not work since we have variable K, not all number of records per page is the same)
+
+        # file has to be sorted
+        position i is:
+        page: i div k
+        record: i mod k
+
+- What if variable number of records per page?
+    * let k_max be max possible records per page
+    * suppose file has n pages
+    * then bitmaps have n*k_max entries
+    * this solution inflates the indexes
+        * this also need one additional bitmap for "phantom" tuples to distinguish if this bitmap corresponds to "real" tuple
+
+#### bit-slice index
+
+    R(A, B, C, Sales)
+    a1,b1,c1   01100011
+    a2,b2,c2   01110111
+    a3,b3,c3   10110111
+
+#### Join index
+
+    RID emp(id, name, age, did)
+    0x436 (7, "jane", 26, 3)
+    build index on name maps from name to RID of emp record with that name
+
+    RID dept(did, dname, ...)
+    0x799 (3, "CS", ...)
+
+    "regular" index:
+        entry: ("jane", 0x436)
+
+    However, we could also build index map from emp.name to dept.name
+    join index:
+        entry: ("jane", 0x799) # RID is from a different table; the index is precomputing the join
+
+#### [User-defined function] (http://en.wikipedia.org/wiki/User-defined_function)
+* select R.A from R where **f**(R.B) >= 10
+    * f is UDF: such as convert concurrency
+    * f must be deterministic
+* problem is query optimizer could not make an estimate
+    * PL people are not afraid to analyse your JAVA codes
+
+What to do with bitmap index?
+
+* can build an index on a function result, i.e., build index on **f**(R.B)
+    * build a table with (RID, f(R.B))
+
+* R(A,B,C,D,E,blob) build index on R(A,B,C)
+    * maps from (a,b,c) tuples to RIDS: (a1b1c1, 0x799)
+    * a "covering index" Q: means can answer Q from index alone
+* think `Q: select R.A, R.B from R`: can use index to answer
+    * rather than scanning the table, scan the smaller index
+
+### Column-store
+store columns instead of rows, scan attribute would be much faster
+
 
 
 ### Summary

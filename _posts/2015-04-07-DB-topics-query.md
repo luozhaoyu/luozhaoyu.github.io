@@ -285,6 +285,8 @@ each index use 1 bit to represent the index
     a2,b2,c2   01110111
     a3,b3,c3   10110111
 
+the bits are stored in a big binary blob, during accessing first slice, the program would loop all the words and find the first bit of each word. Bitmap slice could not access the bit directly
+
 #### Join index
 
     RID emp(id, name, age, did)

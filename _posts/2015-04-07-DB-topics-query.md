@@ -183,9 +183,6 @@ Cross product:
     - join D
 * You could also do cross product by adding a dummy attribute to each tuple in each table
 
-### ADT
-user defined rich data type
-
 ### R-trees
     R   id  name    type    box
         1   dane    county  (lowerleft, lr, ul, upperright)
@@ -321,8 +318,52 @@ What to do with bitmap index?
 * think `Q: select R.A, R.B from R`: can use index to answer
     * rather than scanning the table, scan the smaller index
 
-### Column-store
-store columns instead of rows, scan attribute would be much faster
+### [Column-store] (http://en.wikipedia.org/wiki/C-Store)
+* store columns instead of rows, scan attribute would be much faster
+* read 2 of 10 attributes, read ~20% of the data
+    * uses buffer pool/disk bandwidth better
+    * use CPU cache better
+        * pollute CPU cache with useless columns, since you do not use them while CPU would load them blindly
+* inserting rows is slow
+* scan based system, people prefer scan rather than indexing
+* column stores are good fore read-mostly workload
+* row-store are better for update-intensive workload
+
+How do you construct rows from a column store?
+
+    option 1    key | A     key | B
+                1   | a1    1   | b1
+                2   | a2    2   | b2
+                3   | a3    3   | b3
+    reconstruct works but slow
+
+    option 2: keep columns ordered
+    better I/O CPU usage
+
+#### Another advantage of column stores: compression
+* column stores give up on (byte, word) alignment, [word alignment] (http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Data/aligned.html)
+    * can "pack" data
+* kinds of compression used
+    * dictionery encoding: encode car models to 000, 001, 010, 011
+        * row could do it, too, but it could not **pack** the bits into one
+    * run length encoding: few distinct values, best if sorted on this column: convert [12, 14, 14, 16, 16, 16] -> [(12, 1), (14, 2), (16, 27), (22, 5000)]
+    * delta encoding: sotre difference between consecutive (**BIG***) values, not values themselves: [100123, 100127, 100130] -> [100123, 4, 3]
+        * you have to scan all the column to know the exact value
+    * big disadvantage is you have to keep copies of compressed column, otherwise you may not be able to put them back to one row
+* skipping parts of columns
+    * `SELECT R.A, R.B FROM R WHERE R.A = 117` skip scan R.B if R.A is not 117
+
+#### Another issue: iterator model of query evaluation
+* row stores: getNextRow() until no data <- once per row
+    * row stores may not get a **block** of rows as convenient as column store: indexes only store IDs, block of rows involve locking blocks of data
+* column: getNextBlockOfValues() until no more data
+    * a segment may contain 10000 R.A values
+    * but get 10000 rows at once
+
+### NoSQL
+NoSQL: OLTP, key-value stores, Decision Support, Hadoop/Hive/MapReduce
+
+RDBMS: PRICE, consistency, transaction, unstructured stuff
 
 
 

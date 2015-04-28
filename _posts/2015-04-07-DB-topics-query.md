@@ -333,5 +333,27 @@ store columns instead of rows, scan attribute would be much faster
         * we could start scan once there is joined data popped upper, streaming
 * What are two statistical assumptions that System R makes in doing selectivity estimation?
 * Query optimizers make use of estimates of cardinalities when estimating the cost of plans. Suppose you were able to magically “reach in” and convert some of the cardinality estimates to their true, exact values. Would this necessarily result in better query plans? Why or why not?
+    * No. We should use estimates compare with estimates to get relative different. Since the estimations may have systematic error or consistent skew, we may get wrong comparision between a real value with estimate value
 * Why is it important to keep track of “interesting orders” instead of just calculating the single best one-table plan for each table in the query?
+    * single best one-table plan is a greedy optimization algorithm which may fail to achieve global best
+    * global best may consist of slower plans
 * The query optimizer might not eliminate a suboptimal sub-plan if it generates an “interesting order.” What constitutes an “interesting order” and why are plans that generate them retained?
+
+#### R-tree
+* what is the goal of SplitNode algorithm?
+* Why you might have to search multiple paths during a lookup in an R-tree. Give an example. Why not in B-trees
+* Why trying to minimize the resulting area of two new nodes in SplitNode of R-tree
+* Why store rectangle not precise polygon?
+    * the rectangle is easy for computing
+
+#### Bitmap
+* `SELECT * FROM R WHERE R.a=c1 and R.b=c2` whether use bitmap or B-tree indices on R.a and R.b: use RIDSize, RIDCompTime, WordLength, BitwiseAndTime, NumAValues, NumBValues in your equations
+* Consider a bitmap index built on column B of a table R(A, B, C). Suppose
+R has 1,000,000 rows in it, that the minimal size of an R tuple is 100 bytes, and that
+data pages can hold 10000 bytes of user data. Furthermore, suppose that R currently
+is stored on 13,000 pages (that is, tuples of R appear on 13,000 pages) and R.B has
+200 distinct values. Finally, also assume that the method described in class for
+mapping bit position to record in page is being used.
+    * How many bitmaps will be in the index?
+    * How many bits will be in each bitmap?
+    * What is the total number of “1” bits in all of the bitmaps?

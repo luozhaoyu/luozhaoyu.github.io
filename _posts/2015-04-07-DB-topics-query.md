@@ -365,6 +365,65 @@ NoSQL: OLTP, key-value stores, Decision Support, Hadoop/Hive/MapReduce
 
 RDBMS: PRICE, consistency, transaction, unstructured stuff
 
+Suppose you have:
+
+* too much data for one machine
+* lots of concurrent updates to that data
+
+=> use "cluster" of cheap machine
+
+* want data always available
+* nodes/network will fail
+
+=> replicate data
+
+what about network partitions? But how about consistency
+
+CAP theorem, you can only achieve 2 of:
+
+1. consistency
+- availability
+- partitioning (of network)
+
+
+Use a DBMS?
+
+* very expensive
+* transaction model (might be) too strict
+    1. you may not need it
+    - does not fit availability constraint
+* my data really does not look relational
+
+=> key-value stores
+
+* key-value stores `put(key, v), v <- get(key)`
+    * replicate for availability
+    * for consistency: common approach "eventual consistency" (if you stop all updates, eventually all copies of each data item have the same value)
+
+Suppose you have:
+
+* way more data than fits on a single node
+* you want to process/analyze this data
+
+Use a DBMS?
+
+* very expensive
+* need DBMS experts
+* my processing tasks/data is not a good fit for relational model
+
+=> Hadoop
+
+* HDFS: distributed file system, replicate data
+    * Hive use SQL interface
+* Map/Reduce programming model, NoSQL for read-mostly workloads
+    * Map: generalized **"group by"**, user level code, distributed parallel
+    * Reduce: arbitrary program to combine elements in a group
+* No schema
+    * "unstrctured": data is intepreted in application (Map/Reduce code) (just like 1970)
+
+#### NoSQL for update-intensive workloads, currently:
+* adding SQL
+* looking at strong consistency
 
 
 ### Summary

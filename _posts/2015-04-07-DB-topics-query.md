@@ -432,12 +432,15 @@ Use a DBMS?
     * given the join algorithms System-R had at the time, left-deep trees can be pipelined but right-deep trees cannot.
         * we could start scan once there is joined data popped upper, streaming
 * What are two statistical assumptions that System R makes in doing selectivity estimation?
+    1. `column = value`: An even distribution of tuples among the index key values
+    - `column1 = column2`: each key value in the index with the smaller cardinality has a matching value in the other index
+    - `F = F(pred1) * F(pred2)`: column values are independent
 * Query optimizers make use of estimates of cardinalities when estimating the cost of plans. Suppose you were able to magically “reach in” and convert some of the cardinality estimates to their true, exact values. Would this necessarily result in better query plans? Why or why not?
     * No. We should use estimates compare with estimates to get relative different. Since the estimations may have systematic error or consistent skew, we may get wrong comparision between a real value with estimate value
-* Why is it important to keep track of “interesting orders” instead of just calculating the single best one-table plan for each table in the query?
+* Why is it important to keep track of “interesting orders” instead of just calculating the single best one-table plan for each table in the query? The query optimizer might not eliminate a suboptimal sub-plan if it generates an “interesting order.” What constitutes an “interesting order” and why are plans that generate them retained?
+    * A tuple order is an **interesting order** if that order is one specified by the query block''s **GROUP BY** or **ORDER BY** clauses
     * single best one-table plan is a greedy optimization algorithm which may fail to achieve global best
     * global best may consist of slower plans
-* The query optimizer might not eliminate a suboptimal sub-plan if it generates an “interesting order.” What constitutes an “interesting order” and why are plans that generate them retained?
 
 #### R-tree
 * what is the goal of SplitNode algorithm?
@@ -457,3 +460,12 @@ mapping bit position to record in page is being used.
     * How many bitmaps will be in the index?
     * How many bits will be in each bitmap?
     * What is the total number of “1” bits in all of the bitmaps?
+
+#### Column store
+* Why might one expect cache utilization to be better with a column store than a traditional row store? For what kind of query do you expect this to be important?
+* Some row-store advocates, when they first hear of column stores, say: “This is silly. Suppose I have a table R(A, B, C, D). To simulate a column store on my row store, all I need to do is maintain materialized views on each column. That is, I store the materialized view R_A(A), R_B(B), R_C(C), and R_D(D). The meaning here is that R_A(A) is the projection of R onto column A (with duplicates retained.). Then when evaluating a query, I use these projections instead of the original table.”
+Explain why this “simulated column store” will likely not perform as fast as a true column store.
+
+#### Map Reduce vs Parallel RDBMS
+* 3 reasons why parallel DBMS being more efficient
+* when doing a large data processing task, when does someone choose Map-Reduce, when choose parallel DBMS

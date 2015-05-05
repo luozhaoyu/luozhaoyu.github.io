@@ -426,6 +426,36 @@ Use a DBMS?
 * adding SQL
 * looking at strong consistency
 
+#### [Benchmark] (http://vgc.poly.edu/~juliana/courses/cs9223/Lectures/paralleldb-vs-hadoop.pdf)
+1. Hadoop (Map/Reduce)
+- Vertica (column-store RDBMS)
+- DB2 (row-store RDBMS)
+
+measurements:
+
+1. installation/tuning/setup: **samething hadoop much simpler** DB has so many configurations
+- loading time: `Hadoop << {Vertica, DB2}`
+- query running time: `vertica < DB2 < Hadoop`, why?
+    * Hadoop spent a lot of time parsing the data, which looks like a character file. However, DBs do this in loading time
+        * parsing time has nothing to do with our map/reduce
+    * DBMS support schemas, Map/Reduce (Hadoop) do not
+        * sharing can be difficult, the schema is inside the code, your parser(Hadoop) would not work if the data store changed (from row store to column store)
+            * how about provide a shared library to support schema? it becomes more DB
+        * DB could look into catalog to check the fields
+- DBMS had indexing, Hadoop did not
+- Programming model: imperative(JAVA) vs declarative(SQL)
+- Hadoop is more easy to expand nodes, DB needs stop, unload, reload, run again
+- Flexibility
+    * some things are hard to code in SQL, flexibility of Hadoop helps (but UDFs(User Defined Function) & UDAs(User Defined Aggregate) help)
+
+#### Some other DBMS performance "tricks"
+* partitioning of data (hash partitioning)
+    * Map phase of Hadoop generate some information, but it is stored in memory which could not be reused
+* pipelining
+    * Hadoop writes to disk between each Map/Reduce phase
+        * But it supports fault tolerence by materializing intermediate result
+    * DBMS try to pipeline between operators
+
 
 ### Summary
 #### Query Optimization

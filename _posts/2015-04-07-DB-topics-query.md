@@ -491,6 +491,8 @@ measurements:
 
 #### Bitmap
 * `SELECT * FROM R WHERE R.a=c1 and R.b=c2` whether use bitmap or B-tree indices on R.a and R.b: use RIDSize, RIDCompTime, WordLength, BitwiseAndTime, NumAValues, NumBValues in your equations
+    * Bitmap: `BitwiseAndTime * RIDSize / WordLength`
+    * B-tree: `RIDCompTime * [log(NumAValues) + log(NumBValues)]`
 * Consider a bitmap index built on column B of a table R(A, B, C). Suppose
 R has 1,000,000 rows in it, that the minimal size of an R tuple is 100 bytes, and that
 data pages can hold 10000 bytes of user data. Furthermore, suppose that R currently
@@ -498,8 +500,11 @@ is stored on 13,000 pages (that is, tuples of R appear on 13,000 pages) and R.B 
 200 distinct values. Finally, also assume that the method described in class for
 mapping bit position to record in page is being used.
     * How many bitmaps will be in the index?
+        * 200, since there are 200 distinct values
     * How many bits will be in each bitmap?
+        * 1000000, every recrod has corresponding index
     * What is the total number of “1” bits in all of the bitmaps?
+        * 1000000, every record has 1 corresponding value
 
 #### Column store
 * Why might one expect cache utilization to be better with a column store than a traditional row store? For what kind of query do you expect this to be important?

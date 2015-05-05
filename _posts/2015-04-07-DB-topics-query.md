@@ -91,15 +91,16 @@ Cost of a query: I/O times + Weighting factor * CPU time =
             calculate the cost of scanning relation
             for each applicable index & segment scan
 
-- what is produced?
+- index cost estimation
 
-        case cost
-        unique index matching predicate    1 + 1 + w # 1 for b-tree search, 1 for buffer pool, RSI call is 1
-        clustered index I matching one or more boolean factors F(preds) * (NINDX(I) + TCARD(T)) + W * RSICARD
+        case                                                    cost
+        unique index matching predicate                         1 + 1 + w # 1 for b-tree search, 1 for buffer pool, RSI call is 1
+        clustered index I matching one or more boolean factors  F(preds) * (NINDX(I) + TCARD(T)) + W * RSICARD
         # W * RSICARD: product of selectivities for all SARGable preds
         nonclustered index I
 
-    1. cost C in form (number of pages fetches) + W * RSICARD
+- what is produced?
+    1. cost C in form `(number of pages fetches) + W * RSICARD`
     - ordering of tuples produced (if any)
 - find best single-table access plans (for each interesting order)
 - find best way to join pairs from previous step (for each interesting order)
@@ -183,7 +184,7 @@ Cross product:
     - join D
 * You could also do cross product by adding a dummy attribute to each tuple in each table
 
-### R-trees
+### [R-trees] (http://en.wikipedia.org/wiki/R-tree)
     R   id  name    type    box
         1   dane    county  (lowerleft, lr, ul, upperright)
 
@@ -444,10 +445,19 @@ Use a DBMS?
 
 #### R-tree
 * what is the goal of SplitNode algorithm?
+    1. decide which node go to L or LL
+    - minimize the least enlargement
+    - adjust the parent bordering
 * Why you might have to search multiple paths during a lookup in an R-tree. Give an example. Why not in B-trees
+    * Every internal node contains a set of rectangles and pointers to the corresponding child node and every leaf node contains the rectangles of spatial objects (the pointer to some spatial object can be there).
+        * For every rectangle in a node, it has to be decided if it overlaps the search rectangle or not.
+            * If yes, the corresponding child node has to be searched also.
+    * B-tree is ordered
 * Why trying to minimize the resulting area of two new nodes in SplitNode of R-tree
+    * with fewer resulting area, fewer subtrees need to be processed
 * Why store rectangle not precise polygon?
     * the rectangle is easy for computing
+    * polygon often requires larger storage
 
 #### Bitmap
 * `SELECT * FROM R WHERE R.a=c1 and R.b=c2` whether use bitmap or B-tree indices on R.a and R.b: use RIDSize, RIDCompTime, WordLength, BitwiseAndTime, NumAValues, NumBValues in your equations

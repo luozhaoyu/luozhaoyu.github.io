@@ -361,6 +361,10 @@ How do you construct rows from a column store?
     * a segment may contain 10000 R.A values
     * but get 10000 rows at once
 
+#### reference
+* [MIT column stores] (http://nms.csail.mit.edu/~stavros/pubs/tutorial2009-column_stores.pdf)
+* [Projections in Vertica] (http://baboonit.be/blog/projections-vertica)
+
 ### NoSQL
 NoSQL: OLTP, key-value stores, Decision Support, Hadoop/Hive/MapReduce
 
@@ -508,8 +512,20 @@ mapping bit position to record in page is being used.
 
 #### Column store
 * Why might one expect cache utilization to be better with a column store than a traditional row store? For what kind of query do you expect this to be important?
-* Some row-store advocates, when they first hear of column stores, say: “This is silly. Suppose I have a table R(A, B, C, D). To simulate a column store on my row store, all I need to do is maintain materialized views on each column. That is, I store the materialized view R_A(A), R_B(B), R_C(C), and R_D(D). The meaning here is that R_A(A) is the projection of R onto column A (with duplicates retained.). Then when evaluating a query, I use these projections instead of the original table.”
+    * because column store does much better in **select** partial data, while row store tends to load all the data. Better cache utilization would improve cache hit more obviously under column store
+    * querys that select partial attributes
+* Some row-store advocates, when they first hear of column stores, say: “This is silly. Suppose I have a table R(A, B, C, D). To simulate a column store on my row store, all I need to do is maintain materialized views on each column.
+That is, I store the materialized view **R_A(A), R_B(B), R_C(C), and R_D(D)**.
+The meaning here is that R_A(A) is the projection of R onto column A (with duplicates retained.). Then when evaluating a query, I use these projections instead of the original table.”
 Explain why this “simulated column store” will likely not perform as fast as a true column store.
+    * simulate column store could be done in 2 ways with different difficulty:
+        * vertically partitioned
+            * total tuple size would be huge
+            * could not simulate the same horizontal partition as column store since VP tables do not contain foreign key of other table
+        * indexes on all columns
+            * materialized view holds the row_id set as the clue to reconstruct the result table
+            * the reconstruction could be slow
+    * true column store support compression and multiple projection which would speed up 
 
 #### Map Reduce vs Parallel RDBMS
 * 3 reasons why parallel DBMS being more efficient

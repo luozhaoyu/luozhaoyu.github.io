@@ -512,5 +512,27 @@ mapping bit position to record in page is being used.
 Explain why this “simulated column store” will likely not perform as fast as a true column store.
 
 #### Map Reduce vs Parallel RDBMS
+
+    Item                                Parallel DB         MapReduce
+    Schema Support                      Yes                 No
+    Indexing                            Yes                 No
+    Programming Model                   Declarative         Imperative
+    Optimizations(Compression, Query)   Yes                 No
+    Flexibility                         No                  Yes
+    Fault Tolerance                     transaction level   more fine grained level, store intermediate results
+    Storage independence                No                  Yes
+
 * 3 reasons why parallel DBMS being more efficient
+    1. supports index
+    - have query optimization
+    - have compression
 * when doing a large data processing task, when does someone choose Map-Reduce, when choose parallel DBMS
+    * Use MapReduce:
+        * load partial data, get partial result
+        * need find grained fault tolerance
+        * heterogenous storage
+        * complex data transformations
+    * Use Parallel DBMS:
+        * reduce application development time
+        * query is simple which simple index could acheive much efficiency
+        * limited data storage, which needs compression on data with schema

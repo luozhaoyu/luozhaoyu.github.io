@@ -481,6 +481,7 @@ measurements:
 * what is the goal of SplitNode algorithm?
     1. decide which node go to L or LL
     - minimize the least enlargement
+        * i.e., minimize parent
     - adjust the parent bordering
 * Why you might have to search multiple paths during a lookup in an R-tree. Give an example. Why not in B-trees
     * Every internal node contains a set of rectangles and pointers to the corresponding child node and every leaf node contains the rectangles of spatial objects (the pointer to some spatial object can be there).
@@ -504,11 +505,11 @@ is stored on 13,000 pages (that is, tuples of R appear on 13,000 pages) and R.B 
 200 distinct values. Finally, also assume that the method described in class for
 mapping bit position to record in page is being used.
     * How many bitmaps will be in the index?
-        * 200, since there are 200 distinct values
+        * 201, since there are 200 distinct values and 1 phantom bitmap
     * How many bits will be in each bitmap?
-        * 1000000, every recrod has corresponding index
+        * 1300000, every record has corresponding index, plus potential phantom row
     * What is the total number of “1” bits in all of the bitmaps?
-        * 1000000, every record has 1 corresponding value
+        * 2000000 = 1000000 + 1000000, every record has 1 corresponding value, phantom record also has one
 
 #### Column store
 * Why might one expect cache utilization to be better with a column store than a traditional row store? For what kind of query do you expect this to be important?

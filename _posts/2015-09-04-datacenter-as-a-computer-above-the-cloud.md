@@ -3,6 +3,48 @@ layout: post
 title: "The Datacenter as a computer, Above the Clouds"
 ---
 ### The Datacenter as a Computer
+* "DC" vs WSC
+* key characteristics, goals
+* details
+* constraints impact on -> application desgin and data center design
+* cloud computing
+* EC2 EMR
+    * spot pricing: auction, spot instances run when bid price > spot price
+* illusion of infinite capacity (CPU, storage)
+* scale out
+* pay-as-you-go
+
+#### WSC
+* homogeneous hardware
+* small set of apps
+* one organization management
+* communication across set-up
+* share infrastructure
+* massive scale (~100000 servers)
+    * container-sized: 2000 servers ~ 40-50 racks
+        * on-promise, hook-up containers into DC/WSC
+    * rack-scale: ~ 3-4 (upto 10 rackes)
+
+#### commodity servers -> cost-efficient: high utilization of hardware
+* performance, fault tolerant
+
+#### Some common design patterns to ensure high perf/ availability in the presence of flaky hardware, local-remote trade-off
+
+                                            Performance     Availability
+    Replication                             Y               Y
+    Partitioning(sharding)                  Y               Y
+    checksum/ integrity/ RAID                               Y
+    Health monitoring/ watchdog timer                       Y
+    data-locality                           Y
+    priority                                Y
+    load balancing                          Y
+    compression (queries on)                Y
+    checkpoint                                              Y
+    cache in-memory                         Y
+    diagnoses(x-trace)                      Y               Y
+    eventual consistency                    Y               Y
+
+
 #### What is the theme
 This article gives us a fundamental introduction about a new class of computing system *warehouse-scale computers*. This system has massive scale of their software infrastructure, data repositories and hardware platform.
 

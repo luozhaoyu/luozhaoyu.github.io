@@ -9,8 +9,13 @@ title: "Google Datacenter Network"
     * in-built path diversity and redundancy
     * problems: managing fiber fanout, complex routing across multiple equal-cost paths
 * Merchant silicon
+    * trade-offs
+        * failures are more frequent
+        * small shared buffer
+        * ECMP(equal cost multi path), network balancing (lots of contention)
 * Centralized control protocols
     * each switch calculate forwarding table from a dynamically-elected central switch
+    * central control and configuration (SDN)
 
 ### Background
 * traffic doubles every year
@@ -22,9 +27,15 @@ title: "Google Datacenter Network"
     * so that storage placement and job scheduling have little locality
 
 ### Evolution
+* traditional 4 post cluster: 4 cluster 512 * 1G, 512 racks, 40 servers/rack
+    * oversubscription is 10
+    * schedule for locality
+    * keep storage also local
 * FH1.0: the ToR switch radix is too small
+    * blocking means could not use full speed at a time, there is contention
 * FH1.1
     * buddy two ToR switches together
+        * could use two switches for bursting, bypass through the connected switch
     * The stage 2 and 3 switches within an aggregation block were cabled in a single block (vs. 2 disjoint blocks in FH1.0) in a configuration similar to a Flat Neighborhood Network
     * put FH1.1 and old Four-post cluster routers together, FH1.1 only handles intra-cluster traffic
     * *drawback*: external copper cabling
@@ -37,9 +48,12 @@ title: "Google Datacenter Network"
     * expanding Clos fabric across the entire datacenter subsuming the inter-cluster networking layer
     * incremental deployment
 
+
 ### Features
 * WCC: Decommisiioning Cluster Routers
     * build a seperate aggregation block for external connectivity, which is more easy to controll the effect
+* Inter-cluster connections
+    * Freedome block
 * Build own control plane
     * need support for multipath, equal-cost forwarding
     * need network manageability
@@ -52,6 +66,17 @@ title: "Google Datacenter Network"
     * distribute a single monolithic cluster configuration to all switches
         * each switch may have update new config
     * extened ICMP, random traceroutes probes
+    * static config of cluster topology
+    * deltas of topology changes (only track neighbours)
+* [ECMP] (https://en.wikipedia.org/wiki/Equal-cost_multi-path_routing)
+    * central scheduling of long flows, splitting flows in near uniform sized segments at servers ([TSO] (https://en.wikipedia.org/wiki/TCP_segmentation_offloading))
+        * all flows are the same size
+        * [elephant flow problem] (https://en.wikipedia.org/wiki/Elephant_flow)
+        * bandwidth * delay
+* Why [BGP] (https://en.wikipedia.org/wiki/Border_Gateway_Protocol)
+    * if one fails, use another AS number would be easy (switch quickly)
+    * topology is symmetric, 2 level, simple path vector updates, one localized -> converge quickly
+    * OS implementation of BGP is good
 
 #### Fabric Congestion
 * high congestion drops as utilization approached 25%

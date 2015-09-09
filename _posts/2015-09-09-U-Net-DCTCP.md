@@ -26,6 +26,9 @@ title: "U-Net, DCTCP"
     * *direct acess* is *true zero copy*, which has no intermediate buffering
 
 #### Comment
+* True zero copy is useful, since the *processing overhead* consists of transmission time, buffer management, message copies, checksum, flow control, interrupt, network interface control and so on. Meanwhile, the speed of NIC < Memory < CPU. So it is natural to think about reducing the memory accessing times when there is almost no room for accelerate NIC speed. When transferring large bulk data, think about 1GB, it is very uneconomic to copy it once.
+* However, buffer could be beneficial if the data to send is yieled continuously. e.g., the user process put only 1 Byte everytime for 1000 times to send 1K data. A buffer would largely increase the **throughput** and reduce **network congestion**. Even though the author preaches that his design has minimum overhead, it is still necessary to use *zero copy* to buffer a large packet when one does not need too much realtime communication.
+* Modern high performance server such as Nginx has adopted similar mechanism, which is `sendfile()` a syscall since Linux 2.2. The main idea of `sendfile()` is to combine the `read()` and `write()` together, so that one does not need to copy some content from a file descriptor to user buffer and then write the buffer out. This idea tries to achieve **zero-copy** in kernel level, which would accelerate rending static file from disk to client much quickly.
 
 
 ### [DCTCP] (https://en.wikipedia.org/wiki/Explicit_Congestion_Notification#DCTCP)

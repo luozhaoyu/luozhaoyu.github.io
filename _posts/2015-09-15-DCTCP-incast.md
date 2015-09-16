@@ -22,7 +22,7 @@ title: "DCTCP, incast"
 * [TCP Performance] (http://www.cisco.com/web/about/ac123/ac147/ac174/ac196/about_cisco_ipj_archive_article09186a00800c8417.html)
 
 ### If you are building a datacenter-based replicated storage system, what are the most important one or two lessons you learned from the two TCP papers you just read?
-* I may not worry about the large file transmission, but I will take care of accessing the small files. They would be delayed by large files access, which cause unfairness. Different files could have different storage, transmission plans
+* Since frequent replication would eat up many bandwidth, I would agree with the delayed ACK solution to reduce the time spent in dealing ACKs. Anyway the network condition is rather reliable within the same datacenter
 * The latency within datacenter is largely different from the outside web. So it is important to optimize the TCP default parameter, such as the RTO, windows size and so on. And so is the bandwidth inside the datacenter, we should take the switch buffer size into account since it becomes limited resource under high traffic. As we found there are so many problems in TCP, it maybe a good idea to design our own transmission strategy on top of the UDP protocol.
 
 ### Reference

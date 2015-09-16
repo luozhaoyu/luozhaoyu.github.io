@@ -3,10 +3,81 @@ layout: post
 title: "MapReduce"
 ---
 
+### MapReduce
+* M/R programming model
+* Execution isssues, run time problems
+* Scheduling and fairness across jobs
+    * greedy
+    * fair scheduler (slot-based)
+    * flow-based fair scheduler
+
+* large volumes of data distributed across many machines, process this data to get derived data
+
+* Map (k, v): outputs (k, v) pairs organized by k
+    * `file -> "w, 123"`
+* Reduce (k, v) pairs output by map
+    * for the same k, compute some aggregate over all values for key
+    * `"w", frequency`
+
+#### MR spec:
+1.a list of input files of "splits"
+    * 16 ~ 64 MB <= |B|
+    * number of splits == number of mappers
+- format of input, pattern
+- name of the mapper routine
+- output file space
+- number of reduce tasks
+- format of output
+- reducer routine
+- maximum number of machines
+- maximum resource for M/R
+
+How to decide the number of M or R? not easy to decide
+
+#### Master (job manager)
+* schedule reducers on-the-fly as its input is ready
+* wait for number of maps to finish
+1. allocate Maps (locality)
+    1. reads split
+    - passes (k, v), sort
+    - mapper writes to local (files) that are key space partitioned
+    - informs master when done
+- Reduces (completely random)
+    1. master provides locations of files with initial data
+    * reduce workers use tcp/http to retrieve
+    * reads all input from all mappers sorts by k and feeds all record for a key to reduce()
+    * written to a local tmp file
+    * rename to a global FileSystem file
+    * reduce reports to master
+
+### Run-time
+1. workers may fail
+    * reducers: recompute that in-progress failed tasks
+    * mappers: all tasks of that worker are recomputed even though it is completed
+* master fail: re-run the whole task
+- dealing with stragglers:
+    * fail end of a job, duplicate all tasks
+
+
 ### Why there are outliers
 * machine difference
-* network performance, cross-rack traffic
+    * busy, bad: output is garbled -> recomputations
+    * tasks contending
+    * solution:
+        * duplicate (resource use)
+        * kill and restart (queue delay)
+            * tnew < tcurrent, otherwise, it is not worthwhile to kill and restart
+* network performance, cross-rack traffic (needs network aware placement)
+    * shared resource contention
+    * data locality is not satisfying
+    * reducers self-interfering on the same job
 * MapReduce partition imbalance, data skew
+    * schedule tasks with more data earlier
+    * multiple jobs needs affinity to nodes, racks, cluster
+        * each of it has its own queen
+            * pick a task at head -> greedy: but it could not ensure starvation
+            * look at jobs that are far from fair quota ([sticky-slot problem] (http://people.csail.mit.edu/matei/talks/2009/msr_mapreduce_scheduling.pdf))
+                * delay-scheduling: let the worker starve for a while to see if there is chance to find in-rack task, if wait number exceeds certain threshold, let this worker works
 
 ### Comments
 * Mantri wants to do real-time analysis over the outliers

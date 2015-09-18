@@ -6,6 +6,15 @@ title: "Why it stops"
 ### [Why computers stop] (http://mononcqc.tumblr.com/post/35165909365/why-do-computers-stop)
 * The key to providing high availability is to modularize the system so that modules are the unit of failure and replacement.
 * The top priority for improving system availability is to reduce administrative mistakes by making self-configured systems with minimal maintenance and minimal operator interaction.
+* Bohr vs Heisenbugs
+
+#### what parts of a "system" might lead to failure?
+* power
+* persistent storage devices
+* non-persistent CPU memory
+* network
+* software: OS, app
+* humans
 
 ### [Why Internet services fail] (http://www.powershow.com/view/121944-YzRiO/Why_do_Internet_services_fail_and_what_can_be_done_about_it_powerpoint_ppt_presentation)
 * operator error is the largest cause of failures

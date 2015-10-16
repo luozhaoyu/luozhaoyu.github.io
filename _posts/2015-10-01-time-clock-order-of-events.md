@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "SAMC, memory, flash, networks failure"
+title: "Time, Clocks, and the Ordering of Events"
 ---
 
 ### Time, Clocks, and the Ordering of Events in a Distributed System

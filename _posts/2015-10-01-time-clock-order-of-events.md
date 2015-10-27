@@ -4,13 +4,11 @@ title: "Time, Clocks, and the Ordering of Events"
 ---
 
 ### Time, Clocks, and the Ordering of Events in a Distributed System
-Process: stream of events
-
-Communicate: send message, receive
-* Model: message send takes time, reliable
-
-Ordering:
-* a, c: a is before c
+* Process: stream of events
+* Communicate: send message, receive
+    * Model: message send takes time, reliable
+* Ordering:
+    * a, c: a is before c
 
 #### syntax
 "happens before"
@@ -41,7 +39,7 @@ rules:
 * when come to total ordering
     * using some tie-broker (e.g., process ID when time is the same)
 
-##### [Vector clock]
+##### [Vector clock] (https://en.wikipedia.org/wiki/Vector_clock)
 * each process should track its view of **all** clocks
 * each processi has:
     * array of clocks: [c1, c2, ..., ci, ..., cn]
@@ -52,15 +50,14 @@ rules:
 * local: inc ci by 1
 * communication:
     * recv msg from Ps, contain s's vector-clock
-    * upon receipt
-        * inc local of sender clock (if need to be)
+    * when message is received, inc local clock first then set vector clock to piecewise max of incoming vector and local vector
         * update all local entries with max(local, sent_msg)
-            * sent_msg is increased by 1 after sender's sending
+    * when message is sent, inc local clock first then send msg with vector
 
-        if Ci[s] <= Cs[s]:
-            Ci[s] = Cs[s] + 1
-        for all j:
-            Ci[j] = max(local, msg)
+    if Ci[s] <= Cs[s]:
+	Ci[s] = Cs[s] + 1
+    for all j:
+	Ci[j] = max(local, msg)
 
 
 #### Reference

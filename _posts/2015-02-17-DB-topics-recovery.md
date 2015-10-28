@@ -80,64 +80,6 @@ start of oldest "failed" XACT, "firstLSN"(DPT), most recent CKP could be **arbit
 Think Cases: start_before_CKP/start_after_CKP & finish_before_crash/not_yet_finished
 
 
-### [2 Phase Commit] (http://en.wikipedia.org/wiki/Two-phase_commit_protocol)
-[Message flow] (http://en.wikipedia.org/wiki/Two-phase_commit_protocol#Message_flow)
-
-* force: the same term in ARIES means flush to disk
-
-#### Normal 2PC
-There is no default answer in this protocol, since it forces all the logs, the subordinate and coordinator know what is the status of transaction
-
-It would lost memory about the transaction when the coordinator logs "end"
-##### handling coordinator failure
-* case1: before forcing commit/abort -> XACT is aborted
-* case2: after forcing commit/abort -> recovery process drives to commit/abort
-
-##### subordinate fails
-* before forcing prepare/abort -> outcome is abort
-* after forcing abort(means vote no) -> outcome is abort
-* after forcing prepare(means vote yes) -> contact coordinator
-* after forcing commit/abort -> commit or abort (send a ACK)
-    * coordinator may forget about the XACT, so it would ignore
-
-#### Read-only
-1. coordinator "prepare"
-- read-only subordinate write no log record, vote "read"
-- coordinator ignores read-only sites during 2nd phase
-
-#### Presumed-abort 2PC
-default reply is abort when it has no memory about it
-##### abort case
-1. coordinator "prepare"
-- subordinate abort, no force, since not neccessary
-- coordinator abort, no force, if it fails, it would just recover with abort
-- other subordinate abort, no force, since coordinator default answer is abort
-
-##### commit case
-1. coordinator "prepare"
-- subordinate prepare, force, since it records the start
-- coordinator commit, force
-- other subordinate commit, force, since coordinator may finish the transaction and forget about it, then it would say abort
-
-#### Presumed-commit
-default reply is commit when it has no memory about it
-##### abort case
-1. coordinator "collect", "prepare", force
-    * collect is the **begin** log log all participants, when coordinator recovers, it would not know the transaction and answer "commit"
-- subordinate abort, force
-- coordinator abort, force
-    * another paper says you could no force: Since you find collecting but nothing further (abort/end log), you abort
-- subordinate abort, force
-    * why force and why coordinator would block to receive ack here? See summary below
-
-##### commit case
-1. coordinator "collect", "prepare", force
-    * collect is the **begin** log log all participants, since if there is no such log, when coordinator recovers, it would not know the transaction and answer "commit"
-- subordinate prepare, force
-- coordinator commit, force, since it indicates whether this transaction passes this phase
-    * TODO
-- subordinate commit, no force, since the default answer is "commit"
-
 ### Buffer management
 #### Query Locality Set Model (QLSM)
 * sequential patterns

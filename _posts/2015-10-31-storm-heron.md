@@ -22,13 +22,19 @@ title: "Storm, Heron"
 #### Approximate operators
 * two ways:
     * sampling
-        * [sample-and-hold] (https://en.wikipedia.org/wiki/Sample_and_hold): heavy-hitter
+        * [sample-and-hold] (https://en.wikipedia.org/wiki/Sample_and_hold): heavy-hitter elements
 	    * identify subset of elements, e.g., give me 5% of tweets 
+	    * incoming element x: is it a hash table entry?
+	        * yes: increment its counts
+		* no: sample P (the way you choose the probability)
+		    * yes: create a hash table entry
+		    * no: pass on the element
     * sketching (bloom filter)
         * [loglog operator] (http://blog.notdot.net/2012/09/Dam-Cool-Algorithms-Cardinality-Estimation): estimating cardinality of a multi-set
 	    * bit vector
 	    * index = compute(hash(x))
 	* [count min-sketch] (https://en.wikipedia.org/wiki/Count%E2%80%93min_sketch): estimating frequency counts
+* BlinkDB, estimate the likelihood
 
 #### Common
 * Topology: interconnection between spout and bolt

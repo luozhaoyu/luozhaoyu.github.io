@@ -22,10 +22,19 @@ title: "Eventual Consistency"
 
 ### Bayou
 * design for mobile distributed computing
+* **push app logic into updates function**
+* guarantee: **eventually** all updates are applied in the same order on all servers
 * goals:
     * substrate for distributed apps
     * not transparent: apps aware of distributed system
     * auto detect/resolution of **write conflict**
+* bayou's stable log is "immutable"
+
+#### What can we learn?
+* Integrating application logic is key to "correct" execution of "AP" distributed systems. R/W is bad
+* Lack of app-specific mechanisms in a coordination-free system is a recipe for data corruption
+* Merge/repair is a narrow API for developers to express their application conflicts
+* Alternatives like commutativity, I-confluence, and research tools like Bloom can help limit overhead
 
 #### Bayou model
 * Data Collections: replicated at servers: machines in basement or laptops
@@ -41,6 +50,11 @@ title: "Eventual Consistency"
     * do exchange of updates
 
 #### Conflict Detect/Resolve
+    if Dependency_check(): # do you have $100 in account?
+        Update_function() # transfer money
+    else:
+	Merge_function() # log error
+
 * Dependency check, Merge protocol: establish state of DB
     * (query -> check for expected result, e.g., check existed primary ID)
 	* if DB in expected: do update
@@ -71,3 +85,9 @@ title: "Eventual Consistency"
 * **write log**, **undo log** (allow us to rewind, apply all old updates again)
 
 
+### Reference
+* [papers-we-love: Peter Bailis] (https://github.com/papers-we-love/papers-we-love/issues/193)
+    * [Papers We Love Meetup - Managing Update Conflicts in Bayou] (https://www.youtube.com/watch?v=txP7CI0PjO4)
+    * [PPT] (https://speakerdeck.com/paperswelove/pwlsf-number-10-equals-peter-bailis-on-managing-update-conflicts-in-bayou)
+* [Cornell University] (http://slideplayer.com/slide/5075267/)
+* [Northwestern] (http://www.aqualab.cs.northwestern.edu/classes/EECS345/eecs-345-w10/lectures/Bayou.pdf)

@@ -17,6 +17,7 @@ title: "Project Adam: Building and Efficient and Scalable Deep Learning Training
 ### Adam
 * Adam system is general-purpose
     * since stochastic gradient descent is a generic training algorithm that can train any DNN via back-propagation
+* Persisting updates
 
 #### Components
 * A global parameter server: all model replicas share a common set of parameters that is stored here
@@ -34,6 +35,7 @@ title: "Project Adam: Building and Efficient and Scalable Deep Learning Training
 
 #### Model Training
 * partition models vertically across model worker machines to minimize the amount of cross-machine communication that is required for the convolution layers
+    * cut edges to minimize communication
 * Multi-Threaded Training
     * Each thread allocates a training context for feed-forward evaluation and back propagation
     * Both the context and per-thread scratch buffer for intermediate results use NUMA-aware allocations to reduce crosff-memory bus traffic
@@ -49,5 +51,6 @@ title: "Project Adam: Building and Efficient and Scalable Deep Learning Training
     * waiting for 75% of model replicas to complete processing (which is accurate enough emprically)
 * Two different parameter server communication protocols:
     1. locally computes and accumulates the weight updates in a buffer that is periodically sent to the parameter server machines when k (~100) images have been processed
-    - send the activation and error gradient vectors to the parameter server machines for the fully connected layeres
+    - send the activation and error gradient vectors to the parameter server machines for the **fully connected layeres**
         * since parameter servers are CPU underutilization
+	* activations and gradients are O(k*n), but Weights, Wij are O(n*n)

@@ -20,7 +20,7 @@ title: "MapReduce"
     * `"w", frequency`
 
 #### MR spec:
-1.a list of input files of "splits"
+1. a list of input files of "splits"
     * 16 ~ 64 MB <= |B|
     * number of splits == number of mappers
 - format of input, pattern

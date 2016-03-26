@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "Grapevine, Leases"
+categories: blog
 ---
 
-### [Grapevine: An Exercise in Distributed Computing] (http://pages.cs.wisc.edu/~sschang/OS-Qual/distOS/grapevine.htm)
+### [Grapevine: An Exercise in Distributed Computing](http://pages.cs.wisc.edu/~sschang/OS-Qual/distOS/grapevine.htm)
 * Compared with hardware, software failure could be more arduous. Same version software could get crashed by the same bug which results in crash totally
     * `nohup` is a must to alleviate from having all the servers crash in a short period before anyone notices that
 
@@ -68,7 +69,7 @@ implementing distributed database
 - message server: **store** locally and **say OK**
 
 
-### [Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency] (https://en.wikipedia.org/wiki/Lease_(computer_science))
+### [Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency](https://en.wikipedia.org/wiki/Lease_(computer_science))
 * Leases give great management flexibility.
     * The server could control the term of leases, and it could choose from seeking write approval or wait for lease expire
 	* A heavily write-shared file might be given a lease term of zero
@@ -94,7 +95,7 @@ implementing distributed database
 * lease extenstion overhead: extension after lease expires
     * on-demand extension rather than periodic extension
 * false sharing: leaseholder hold the lease without accessing the file, while others could not write
-* [Scaling Memcache at Facebook, thundering herds] (https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf)
+* [Scaling Memcache at Facebook, thundering herds](https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf)
     * without lease, all cache misses would go to database query
     * with lease, I would wait for a short time to let other leaseholder to set the data, so that I will not query the DB
 

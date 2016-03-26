@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Reviews of DEMOS"
+categories: blog
 ---
 
 ### DEMOS

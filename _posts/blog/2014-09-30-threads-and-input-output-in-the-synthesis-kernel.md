@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Synthesis kernel"
+categories: blog
 ---
 
 ### Design Goal
@@ -42,7 +43,7 @@ synthesis context-switch is shorter:
 
 
 ### Reviews
-* [self-modifying code] (http://en.wikipedia.org/wiki/Self-modifying_code#Massalin.27s_Synthesis_kernel)
+* [self-modifying code](http://en.wikipedia.org/wiki/Self-modifying_code#Massalin.27s_Synthesis_kernel)
 * principle of frugality: use the least powerful solution to a given problem
-* [constant folding] (http://en.wikipedia.org/wiki/Constant_folding)
-* [common subexpression elimination] (http://en.wikipedia.org/wiki/Common_subexpression_elimination)
+* [constant folding](http://en.wikipedia.org/wiki/Constant_folding)
+* [common subexpression elimination](http://en.wikipedia.org/wiki/Common_subexpression_elimination)

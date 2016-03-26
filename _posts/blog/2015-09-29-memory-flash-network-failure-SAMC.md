@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "SAMC, memory, flash, networks failure"
+categories: blog
 ---
 
-### [SAMC] (http://blog.acolyer.org/2015/03/25/samc-semantic-aware-model-checking-for-fast-discovery-of-deep-bugs-in-cloud-systems/)
+### [SAMC](http://blog.acolyer.org/2015/03/25/samc-semantic-aware-model-checking-for-fast-discovery-of-deep-bugs-in-cloud-systems/)
 * Use the knowledge of a system to craft the semantic could help to alleviate the state-space explosion in test cases
 * Future test works would highly relate to the pattern extraction, since it is still manually so far. And of course, we do not need low-level test engineer that much
     * Future test engineers need to learn how to model the codes into a specific protocol, then generate tests from these protocols
@@ -47,7 +48,7 @@ read/write
     * program (unit: page)
 
 #### Solution
-* [Log-structured design] (https://en.wikipedia.org/wiki/Log-structured_file_system)
+* [Log-structured design](https://en.wikipedia.org/wiki/Log-structured_file_system)
     * program at end of log
     * introduce new problem: **Mapping Info**: Logical -> Physical translations
         1. how to persistent? since it is in memory

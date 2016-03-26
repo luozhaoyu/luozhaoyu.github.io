@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Review of MACH"
+categories: blog
 ---
 
 ### vm_allocate

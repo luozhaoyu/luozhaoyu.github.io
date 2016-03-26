@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Remus and HA NFS"
+categories: blog
 ---
 
 ### Failures
@@ -87,4 +88,4 @@ Hypothesis: Have migration, can we buil HA easier?
     * dual-ported disks that are accessible to two servers
     * mirroring files on different disks
 * one server down may put more works on the remain server
-* [DRBD] (https://en.wikipedia.org/wiki/Distributed_Replicated_Block_Device)
+* [DRBD](https://en.wikipedia.org/wiki/Distributed_Replicated_Block_Device)

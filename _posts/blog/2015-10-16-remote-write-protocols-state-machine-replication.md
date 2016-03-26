@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "remote write protocols, state machine replication"
+categories: blog
 ---
 ### ReplicatedService
 2 nodes at first
@@ -36,7 +37,7 @@ just send all requests to each replica
     * failure/ recovery: how to **catchup**
     * deterministic: different replica with same input would generate different output
 
-### [Optimal Primary-Backup Protocols] (https://en.wikipedia.org/wiki/Consistency_model#Consistency_and_Replication)
+### [Optimal Primary-Backup Protocols](https://en.wikipedia.org/wiki/Consistency_model#Consistency_and_Replication)
 * a globally unique time
 * blocking protocols guarantee that processes view the result of the last write operation
 
@@ -86,8 +87,8 @@ just send all requests to each replica
     * still have to think about leader election
 
 
-### [Implementing Fault-Tolerant Services Using the State Machine Approach: A Tutorial] (https://en.wikipedia.org/wiki/State_machine_replication)
+### [Implementing Fault-Tolerant Services Using the State Machine Approach: A Tutorial](https://en.wikipedia.org/wiki/State_machine_replication)
 
 #### Reference
-* [PPT] (http://www.powershow.com/view1/160934-ZDc1Z/Implementing_FaultTolerant_Services_Using_the_State_Machine_Approach_A_Tutorial_powerpoint_ppt_presentation)
-* [mtu.edu] (http://www.cs.mtu.edu/~aebnenas/teaching/fall2010/cs5090/present/Steve/Steve-SMSurvey-presentation.pdf)
+* [PPT](http://www.powershow.com/view1/160934-ZDc1Z/Implementing_FaultTolerant_Services_Using_the_State_Machine_Approach_A_Tutorial_powerpoint_ppt_presentation)
+* [mtu.edu](http://www.cs.mtu.edu/~aebnenas/teaching/fall2010/cs5090/present/Steve/Steve-SMSurvey-presentation.pdf)

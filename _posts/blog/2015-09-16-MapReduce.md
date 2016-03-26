@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "MapReduce"
+categories: blog
 ---
 
 ### MapReduce
@@ -76,7 +77,7 @@ How to decide the number of M or R? not easy to decide
     * multiple jobs needs affinity to nodes, racks, cluster
         * each of it has its own queen
             * pick a task at head -> greedy: but it could not ensure starvation
-            * look at jobs that are far from fair quota ([sticky-slot problem] (http://people.csail.mit.edu/matei/talks/2009/msr_mapreduce_scheduling.pdf))
+            * look at jobs that are far from fair quota ([sticky-slot problem](http://people.csail.mit.edu/matei/talks/2009/msr_mapreduce_scheduling.pdf))
                 * delay-scheduling: let the worker starve for a while to see if there is chance to find in-rack task, if wait number exceeds certain threshold, let this worker works
 
 ### Comments
@@ -93,5 +94,5 @@ How to decide the number of M or R? not easy to decide
             * So a further idea is to assign half tasks directly into workers. i.e., combines the action **push** and **pull** together
 
 ### Reference
-* [MapReduce数据处理性能分析] (http://zhangjunhd.github.io/2013/09/26/mr2.html)
-* [Spark随笔（三）：straggler的产生原因] (http://www.cnblogs.com/zx247549135/p/3977725.html)
+* [MapReduce数据处理性能分析](http://zhangjunhd.github.io/2013/09/26/mr2.html)
+* [Spark随笔（三）：straggler的产生原因](http://www.cnblogs.com/zx247549135/p/3977725.html)

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "linux配置wireless无线"
+categories: blog
 ---
 查看可用的无线网络 `sudo iwlist wlan0 scan`
 

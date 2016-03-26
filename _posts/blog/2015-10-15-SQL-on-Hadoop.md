@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "SQL-on-Hadoop"
+categories: blog
 ---
 
-### [SQL-on-Hadoop] (http://www.slideshare.net/abadid/sqlonhadoop-tutorial)
+### [SQL-on-Hadoop](http://www.slideshare.net/abadid/sqlonhadoop-tutorial)
 * Both Hive-MR and Hive-Tez are CPU-bound during scan operations, which is Java deserialization
     * A faster Java deserialization lib or JSON lib would help a lot
 #### Hive

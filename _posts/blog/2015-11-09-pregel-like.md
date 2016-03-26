@@ -1,10 +1,11 @@
 ---
 layout: post
 title: "Pregel-like Graph Processing Systems Comparison"
+categories: blog
 ---
 
 ### Pregel-like
-* [Bulk Synchronous Parallel model] (https://en.wikipedia.org/wiki/Bulk_synchronous_parallel)
+* [Bulk Synchronous Parallel model](https://en.wikipedia.org/wiki/Bulk_synchronous_parallel)
     * is a vertex state machine (think like a vertex)
     * but may encounter the straggler problem
 * use vertex-centric approach, graph parallel
@@ -38,8 +39,8 @@ title: "Pregel-like Graph Processing Systems Comparison"
 #### Iterations
 * synchronous: supersteps
 * asynchronous: no need to wait for superstep to finish, could run eagerly
-    * [connected component] (https://en.wikipedia.org/wiki/Connected_component_(graph_theory)) can not use synchronous, can not converge
-    * [Greedy graph coloring] (https://en.wikipedia.org/wiki/Greedy_coloring), same, could not converge
+    * [connected component](https://en.wikipedia.org/wiki/Connected_component_(graph_theory)) can not use synchronous, can not converge
+    * [Greedy graph coloring](https://en.wikipedia.org/wiki/Greedy_coloring), same, could not converge
 
 ### Other optimizations
 * LALP: send only one message to one worker, the message would be replicated inside that worker

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Using lvm to manage multi-disks"
+categories: blog
 ---
 
 Install

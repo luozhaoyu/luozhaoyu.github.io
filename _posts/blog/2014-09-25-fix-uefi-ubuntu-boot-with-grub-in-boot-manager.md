@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Fix UEFI Ubuntu's Grub in Boot Manager"
+categories: blog
 ---
 
 I bought a HP laptop equipped with Windows 8.1, but it would jump over Ubuntu's Grub after I install it.

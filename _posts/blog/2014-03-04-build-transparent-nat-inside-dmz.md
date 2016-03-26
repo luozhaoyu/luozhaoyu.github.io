@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "linux为DMZ的机器通过透明nat配置公网ip"
+categories: blog
 ---
 处于DMZ之后的内网机器往往只配了一块网卡，所以往往只有一个内网ip(就算配了外网ip，外网的机器也ping不到，所以没有作用)(除非再去上游配置路由)
 

@@ -1,10 +1,11 @@
 ---
 layout: post
 title: "Google Datacenter Network"
+categories: blog
 ---
 
 ### Network Construction Principles
-* [Clos topologies] (https://en.wikipedia.org/wiki/Clos_network)
+* [Clos topologies](https://en.wikipedia.org/wiki/Clos_network)
     * could scale to arbitrary size
     * in-built path diversity and redundancy
     * problems: managing fiber fanout, complex routing across multiple equal-cost paths
@@ -68,12 +69,12 @@ title: "Google Datacenter Network"
     * extened ICMP, random traceroutes probes
     * static config of cluster topology
     * deltas of topology changes (only track neighbours)
-* [ECMP] (https://en.wikipedia.org/wiki/Equal-cost_multi-path_routing)
-    * central scheduling of long flows, splitting flows in near uniform sized segments at servers ([TSO] (https://en.wikipedia.org/wiki/TCP_segmentation_offloading))
+* [ECMP](https://en.wikipedia.org/wiki/Equal-cost_multi-path_routing)
+    * central scheduling of long flows, splitting flows in near uniform sized segments at servers ([TSO](https://en.wikipedia.org/wiki/TCP_segmentation_offloading))
         * all flows are the same size
-        * [elephant flow problem] (https://en.wikipedia.org/wiki/Elephant_flow)
+        * [elephant flow problem](https://en.wikipedia.org/wiki/Elephant_flow)
         * bandwidth * delay
-* Why [BGP] (https://en.wikipedia.org/wiki/Border_Gateway_Protocol)
+* Why [BGP](https://en.wikipedia.org/wiki/Border_Gateway_Protocol)
     * if one fails, use another AS number would be easy (switch quickly)
     * topology is symmetric, 2 level, simple path vector updates, one localized -> converge quickly
     * OS implementation of BGP is good

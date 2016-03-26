@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Review of Communicating Sequential Processes"
+categories: blog
 ---
 ### Introduction
 Essential Proposals
@@ -33,7 +34,7 @@ Serious Problems
 - Programming language needs not to be fair
     * implementation should try to be reasonably fair
     * programmer should prove the correctness of terminations
-- CSP is more machine-oriented imperative(procedural) approach than [the semantics of a simple language for parallel programming] (http://www.tik.ee.ethz.ch/education/lectures/hswcd/papers/2_KahnProcessNetworks.pdf) which is more abstract applicative(functional) approach
+- CSP is more machine-oriented imperative(procedural) approach than [the semantics of a simple language for parallel programming](http://www.tik.ee.ethz.ch/education/lectures/hswcd/papers/2_KahnProcessNetworks.pdf) which is more abstract applicative(functional) approach
 - Output Guards needs further discussion
 - Restriction: Repetitive Command With Input Guard needs further discussion
 
@@ -50,9 +51,9 @@ Serious Problems
 #### about Hoare
 * We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil
 * There are two ways of constructing a software design: One way is to make it so simple that there are obviously no deficiencies, and the other way is to make it so complicated that there are no obvious deficiencies. The first method is far more difficult
-* [CSP] (http://en.wikipedia.org/wiki/Communicating_sequential_processes)
+* [CSP](http://en.wikipedia.org/wiki/Communicating_sequential_processes)
 * Slogan of Go: Do not communicate by sharing memory; instead, share memory by communicating.
-* [Share Memory By Communicating] (http://blog.golang.org/share-memory-by-communicating)
+* [Share Memory By Communicating](http://blog.golang.org/share-memory-by-communicating)
 
 ### Notes
 * messages has types

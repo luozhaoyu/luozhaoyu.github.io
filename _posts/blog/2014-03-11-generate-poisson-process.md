@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "泊松过程的生成"
+categories: blog
 ---
 为了模拟客户到访时间或者服务器请求到达时间，通常使用的模拟方式是[泊松过程](http://zh.wikipedia.org/zh-cn/%E6%B3%8A%E6%9D%BE%E8%BF%87%E7%A8%8B)
 

@@ -1,10 +1,11 @@
 ---
 layout: post
 title: "Zestybench, measure IPC"
+categories: blog
 ---
 This post is a digest of the first paper in my CS736 which will talk about the IPC benchmark briefly.
 
-Source code in [available] (https://github.com/luozhaoyu/zestybench)
+Source code in [available](https://github.com/luozhaoyu/zestybench)
 
 ### Abstract
 
@@ -35,7 +36,7 @@ Source code in [available] (https://github.com/luozhaoyu/zestybench)
 * first pipe(), then fork()
 
 ##### AF_INET tcp
-* TCP_NODELAY, disable the [Nagle algorithm] (http://en.wikipedia.org/wiki/Nagle's_algorithm), because of the need of real time responses
+* TCP_NODELAY, disable the [Nagle algorithm](http://en.wikipedia.org/wiki/Nagle's_algorithm), because of the need of real time responses
 * server is using epoll_wait
 * system default tcp buffer is enough
 
@@ -62,4 +63,4 @@ Source code in [available] (https://github.com/luozhaoyu/zestybench)
 
 
 ### reference
-* [IP options] (https://www.frozentux.net/ipsysctl-tutorial/chunkyhtml/)
+* [IP options](https://www.frozentux.net/ipsysctl-tutorial/chunkyhtml/)

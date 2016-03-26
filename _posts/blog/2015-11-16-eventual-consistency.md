@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Eventual Consistency"
+categories: blog
 ---
 
 ### Strong Consistency
@@ -86,8 +87,8 @@ title: "Eventual Consistency"
 
 
 ### Reference
-* [papers-we-love: Peter Bailis] (https://github.com/papers-we-love/papers-we-love/issues/193)
-    * [Papers We Love Meetup - Managing Update Conflicts in Bayou] (https://www.youtube.com/watch?v=txP7CI0PjO4)
-    * [PPT] (https://speakerdeck.com/paperswelove/pwlsf-number-10-equals-peter-bailis-on-managing-update-conflicts-in-bayou)
-* [Cornell University] (http://slideplayer.com/slide/5075267/)
-* [Northwestern] (http://www.aqualab.cs.northwestern.edu/classes/EECS345/eecs-345-w10/lectures/Bayou.pdf)
+* [papers-we-love: Peter Bailis](https://github.com/papers-we-love/papers-we-love/issues/193)
+    * [Papers We Love Meetup - Managing Update Conflicts in Bayou](https://www.youtube.com/watch?v=txP7CI0PjO4)
+    * [PPT](https://speakerdeck.com/paperswelove/pwlsf-number-10-equals-peter-bailis-on-managing-update-conflicts-in-bayou)
+* [Cornell University](http://slideplayer.com/slide/5075267/)
+* [Northwestern](http://www.aqualab.cs.northwestern.edu/classes/EECS345/eecs-345-w10/lectures/Bayou.pdf)

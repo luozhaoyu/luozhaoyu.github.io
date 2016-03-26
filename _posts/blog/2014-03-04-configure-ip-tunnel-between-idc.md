@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "linux配置idc之间的ip tunnel"
+categories: blog
 ---
 假设有机房A的机器10.1.0.10/16 1.2.3.4与机房B的机器192.168.1.10/24 5.6.7.8要搭建基于internet的内网隧道
 

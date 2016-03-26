@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "Log-Structured File System"
+categories: blog
 ---
 
-### [Introduction] (http://en.wikipedia.org/wiki/Log-structured_file_system)
+### [Introduction](http://en.wikipedia.org/wiki/Log-structured_file_system)
 Principle: collect large amounts of new data in a file cache in main memory, then write the data to disk in a single large I/O that can use all of the disk bandwidth
 
 ### Design for file systems of the 1990s
@@ -38,10 +39,10 @@ LFS will choose the most recent check point that is consistent, the check point 
 
 
 ### Reviews
-* [OSTEP-LFS] (http://pages.cs.wisc.edu/~remzi/OSTEP/file-lfs.pdf)
+* [OSTEP-LFS](http://pages.cs.wisc.edu/~remzi/OSTEP/file-lfs.pdf)
 * inode map solves the recursive update problem by updating only the directory? (is this a problem in other FS?)
 * conventional file system normally keep files contiguously with in-place writes, while LSF tends to use unused disk (Copy-on-write)
-    * this is called [Shadow paging] (http://en.wikipedia.org/wiki/Shadow_paging) in database
+    * this is called [Shadow paging](http://en.wikipedia.org/wiki/Shadow_paging) in database
 * in SSD, many flash based devices can not rewrite part of a block, so they have to erase cycle of each block before being able to re-write. This fits the Copy-on-write feature which circumvents in-place rewrite
 
 #### disadvantage
@@ -51,4 +52,4 @@ LFS will choose the most recent check point that is consistent, the check point 
 * Why LFS could lose data?
     * LFS does not want a transaction
     * It is not in a high reliable situation, it is ok to lose some seconds, it is loose reliable
-* [Name mangling] (http://en.wikipedia.org/wiki/Name_mangling)
+* [Name mangling](http://en.wikipedia.org/wiki/Name_mangling)

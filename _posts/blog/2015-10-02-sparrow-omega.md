@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Sparrow Omega"
+categories: blog
 ---
 
 ### Sparrow
@@ -56,7 +57,7 @@ constraints
     * Backup can pick when primary fails, but apps decides if rescheduling is needed
 
 #### Reference
-* [Sparrow] (http://www.cnblogs.com/fxjwind/p/3518871.html)
+* [Sparrow](http://www.cnblogs.com/fxjwind/p/3518871.html)
 
 ### Omega
 * monolithic

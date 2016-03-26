@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Spark Streaming"
+categories: blog
 ---
 
 ### Current distributed stream processing model

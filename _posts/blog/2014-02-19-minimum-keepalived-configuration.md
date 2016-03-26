@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "keepalived的最小化配置应用"
+categories: blog
 ---
 
 背景介绍

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Parameter Server"
+categories: blog
 ---
 
 ### ML challenges
@@ -40,5 +41,5 @@ title: "Parameter Server"
 
 
 ### Reference
-* [USENIX] (https://www.usenix.org/node/186215)
-* [talk PPT] (http://parameterserver.org/talks/PSLong2014.pdf)
+* [USENIX](https://www.usenix.org/node/186215)
+* [talk PPT](http://parameterserver.org/talks/PSLong2014.pdf)

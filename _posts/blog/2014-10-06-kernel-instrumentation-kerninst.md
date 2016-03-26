@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "Kernel Instrumentation, KernInst"
+categories: blog
 ---
 
-### [KernInst] (http://www.dyninst.org/sites/default/files/downloads/w2003/KerninstAPI.pdf)
+### [KernInst](http://www.dyninst.org/sites/default/files/downloads/w2003/KerninstAPI.pdf)
 structure
 
 * kerninstd: user-level daemon
@@ -40,10 +41,10 @@ structure
 ### Springboards
 
 ### Reviews
-* [Symbol table] (http://en.wikipedia.org/wiki/Symbol_table)
-* [Hooking] (http://en.wikipedia.org/wiki/Hooking)
-* [Control flow graph] (http://en.wikipedia.org/wiki/Control_flow_graph)
-* [Just-in-time compilation] (http://en.wikipedia.org/wiki/Just-in-time_compilation)
+* [Symbol table](http://en.wikipedia.org/wiki/Symbol_table)
+* [Hooking](http://en.wikipedia.org/wiki/Hooking)
+* [Control flow graph](http://en.wikipedia.org/wiki/Control_flow_graph)
+* [Just-in-time compilation](http://en.wikipedia.org/wiki/Just-in-time_compilation)
 * Why Solaris?
     * Solaris kernel is more clean
     * Solaris could track the source of a trap

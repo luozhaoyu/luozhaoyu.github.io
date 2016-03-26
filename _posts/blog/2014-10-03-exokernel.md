@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Exokernel"
+categories: blog
 ---
 
 ### Introduction
@@ -46,11 +47,11 @@ How to implement it?
 
 
 ### Reviews
-* [Exokernel] (http://wiki.osdev.org/Exokernel)
-* [Capability-based security] (http://en.wikipedia.org/wiki/Capability-based_security)
-* [End-to-end principle] (http://en.wikipedia.org/wiki/End-to-end_principle)
-* [MIT Exokernels slides] (http://pdos.csail.mit.edu/exo/exo-slides/sld001.htm)
-* [paper QA] (http://c2.com/cgi/wiki?ExoKernel)
+* [Exokernel](http://wiki.osdev.org/Exokernel)
+* [Capability-based security](http://en.wikipedia.org/wiki/Capability-based_security)
+* [End-to-end principle](http://en.wikipedia.org/wiki/End-to-end_principle)
+* [MIT Exokernels slides](http://pdos.csail.mit.edu/exo/exo-slides/sld001.htm)
+* [paper QA](http://c2.com/cgi/wiki?ExoKernel)
 
 ### Notes
 Cons:

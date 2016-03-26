@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Use logrotate: rotate as minute and customize new log filename"
+categories: blog
 ---
 
 logrotate.d

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Tao of Cooking"
+categories: blog
 ---
 ### 原理
 * 加盐早，肉就紧
@@ -93,7 +94,7 @@ title: "Tao of Cooking"
 - 盛出葱，留底油炒饭
 - 再加入葱，炒熟后加入萝卜干，酱油，香油
 
-#### [毛氏红烧肉] (https://www.youtube.com/watch?v=MFDtZmRIrtg)
+#### [毛氏红烧肉](https://www.youtube.com/watch?v=MFDtZmRIrtg)
 1. 五花肉，鹌鹑蛋，红糖，料酒，干辣椒，陈皮，桂皮，大料
 - 凉水煮开五花肉，陈皮，八角，大姜片，高压锅焖6分钟至5成熟
     * 去油脂，去腥味
@@ -107,7 +108,7 @@ title: "Tao of Cooking"
 - 加入黄酒，少许水，大火炖5分钟后，改用小火15分钟
 - 加入鹌鹑蛋，大火收汁
 
-#### [酸汤肥牛] (https://www.youtube.com/watch?v=pqdLbdRMDKo)
+#### [酸汤肥牛](https://www.youtube.com/watch?v=pqdLbdRMDKo)
 1. 主料：肥牛，水晶粉； 辅料：金针菇，西红柿； 调料：黄椒酱，醪糟，柠檬
 - 水晶粉温水泡发，西红柿切成丁，大葱切段备用；
 - 锅上火倒入水，加入少许油，放入大葱段，和西红柿丁用水炒制

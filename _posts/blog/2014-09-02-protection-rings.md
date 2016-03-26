@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Review of A Hardware Architecture for Implementing Protection Rings"
+categories: blog
 ---
 
 ### Introduction
@@ -121,4 +122,4 @@ Benefits of Protection Rings
 ### Notes
 * paraphrase: delegation "trust" between layeres. TRUST, what is the boundary
 * Computer Utility=OS, Supervisor Program=kernal, IPR=PC Instruction Pointer, Segment Descriptor=Segment Table, SDW=Segment Table Entry
-* [ROP] (http://en.wikipedia.org/wiki/Return-oriented_programming)
+* [ROP](http://en.wikipedia.org/wiki/Return-oriented_programming)

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Configure nginx with rsyslog to assemble your log files"
+categories: blog
 ---
 
 Rsyslog Configurations

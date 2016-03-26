@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Time, Clocks, and the Ordering of Events"
+categories: blog
 ---
 
 ### Time, Clocks, and the Ordering of Events in a Distributed System
@@ -25,7 +26,7 @@ concurrent: if A !-> B, B !-> A: A || B
 * Ci: clock for process i
 * just counters
 
-##### [Lamport timestamps] (https://en.wikipedia.org/wiki/Lamport_timestamps)
+##### [Lamport timestamps](https://en.wikipedia.org/wiki/Lamport_timestamps)
 for a, b: if a->b, c(a) < c(b)
 
 rules:
@@ -39,7 +40,7 @@ rules:
 * when come to total ordering
     * using some tie-broker (e.g., process ID when time is the same)
 
-##### [Vector clock] (https://en.wikipedia.org/wiki/Vector_clock)
+##### [Vector clock](https://en.wikipedia.org/wiki/Vector_clock)
 * each process should track its view of **all** clocks
 * each processi has:
     * array of clocks: [c1, c2, ..., ci, ..., cn]
@@ -61,4 +62,4 @@ rules:
 
 
 #### Reference
-* [PPT] (http://www.slideshare.net/payberah/time-43900531)
+* [PPT](http://www.slideshare.net/payberah/time-43900531)

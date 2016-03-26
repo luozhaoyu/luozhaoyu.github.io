@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Political Order in Changing Societies"
+categories: blog
 ---
 
 虽然我没有看《变化社会中的政治秩序》一书，但是在看完几乎所有书评之后，我发现它对我的启发仍然是巨大的。

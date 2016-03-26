@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "DB topics - Recovery"
+categories: blog
 ---
 
-### [ARIES] (http://en.wikipedia.org/wiki/Algorithms_for_Recovery_and_Isolation_Exploiting_Semantics)
+### [ARIES](http://en.wikipedia.org/wiki/Algorithms_for_Recovery_and_Isolation_Exploiting_Semantics)
 ARIES is complex because it combines no force and steal
 #### Buffer manager
 1. force or no force? (when XACT commits, do you write its dirty pages to disk?)
@@ -96,19 +97,19 @@ Love: I would expect to come back; Hate: I would rather not see them again
 
 2 LRU chains, 1 love chain, 1 hate chain
 
-##### [LRU-k (Least Recent Used)] (http://en.wikipedia.org/wiki/Page_replacement_algorithm#Variants_on_LRU)
+##### [LRU-k (Least Recent Used)](http://en.wikipedia.org/wiki/Page_replacement_algorithm#Variants_on_LRU)
 LRU-2: pick the next most recent pages among Pi; LRU-k: pick the kth most recent pages among Pi
 
 
 ### Join algorithms
-#### [Nested loop join] (http://en.wikipedia.org/wiki/Nested_loop_join)
+#### [Nested loop join](http://en.wikipedia.org/wiki/Nested_loop_join)
     for each r in R:
         for each s in S:
             if r.A == s.B:
                 output(r, s)
     # O(Time) = len(R) + number_of_R_rows_per_page * len(R) * len(S)
 
-An optimization is [page-oriented nested loops join] (http://www.dis.uniroma1.it/~catarci/DBslides/Mod5L1LT/tsld005.htm) by reading a block(a thousand of pages) of R and checking S: we could get rid of the `number_of_R_rows_per_page`
+An optimization is [page-oriented nested loops join](http://www.dis.uniroma1.it/~catarci/DBslides/Mod5L1LT/tsld005.htm) by reading a block(a thousand of pages) of R and checking S: we could get rid of the `number_of_R_rows_per_page`
 
     for each block of R:
         - build a hash table in memory on R.A for all the rows of R in the block
@@ -141,7 +142,7 @@ How big a file can you sort in 2-passes? n * (n-1)
         sort S: 4 * len(S)
         merge: len(R) + len(S)
 
-#### [GRACE Hash Join] (http://en.wikipedia.org/wiki/Hash_join#Grace_hash_join)
+#### [GRACE Hash Join](http://en.wikipedia.org/wiki/Hash_join#Grace_hash_join)
 This is a parrallel idea.
 
 * partition R into R1, R2, ... , Rk using hashing on R.a
@@ -240,7 +241,7 @@ GraceJoin is faster:
 * shared disk: scale better
 * shared-nothing: Teradata(Gamma), DB2 PE, Oracle Exadata, MS PDW
 
-#### [DATAllegro] (http://en.wikipedia.org/wiki/DATAllegro)
+#### [DATAllegro](http://en.wikipedia.org/wiki/DATAllegro)
 It designs a Glue Layer to connect multiple Ingres instances
 
 #### Type of parallel joins

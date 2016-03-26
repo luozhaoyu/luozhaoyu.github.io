@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Linux disk partition"
+categories: blog
 ---
 ### fdisk
 handle disk which is less than 2T

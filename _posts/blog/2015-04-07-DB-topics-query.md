@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "DB topics - Query"
+categories: blog
 ---
 
 ### Query optimization
@@ -167,12 +168,12 @@ right deep tree for data warehouse: assume we would join ABCDF, put hash table o
     F(A,B,C,Measure)
     F(storeId, date, product, quantity)
 
-[Star schema] (http://en.wikipedia.org/wiki/Star_schema) (build data warehouse)
+[Star schema](http://en.wikipedia.org/wiki/Star_schema) (build data warehouse)
 
-* dimensional table contain only [hierarchies] (http://en.wikipedia.org/wiki/Hierarchical_database_model)
+* dimensional table contain only [hierarchies](http://en.wikipedia.org/wiki/Hierarchical_database_model)
 * Fat table contains all the details
 
-[Snowflake schema] (http://en.wikipedia.org/wiki/Snowflake_schema)
+[Snowflake schema](http://en.wikipedia.org/wiki/Snowflake_schema)
 
 Cross product:
 
@@ -184,7 +185,7 @@ Cross product:
     - join D
 * You could also do cross product by adding a dummy attribute to each tuple in each table
 
-### [R-trees] (http://en.wikipedia.org/wiki/R-tree)
+### [R-trees](http://en.wikipedia.org/wiki/R-tree)
     R   id  name    type    box
         1   dane    county  (lowerleft, lr, ul, upperright)
 
@@ -239,7 +240,7 @@ How to find spatio data: search multiple path or replicate to multiple nodes (R*
 * Goal: minimize area of bounding rectangle for the 2 new nodes
 * paper gives exponential(exact) quadratic linear(approximate) algorithm
 
-### [Bit-map indexes] (http://en.wikipedia.org/wiki/Bitmap_index)
+### [Bit-map indexes](http://en.wikipedia.org/wiki/Bitmap_index)
 each index use 1 bit to represent the index
 
     B+ good at:
@@ -301,7 +302,7 @@ the bits are stored in a big binary blob, during accessing first slice, the prog
     join index:
         entry: ("jane", 0x799) # RID is from a different table; the index is precomputing the join
 
-#### [User-defined function] (http://en.wikipedia.org/wiki/User-defined_function)
+#### [User-defined function](http://en.wikipedia.org/wiki/User-defined_function)
 * select R.A from R where **f**(R.B) >= 10
     * f is UDF: such as convert concurrency
     * f must be deterministic
@@ -319,7 +320,7 @@ What to do with bitmap index?
 * think `Q: select R.A, R.B from R`: can use index to answer
     * rather than scanning the table, scan the smaller index
 
-### [Column-store] (http://en.wikipedia.org/wiki/C-Store)
+### [Column-store](http://en.wikipedia.org/wiki/C-Store)
 * store columns instead of rows, scan attribute would be much faster
 * read 2 of 10 attributes, read ~20% of the data
     * uses buffer pool/disk bandwidth better
@@ -342,7 +343,7 @@ How do you construct rows from a column store?
     better I/O CPU usage
 
 #### Another advantage of column stores: compression
-* column stores give up on (byte, word) alignment, [word alignment] (http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Data/aligned.html)
+* column stores give up on (byte, word) alignment, [word alignment](http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Data/aligned.html)
     * can "pack" data
 * kinds of compression used
     * dictionery encoding: encode car models to 000, 001, 010, 011
@@ -362,8 +363,8 @@ How do you construct rows from a column store?
     * but get 10000 rows at once
 
 #### reference
-* [MIT column stores] (http://nms.csail.mit.edu/~stavros/pubs/tutorial2009-column_stores.pdf)
-* [Projections in Vertica] (http://baboonit.be/blog/projections-vertica)
+* [MIT column stores](http://nms.csail.mit.edu/~stavros/pubs/tutorial2009-column_stores.pdf)
+* [Projections in Vertica](http://baboonit.be/blog/projections-vertica)
 
 ### NoSQL
 NoSQL: OLTP, key-value stores, Decision Support, Hadoop/Hive/MapReduce
@@ -430,7 +431,7 @@ Use a DBMS?
 * adding SQL
 * looking at strong consistency
 
-#### [Benchmark] (http://vgc.poly.edu/~juliana/courses/cs9223/Lectures/paralleldb-vs-hadoop.pdf)
+#### [Benchmark](http://vgc.poly.edu/~juliana/courses/cs9223/Lectures/paralleldb-vs-hadoop.pdf)
 1. Hadoop (Map/Reduce)
 - Vertica (column-store RDBMS)
 - DB2 (row-store RDBMS)

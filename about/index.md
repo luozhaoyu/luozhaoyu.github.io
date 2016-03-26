@@ -7,4 +7,4 @@ image:
   feature: so-simple-sample-image-4.jpg
 ---
 
-* [Books] (/book/)
+* [Books](/book/)

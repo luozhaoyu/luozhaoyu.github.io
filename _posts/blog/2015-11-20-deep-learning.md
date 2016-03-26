@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Project Adam: Building and Efficient and Scalable Deep Learning Training System"
+categories: blog
 ---
 
 ### Why Deep Learning is hard?

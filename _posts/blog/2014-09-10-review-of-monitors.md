@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "Reviews of Monitors"
+categories: blog
 ---
 
-### [Monitors] (http://en.wikipedia.org/wiki/Monitor_(synchronization))
+### [Monitors](http://en.wikipedia.org/wiki/Monitor_(synchronization))
 
 
 ### Mesa

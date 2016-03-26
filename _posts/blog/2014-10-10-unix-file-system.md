@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "Unix File System"
+categories: blog
 ---
 
-### [Introduction] (http://en.wikipedia.org/wiki/Unix_File_System)
+### [Introduction](http://en.wikipedia.org/wiki/Unix_File_System)
 
 ### Old file system
 Structure:
@@ -68,9 +69,9 @@ Allocator strategy:
 ### Reviews
 * better locality of reference
 * less wastage
-* [Thrashing] (http://en.wikipedia.org/wiki/Thrashing_(computer_science))
-* [Block suballocation] (http://en.wikipedia.org/wiki/Block_suballocation)
-* [fsck] (http://en.wikipedia.org/wiki/Fsck), the right sequence of writing:
+* [Thrashing](http://en.wikipedia.org/wiki/Thrashing_(computer_science))
+* [Block suballocation](http://en.wikipedia.org/wiki/Block_suballocation)
+* [fsck](http://en.wikipedia.org/wiki/Fsck), the right sequence of writing:
     1. allocate block
     - write data
     - update inode

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Principles of Programming Languages"
+categories: blog
 ---
 
 ### Lambda Calculus
@@ -59,7 +60,7 @@ The substitution of a term N for all free occurrence of x in M. Do M[N/x]
 - (lambda y.M) [N/x]= lambda z.((M[z/y])[N/x]) where **y!=x** and **z is free**
 
 Summary:
-1. alpha reduction (renaming): lambda x.M -> lambda y.M[y/x] (y is fresh)
+1. alpha reduction (renaming): lambda x.M -> lambda y.M[y/x](y is fresh)
 - beta reduction: (lambda x.M)N -> M[N/x]
 
 #### Mulitiple arguments
@@ -101,19 +102,19 @@ We want a magic function Y such that: Y(F) -> T   F(T) = T
         1. walk can not be got by concatenate two walks
         - Two walks that reduce non-overlapping redexes can be concatenated to form a walk
 
-### [SAT] (http://en.wikipedia.org/wiki/Boolean_satisfiability_problem)
-* [CNF] (http://en.wikipedia.org/wiki/Conjunctive_normal_form)
+### [SAT](http://en.wikipedia.org/wiki/Boolean_satisfiability_problem)
+* [CNF](http://en.wikipedia.org/wiki/Conjunctive_normal_form)
 
-#### [DPLL] (http://en.wikipedia.org/wiki/DPLL_algorithm)
-* [DPLL algorithm, Pure literal propagation] (http://www.dis.uniroma1.it/~liberato/ar/dpll/dpll.html)
+#### [DPLL](http://en.wikipedia.org/wiki/DPLL_algorithm)
+* [DPLL algorithm, Pure literal propagation](http://www.dis.uniroma1.it/~liberato/ar/dpll/dpll.html)
 * Pure literal propagation
     * if p appear only positively in all clauses, then set p to true
     * if p only appears !p set it to false
-* [Resolution] (http://en.wikipedia.org/wiki/Resolution_(logic))
-* [Boolean Constraint propagation] (http://en.wikipedia.org/wiki/Unit_propagation)
+* [Resolution](http://en.wikipedia.org/wiki/Resolution_(logic))
+* [Boolean Constraint propagation](http://en.wikipedia.org/wiki/Unit_propagation)
     1. Decision variable: variable assigned in Decide Step
     - decision level: the level/order in which variable assgined
-* [Unique implication point] (http://www.cs.princeton.edu/courses/archive/fall13/cos402/readings/SAT_learning_clauses.pdf)
+* [Unique implication point](http://www.cs.princeton.edu/courses/archive/fall13/cos402/readings/SAT_learning_clauses.pdf)
 * non-chronological backtracking: backtrack to level d where conflict clause C is an asserting clause
 
 Implication graph: lead to a conflict, subgraph characterizes the conflicts
@@ -285,12 +286,12 @@ FOL is semidecidable: if a formula is VALID then we can prove that, otherwise we
 - monadic FOL
     * pure: all predicates take 1 argument has functions and letters
     * impure: allow monadic functions
-- [Bernays–Schönfinkel class] (http://en.wikipedia.org/wiki/Bernays%E2%80%93Sch%C3%B6nfinkel_class)
+- [Bernays–Schönfinkel class](http://en.wikipedia.org/wiki/Bernays%E2%80%93Sch%C3%B6nfinkel_class)
     1. no function constants
     - only formulates of the farm
 
-#### [Datalog] (http://en.wikipedia.org/wiki/Datalog)
-all clauses are [Horn clauses] (http://en.wikipedia.org/wiki/Horn_clause)
+#### [Datalog](http://en.wikipedia.org/wiki/Datalog)
+all clauses are [Horn clauses](http://en.wikipedia.org/wiki/Horn_clause)
 
 #### First order theories
 * specializing FOL for domain if interest
@@ -313,16 +314,16 @@ F is **VALID** if for all T-models S    S, 6 |= F
 
 A theory is **complete** if for every sentence T |= F or T |= !F
 
-#### [peano axioms] (http://en.wikipedia.org/wiki/Peano_axioms#First-order_theory_of_arithmetic)
+#### [peano axioms](http://en.wikipedia.org/wiki/Peano_axioms#First-order_theory_of_arithmetic)
 Peano arithmetic, which is Presburger arithmetic augmented with multiplication, is not decidable, as a consequence of the negative answer to the Entscheidungsproblem. By Gödel's incompleteness theorem, Peano arithmetic is incomplete and its consistency is not internally provable (but see Gentzen's consistency proof.)
 
-#### [Presburger arithmetic] (http://en.wikipedia.org/wiki/Presburger_arithmetic)
-[consistent, complete, decidable] (http://en.wikipedia.org/wiki/Presburger_arithmetic#Properties)
+#### [Presburger arithmetic](http://en.wikipedia.org/wiki/Presburger_arithmetic)
+[consistent, complete, decidable](http://en.wikipedia.org/wiki/Presburger_arithmetic#Properties)
 
 ### Theory of arrays
 Ta decidable for quantifier-free
 
-[SMT solver] (http://en.wikipedia.org/wiki/Satisfiability_modulo_theories#SMT_solvers)
+[SMT solver](http://en.wikipedia.org/wiki/Satisfiability_modulo_theories#SMT_solvers)
 
 DPLL(T)
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "U-Net, DCTCP"
+categories: blog
 ---
 ### Why this paper
 * How to improve performance and flexibility of netwroking layer performance?
@@ -102,5 +103,5 @@ title: "U-Net, DCTCP"
 * Modern high performance server such as Nginx has adopted similar mechanism, which is `sendfile()` a syscall since Linux 2.2. The main idea of `sendfile()` is to combine the `read()` and `write()` together, so that one does not need to copy some content from a file descriptor to user buffer and then write the buffer out. This idea tries to achieve **zero-copy** in kernel level, which would accelerate rending static file from disk to client much quickly.
 
 
-### [DCTCP] (https://en.wikipedia.org/wiki/Explicit_Congestion_Notification#DCTCP)
-* [TCP Performance] (http://www.cisco.com/web/about/ac123/ac147/ac174/ac196/about_cisco_ipj_archive_article09186a00800c8417.html)
+### [DCTCP](https://en.wikipedia.org/wiki/Explicit_Congestion_Notification#DCTCP)
+* [TCP Performance](http://www.cisco.com/web/about/ac123/ac147/ac174/ac196/about_cisco_ipj_archive_article09186a00800c8417.html)

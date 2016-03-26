@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "配置haproxy及通过rsyslog记录日志"
+categories: blog
 ---
 
 安装

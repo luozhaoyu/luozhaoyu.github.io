@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Review of First-Class User-Level Threads"
+categories: blog
 ---
 
 ### two minutes warning
@@ -12,14 +13,14 @@ title: "Review of First-Class User-Level Threads"
 * Kernel threads need not to be associated with a process
 * M:N model performs well in an application are synchronizing with each other, ie taking local mutexes
 
-#### [Threads] (http://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/4_Threads.html) Comparisions
+#### [Threads](http://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/4_Threads.html) Comparisions
 * Processes are typically preemptively multitasked
 * A kernel thread is a "lightweight" unit of kernel scheduling. Each process has >= 1 kernel thread. Kernel threads are preemptively multitasked if the operating system's process scheduler is preemptive. Kernel threads take much longer than user threads to be swapped
 * User threads cannot take advantage of multithreading or multiprocessing and get blocked if all of their associated kernel threads get blocked even if they are ready to run
-    * [green threads] (https://en.wikipedia.org/wiki/Green_threads) are threads that are scheduled by a virtual machine
+    * [green threads](https://en.wikipedia.org/wiki/Green_threads) are threads that are scheduled by a virtual machine
     * green threads must use asynchronous I/O to prevent blocking caused by only one single thread
     * green thread could normally use only one processor
-* [Fiber] (https://en.wikipedia.org/wiki/Fiber_(computer_science)) is a particularly lightweight thread of execution. Fiber use co-operative multitasking while threads use pre-emptive multitasking
+* [Fiber](https://en.wikipedia.org/wiki/Fiber_(computer_science)) is a particularly lightweight thread of execution. Fiber use co-operative multitasking while threads use pre-emptive multitasking
     * Fibers are implicitly synchronized, yield
     * Fibers are being used to soft block themselves to allow their one threaded parent programs to continue working until related i/o operation event occurred
 

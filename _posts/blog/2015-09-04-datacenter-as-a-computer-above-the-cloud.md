@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Datacenter as a computer, Above the Clouds"
+categories: blog
 ---
 ### The Datacenter as a Computer
 * "DC" vs WSC
@@ -102,5 +103,5 @@ This system is innovative since it focuses on scale-out rather than scale-up.
     * Fuzz test may be an alternative way to find bugs
 * Reputation Fate Sharing
     * Blacklisting of IP address itself is wrong. Please blacklist the domains instead
-    * I am optimistic that if there exists lawsuit against cloud provider about spaming, the court would refer the [DMCA] (https://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act)'s principle inovation: **exemption from direct and indirect liability** of ISP and other intermediaries
+    * I am optimistic that if there exists lawsuit against cloud provider about spaming, the court would refer the [DMCA](https://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act)'s principle inovation: **exemption from direct and indirect liability** of ISP and other intermediaries
 

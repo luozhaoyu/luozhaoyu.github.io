@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "spanner tao paxos raft"
+categories: blog
 ---
 
 ### Raft

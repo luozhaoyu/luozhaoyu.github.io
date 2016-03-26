@@ -7,4 +7,13 @@ image:
   feature: so-simple-sample-image-4.jpg
 ---
 
-* [Books](/book/)
+## My TODO
+* 合气道
+* Korean
+* Kayak
+* Shooting & Hunting
+* Karaoke
+* Handstand
+* Swing dance
+* Swimming
+* 一些书需要看

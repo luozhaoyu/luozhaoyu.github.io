@@ -8,3 +8,6 @@ image:
 ---
 
 * [美国宪政历程](usa_constitutional.html)
+* [自私的基因](eh_selfish_gene_tc.html)
+* [魔鬼搭讪学](pua.html)
+* [中国农民调查](chinese_farmer_investigation.html)

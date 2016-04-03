@@ -50,7 +50,7 @@ titlecase: true
 owner:
   name: Zhaoyu Luo
   avatar: bio-photo.jpg
-  email: luozhaoyu90@email.com
+  email: luozhaoyu90@gmail.com
   disqus-shortname:
   twitter: #username
   facebook: #username
@@ -64,7 +64,7 @@ owner:
   weibo: #userid
   google:
     plus: #username
-    analytics:
+    analytics: UA-59993447-3
     verify:
     ad-client:
     ad-slot:

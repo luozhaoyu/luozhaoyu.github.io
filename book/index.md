@@ -11,3 +11,4 @@ image:
 * [自私的基因](eh_selfish_gene_tc.html)
 * [魔鬼搭讪学](pua.html)
 * [中国农民调查](chinese_farmer_investigation.html)
+* [禅与摩托车维修艺术](zen_and_the_art_of_motorcycle_maintenance.txt)

@@ -13,3 +13,4 @@ image:
 * [中国农民调查](chinese_farmer_investigation.html)
 * [禅与摩托车维修艺术](zen_and_the_art_of_motorcycle_maintenance.txt)
 * [异乡人](the_outsider.html)
+* [朱凌：《我反对：一个人大代表的参政传奇》](wofandui.txt)

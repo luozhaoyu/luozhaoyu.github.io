@@ -6,14 +6,12 @@
     <title>Zhaoyu Luo - Resume</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.pumpkin.min.css">
     <style>
-        /* A4 dimensions and print styling */
+        /* A4 dimensions and two-column layout */
         body {
             max-width: 210mm;
-            min-height: 297mm;
             margin: 0 auto;
         }
 
-        /* Two-column layout */
         .resume-container {
             display: grid;
             grid-template-columns: 65% 35%; /* Left column significantly wider than right */
@@ -21,7 +19,6 @@
             min-height: 277mm; /* A4 height minus padding */
         }
 
-        /* Header spans full width */
         header {
             grid-column: 1 / -1;
             text-align: center;
@@ -44,7 +41,6 @@
             transition: width 0.3s ease;
         }
 
-        /* Skills container styling */
         .skills-container {
             display: flex;
             flex-direction: column;
@@ -60,13 +56,11 @@
             margin-bottom: 0.25rem;
         }
 
-        /* Section headings */
         .section h2 {
             border-bottom: 2px solid;
             padding-bottom: 0.5rem;
         }
 
-        /* Contact info styling */
         .contact-info {
             display: flex;
             justify-content: center;
@@ -80,150 +74,36 @@
             font-size: 0.9rem;
         }
 
-        /* Print styles - required for A4 printing */
+        /* A4 Print styles */
         @media print {
             @page {
                 size: A4;
+                margin: 15mm;
             }
             
             body {
-                font-size: 10px !important;
-                line-height: 1.2 !important;
+                font-size: 11px !important;
                 max-width: none !important;
-                margin: 0 !important;
-                padding: 0 !important;
             }
             
             .resume-container {
-                display: grid !important;
-                grid-template-columns: 62% 36% !important;
-                gap: 2% !important;
-                padding: 0 !important;
-                min-height: auto !important;
-                max-width: 194mm !important;
+                max-width: 180mm !important;
                 margin: 0 auto !important;
             }
             
-            header {
-                grid-column: 1 / -1 !important;
-                page-break-after: avoid !important;
-            }
-            
-            header h1 {
-                margin-bottom: 0.3rem !important;
-                font-size: 1.4em !important;
-            }
-            
-            header p {
-            }
-            
             .contact-info {
+                gap: 0.5rem !important;
+                flex-wrap: nowrap !important;
+                font-size: 9px !important;
             }
             
             .contact-item {
-            }
-            
-            .section {
-                page-break-inside: avoid !important;
-                margin-bottom: 0.8rem !important;
-            }
-            
-            .section h2 {
-                margin-bottom: 0.4rem !important;
-                font-size: 1.1em !important;
-                page-break-after: avoid !important;
-            }
-            
-            .experience-item {
-                margin-bottom: 0.8rem !important;
-                padding-bottom: 0.3rem !important;
-                page-break-inside: avoid !important;
-            }
-            
-            .job-title {
-                font-size: 1.05em !important;
-                margin-bottom: 0.1rem !important;
-            }
-            
-            .company {
-                margin-bottom: 0.1rem !important;
-            }
-            
-            .job-duration {
-                margin-bottom: 0.3rem !important;
-                font-size: 0.9em !important;
-            }
-            
-            .job-description ul {
-                margin: 0.3rem 0 !important;
-                padding-left: 1.2rem !important;
-            }
-            
-            .job-description li {
-                margin-bottom: 0.2rem !important;
-            }
-            
-            .education-item {
-                margin-bottom: 0.6rem !important;
-            }
-            
-            .education-item h6 {
-                margin-bottom: 0.1rem !important;
-            }
-            
-            .education-item .degree {
-                margin-bottom: 0.1rem !important;
-            }
-            
-            .education-item p {
-                margin-bottom: 0.3rem !important;
+                white-space: nowrap !important;
             }
             
             .skill-progress {
-                height: 0.4rem !important;
-                margin: 0.2rem 0 0.4rem 0 !important;
                 background: whitesmoke !important;
                 -webkit-print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-            
-            .skill-progress-bar {
-                background: linear-gradient(90deg, var(--pico-primary), var(--pico-secondary)) !important;
-                -webkit-print-color-adjust: exact !important;
-                color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            
-            .skill-item {
-                margin-bottom: 0.4rem !important;
-                page-break-inside: avoid !important;
-            }
-            
-            .skill-item strong {
-                margin-bottom: 0.1rem !important;
-            }
-            
-            .skills-container {
-                gap: 0.2rem !important;
-            }
-            
-            footer {
-                margin-top: 0.8rem !important;
-                font-size: 8px !important;
-                page-break-inside: avoid !important;
-            }
-            
-            ul {
-                margin: 0.3rem 0 !important;
-                padding-left: 1.2rem !important;
-            }
-            
-            li {
-                margin-bottom: 0.15rem !important;
-            }
-            
-            p {
-                margin-bottom: 0.4rem !important;
             }
         }
 
@@ -232,7 +112,6 @@
             .resume-container {
                 grid-template-columns: 1fr;
                 gap: 1rem;
-                padding: 1rem;
             }
             
             .contact-info {

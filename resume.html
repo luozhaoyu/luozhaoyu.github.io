@@ -6,97 +6,35 @@
     <title>Zhaoyu Luo - Resume</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css">
     <style>
-        /* A4 dimensions - minimal overrides */
-        body {
-            max-width: 210mm;
-            margin: 0 auto;
-        }
-
         header {
             text-align: center;
         }
 
         /* Grid column sizing for two-column layout */
-        .resume-container {
+        .grid {
             grid-template-columns: 2fr 1fr; /* Left column wider than right */
         }
 
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .contact-item {
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        /* A4 Print styles */
         @media print {
-            @page {
-                size: A4;
-                margin: 15mm;
-            }
-            
             body {
+                /* This is to make the print version more compact */
                 font-size: 11px !important;
-                max-width: none !important;
-            }
-            
-            .resume-container {
-                max-width: 180mm !important;
-                margin: 0 auto !important;
-                grid-template-columns: 2fr 1fr !important;
-            }
-            
-            .contact-info {
-                gap: 0.5rem !important;
-                flex-wrap: nowrap !important;
-                font-size: 9px !important;
-            }
-            
-            .contact-item {
-                white-space: nowrap !important;
             }
             
             progress {
+                /* This is to make the progress bar color correct in print */
                 -webkit-print-color-adjust: exact !important;
-            }
-        }
-
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .resume-container {
-                grid-template-columns: 1fr !important;
-            }
-            
-            .contact-info {
-                flex-direction: column;
-                gap: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-        <header role="banner">
-            <h1>Zhaoyu Luo</h1>
-            <p><strong>Senior Software Engineer</strong></p>
-            <nav class="contact-info" role="navigation" aria-label="Contact Information">
-                <a href="mailto:luozhaoyu90@gmail.com" class="contact-item" aria-label="Email Zhaoyu Luo">
-                    📧 luozhaoyu90@gmail.com
-                </a>
-                <a href="https://www.linkedin.com/in/luozhaoyu/" class="contact-item" aria-label="View LinkedIn Profile" target="_blank" rel="noopener noreferrer">
-                    💼 LinkedIn
-                </a>
-                <a href="https://github.com/luozhaoyu" class="contact-item" aria-label="View GitHub Profile" target="_blank" rel="noopener noreferrer">
-                    🐱 GitHub
-                </a>
-            </nav>
-        </header>
-    <div class="grid resume-container">
+    <header role="banner">
+        <h1>Zhaoyu Luo</h1>
+        <p><strong>Senior Software Engineer</strong></p>
+    </header>
+
+    <div class="grid">
         <main role="main">
             <section>
                 <h2>Work Experience</h2>
@@ -150,6 +88,15 @@
 
         <aside role="complementary">
             <section>
+                <h2>Contact</h2>
+                <address>
+                    <p><a href="mailto:luozhaoyu90@gmail.com" aria-label="Email Zhaoyu Luo">📧 luozhaoyu90@gmail.com</a></p>
+                    <p><a href="https://www.linkedin.com/in/luozhaoyu/" aria-label="View LinkedIn Profile" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a></p>
+                    <p><a href="tel:+19062001000" aria-label="Call Zhaoyu Luo">🇺🇸 +1 (906) 200-1000</a></p>
+                    <p><a href="https://github.com/luozhaoyu" aria-label="View GitHub Profile" target="_blank" rel="noopener noreferrer">🐱 GitHub</a></p>
+                </address>
+            </section>
+            <section>
                 <h2>Professional Summary</h2>
                 <p>
                     <strong>Experienced Senior Software Engineer</strong> with 8+ years in backend development, DevOps, and SRE. 
@@ -176,23 +123,14 @@
             <section>
                 <h2>Technical Skills</h2>
                 <dl>
-                    <dt>Go</dt>
-                    <dd><progress value="95" max="100" aria-label="Go proficiency: 95%"></progress></dd>
+                    <dt>TypeScript/Go/Python/Java</dt>
+                    <dd><progress value="95" max="100" aria-label="TypeScript/Go/Python/Java proficiency: 95%"></progress></dd>
                     
-                    <dt>Python</dt>
-                    <dd><progress value="95" max="100" aria-label="Python proficiency: 95%"></progress></dd>
-                    
-                    <dt>Distributed Systems</dt>
-                    <dd><progress value="90" max="100" aria-label="Distributed Systems proficiency: 90%"></progress></dd>
-                    
-                    <dt>Docker & Kubernetes</dt>
-                    <dd><progress value="85" max="100" aria-label="Docker & Kubernetes proficiency: 85%"></progress></dd>
+                    <dt>Docker/Kubernetes/Distributed Systems</dt>
+                    <dd><progress value="90" max="100" aria-label="Docker/Kubernetes/Distributed Systems proficiency: 90%"></progress></dd>
                     
                     <dt>AWS/Cloud Infrastructure</dt>
                     <dd><progress value="85" max="100" aria-label="AWS/Cloud Infrastructure proficiency: 85%"></progress></dd>
-                    
-                    <dt>Java</dt>
-                    <dd><progress value="80" max="100" aria-label="Java proficiency: 80%"></progress></dd>
                     
                     <dt>MySQL/PostgreSQL</dt>
                     <dd><progress value="85" max="100" aria-label="MySQL/PostgreSQL proficiency: 85%"></progress></dd>

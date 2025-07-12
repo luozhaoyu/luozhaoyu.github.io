@@ -9,7 +9,7 @@ Creating `resume.html` to generate resume based on HTML/CSS with a modern view.
     - try to reuse the component provided by the CSS framework as much as possible
     - only override when specifically needed for the requirements.
 - The whole resume layout is within A4 dimension, that is easy to be exported/printed within A4
-- 2-column display: left column is work experience, right column is miscellaneous info such as summary/eduction/skill
+- 2-column display: left column is work experience, right column is miscellaneous info such as contact/profile summary/eduction/skill
   - Left column is the important content, which is wider than right column
 - For each skill it has a progress bar to visualize the strength
 

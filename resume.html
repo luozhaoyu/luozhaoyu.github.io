@@ -4,61 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zhaoyu Luo - Resume</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.pumpkin.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css">
     <style>
-        /* A4 dimensions and two-column layout */
+        /* A4 dimensions - minimal overrides */
         body {
             max-width: 210mm;
             margin: 0 auto;
         }
 
-        .resume-container {
-            display: grid;
-            grid-template-columns: 65% 35%; /* Left column significantly wider than right */
-            gap: 2rem;
-            min-height: 277mm; /* A4 height minus padding */
-        }
-
         header {
-            grid-column: 1 / -1;
             text-align: center;
         }
 
-        /* Progress bars for skills - required by resume.md */
-        .skill-progress {
-            background: whitesmoke;
-            border-radius: 0.5rem;
-            height: 0.5rem;
-            margin: 0.5rem 0 1rem 0;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .skill-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--pico-primary), var(--pico-secondary));
-            border-radius: 0.5rem;
-            transition: width 0.3s ease;
-        }
-
-        .skills-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .skill-item {
-            margin-bottom: 0.5rem;
-        }
-
-        .skill-item strong {
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .section h2 {
-            border-bottom: 2px solid;
-            padding-bottom: 0.5rem;
+        /* Grid column sizing for two-column layout */
+        .resume-container {
+            grid-template-columns: 2fr 1fr; /* Left column wider than right */
         }
 
         .contact-info {
@@ -89,6 +49,7 @@
             .resume-container {
                 max-width: 180mm !important;
                 margin: 0 auto !important;
+                grid-template-columns: 2fr 1fr !important;
             }
             
             .contact-info {
@@ -101,8 +62,7 @@
                 white-space: nowrap !important;
             }
             
-            .skill-progress {
-                background: whitesmoke !important;
+            progress {
                 -webkit-print-color-adjust: exact !important;
             }
         }
@@ -110,8 +70,7 @@
         /* Mobile responsive */
         @media (max-width: 768px) {
             .resume-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+                grid-template-columns: 1fr !important;
             }
             
             .contact-info {
@@ -122,7 +81,6 @@
     </style>
 </head>
 <body>
-    <div class="resume-container">
         <header role="banner">
             <h1>Zhaoyu Luo</h1>
             <p><strong>Senior Software Engineer</strong></p>
@@ -138,75 +96,60 @@
                 </a>
             </nav>
         </header>
-
+    <div class="grid resume-container">
         <main role="main">
-            <section class="section">
+            <section>
                 <h2>Work Experience</h2>
                 
-                <article class="experience-item">
-                    <h3 class="job-title">Senior Software Engineer</h3>
-                    <div class="company">Peloton</div>
-                    <div class="job-duration">January 2019 - Present · New York, NY</div>
-                    <div class="job-description">
-                        <ul>
-                            <li>Led backend development for fitness streaming platform serving millions of users</li>
-                            <li>Architected scalable microservices using Go and Python</li>
-                            <li>Implemented real-time data processing systems for live fitness classes</li>
-                            <li>Optimized performance achieving 99.9% uptime across critical services</li>
-                        </ul>
-                    </div>
+                <article>
+                    <h3>Senior Software Engineer</h3>
+                    <p><strong>Peloton</strong> · January 2019 - Present · New York, NY</p>
+                    <ul>
+                        <li>Led backend development for fitness streaming platform serving millions of users</li>
+                        <li>Architected scalable microservices using Go and Python</li>
+                        <li>Implemented real-time data processing systems for live fitness classes</li>
+                        <li>Optimized performance achieving 99.9% uptime across critical services</li>
+                    </ul>
                 </article>
 
-                <article class="experience-item">
-                    <h3 class="job-title">Production Engineer</h3>
-                    <div class="company">Facebook</div>
-                    <div class="job-duration">December 2017 - January 2019 · New York, NY</div>
-                    <div class="job-description">
-                        <ul>
-                            <li>Maintained large-scale distributed systems serving billions of users</li>
-                            <li>Automated deployment and monitoring processes reducing incident response time by 40%</li>
-                            <li>Optimized system performance and reliability through proactive monitoring</li>
-                            <li>Collaborated with engineering teams on capacity planning and scaling strategies</li>
-                        </ul>
-                    </div>
+                <article>
+                    <h3>Production Engineer</h3>
+                    <p><strong>Facebook</strong> · December 2017 - January 2019 · New York, NY</p>
+                    <ul>
+                        <li>Maintained large-scale distributed systems serving billions of users</li>
+                        <li>Automated deployment and monitoring processes reducing incident response time by 40%</li>
+                        <li>Optimized system performance and reliability through proactive monitoring</li>
+                        <li>Collaborated with engineering teams on capacity planning and scaling strategies</li>
+                    </ul>
                 </article>
 
-                <article class="experience-item">
-                    <h3 class="job-title">Infrastructure Engineer</h3>
-                    <div class="company">Uber</div>
-                    <div class="job-duration">January 2016 - November 2017 · New York, NY</div>
-                    <div class="job-description">
-                        <ul>
-                            <li>Built and maintained infrastructure for ride-sharing platform</li>
-                            <li>Implemented comprehensive monitoring and alerting systems</li>
-                            <li>Collaborated on capacity planning and scaling initiatives</li>
-                            <li>Reduced system downtime by 60% through improved automation</li>
-                        </ul>
-                    </div>
+                <article>
+                    <h3>Infrastructure Engineer</h3>
+                    <p><strong>Uber</strong> · January 2016 - November 2017 · New York, NY</p>
+                    <ul>
+                        <li>Built and maintained infrastructure for ride-sharing platform</li>
+                        <li>Implemented comprehensive monitoring and alerting systems</li>
+                        <li>Collaborated on capacity planning and scaling initiatives</li>
+                        <li>Reduced system downtime by 60% through improved automation</li>
+                    </ul>
                 </article>
 
-                <article class="experience-item">
-                    <h3 class="job-title">SRE Infrastructure Intern</h3>
-                    <div class="company">LinkedIn</div>
-                    <div class="job-duration">June 2015 - August 2015 · New York, NY</div>
-                    <div class="job-description">
-                        <p>Implemented real-time system in Go, passed all concurrency tests and data race detector validations. Enhanced system reliability through robust error handling and monitoring.</p>
-                    </div>
+                <article>
+                    <h3>SRE Infrastructure Intern</h3>
+                    <p><strong>LinkedIn</strong> · June 2015 - August 2015 · New York, NY</p>
+                    <p>Implemented real-time system in Go, passed all concurrency tests and data race detector validations. Enhanced system reliability through robust error handling and monitoring.</p>
                 </article>
 
-                <article class="experience-item">
-                    <h3 class="job-title">Senior Backend Engineer</h3>
-                    <div class="company">Guohead.com</div>
-                    <div class="job-duration">January 2014 - June 2014 · Beijing, China</div>
-                    <div class="job-description">
-                        <p>Built ads recommendation system using collaborative filtering algorithms. Managed system scaling and data consistency across distributed architecture.</p>
-                    </div>
+                <article>
+                    <h3>Senior Backend Engineer</h3>
+                    <p><strong>Guohead.com</strong> · January 2014 - June 2014 · Beijing, China</p>
+                    <p>Built ads recommendation system using collaborative filtering algorithms. Managed system scaling and data consistency across distributed architecture.</p>
                 </article>
             </section>
         </main>
 
         <aside role="complementary">
-            <section class="section">
+            <section>
                 <h2>Professional Summary</h2>
                 <p>
                     <strong>Experienced Senior Software Engineer</strong> with 8+ years in backend development, DevOps, and SRE. 
@@ -215,97 +158,57 @@
                 </p>
             </section>
 
-            <section class="section">
+            <section>
                 <h2>Education</h2>
-                <article class="education-item">
-                    <h6 class="university">University of Wisconsin-Madison</h6>
-                    <div class="degree">Master: Computer Science</div>
+                <article>
+                    <h6>University of Wisconsin-Madison</h6>
+                    <p><strong>Master: Computer Science</strong></p>
                     <p>Network Security, NLP. Contributor to Python Requests library.</p>
                 </article>
 
-                <article class="education-item">
-                    <h6 class="university">University of International Relations</h6>
-                    <div class="degree">Bachelor: Management Information Systems</div>
+                <article>
+                    <h6>University of International Relations</h6>
+                    <p><strong>Bachelor: Management Information Systems</strong></p>
                     <p>Rank 3 of 60 students. First Prize in China Undergraduate Mathematical Contest in Modeling.</p>
                 </article>
             </section>
 
-            <section class="section">
+            <section>
                 <h2>Technical Skills</h2>
-                <div class="skills-container" role="group" aria-label="Technical Skills with proficiency levels">
-                    <div class="skill-item">
-                        <strong>Go</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" aria-label="Go proficiency: 95%">
-                            <div class="skill-progress-bar" style="width: 95%"></div>
-                        </div>
-                    </div>
+                <dl>
+                    <dt>Go</dt>
+                    <dd><progress value="95" max="100" aria-label="Go proficiency: 95%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>Python</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" aria-label="Python proficiency: 95%">
-                            <div class="skill-progress-bar" style="width: 95%"></div>
-                        </div>
-                    </div>
+                    <dt>Python</dt>
+                    <dd><progress value="95" max="100" aria-label="Python proficiency: 95%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>Distributed Systems</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Distributed Systems proficiency: 90%">
-                            <div class="skill-progress-bar" style="width: 90%"></div>
-                        </div>
-                    </div>
+                    <dt>Distributed Systems</dt>
+                    <dd><progress value="90" max="100" aria-label="Distributed Systems proficiency: 90%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>Docker & Kubernetes</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Docker & Kubernetes proficiency: 85%">
-                            <div class="skill-progress-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
+                    <dt>Docker & Kubernetes</dt>
+                    <dd><progress value="85" max="100" aria-label="Docker & Kubernetes proficiency: 85%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>AWS/Cloud Infrastructure</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="AWS/Cloud Infrastructure proficiency: 85%">
-                            <div class="skill-progress-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
+                    <dt>AWS/Cloud Infrastructure</dt>
+                    <dd><progress value="85" max="100" aria-label="AWS/Cloud Infrastructure proficiency: 85%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>Java</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="Java proficiency: 80%">
-                            <div class="skill-progress-bar" style="width: 80%"></div>
-                        </div>
-                    </div>
+                    <dt>Java</dt>
+                    <dd><progress value="80" max="100" aria-label="Java proficiency: 80%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>MySQL/PostgreSQL</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="MySQL/PostgreSQL proficiency: 85%">
-                            <div class="skill-progress-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
+                    <dt>MySQL/PostgreSQL</dt>
+                    <dd><progress value="85" max="100" aria-label="MySQL/PostgreSQL proficiency: 85%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>Redis/MongoDB</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="Redis/MongoDB proficiency: 80%">
-                            <div class="skill-progress-bar" style="width: 80%"></div>
-                        </div>
-                    </div>
+                    <dt>Redis/MongoDB</dt>
+                    <dd><progress value="80" max="100" aria-label="Redis/MongoDB proficiency: 80%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>Linux/Unix</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Linux/Unix proficiency: 90%">
-                            <div class="skill-progress-bar" style="width: 90%"></div>
-                        </div>
-                    </div>
+                    <dt>Linux/Unix</dt>
+                    <dd><progress value="90" max="100" aria-label="Linux/Unix proficiency: 90%"></progress></dd>
                     
-                    <div class="skill-item">
-                        <strong>Monitoring & Observability</strong>
-                        <div class="skill-progress" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Monitoring & Observability proficiency: 85%">
-                            <div class="skill-progress-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
-                </div>
+                    <dt>Monitoring & Observability</dt>
+                    <dd><progress value="85" max="100" aria-label="Monitoring & Observability proficiency: 85%"></progress></dd>
+                </dl>
             </section>
 
-            <section class="section">
+            <section>
                 <h2>Additional Information</h2>
                 <ul>
                     <li><strong>Open Source Contributor:</strong> Python Requests library</li>

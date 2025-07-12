@@ -5,7 +5,9 @@ Creating `resume.html` to generate resume based on HTML/CSS with a modern view.
   - It would fully leverage modern HTML elements with correct semantics, see examples below (but not limited to these)
 - CSS: It must use modern CSS frameworks for color selection and semantic HTML
   - A minimalist/class-less CSS framework is preferred
-  - respect CSS framework's design decisions and only override when specifically needed for the requirements.
+  - respect CSS framework's design decisions
+    - try to reuse the component provided by the CSS framework as much as possible
+    - only override when specifically needed for the requirements.
 - The whole resume layout is within A4 dimension, that is easy to be exported/printed within A4
 - 2-column display: left column is work experience, right column is miscellaneous info such as summary/eduction/skill
   - Left column is the important content, which is wider than right column
@@ -13,11 +15,11 @@ Creating `resume.html` to generate resume based on HTML/CSS with a modern view.
 
 
 ### Detailed Requirements
-It use picocss class-less design
+Using picocss design with grid support, as we have 2-column display
 ```
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.pumpkin.min.css"
+  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.pumpkin.min.css"
 >
 ```
 

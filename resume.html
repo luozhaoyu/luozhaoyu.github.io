@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,10 @@
             text-align: center;
         }
 
+        h1, h3, h6 {
+            color: var(--pico-primary);
+        }
+
         /* Grid column sizing for two-column layout */
         .grid {
             grid-template-columns: 2fr 1fr; /* Left column wider than right */
@@ -18,7 +22,7 @@
         @media print {
             body {
                 /* This is to make the print version more compact */
-                font-size: 11px !important;
+                font-size: 10px !important;
             }
             
             progress {
@@ -30,7 +34,7 @@
 </head>
 <body>
     <header role="banner">
-        <h1>Zhaoyu Luo</h1>
+        <h1>Zhaoyu (Joey) Luo</h1>
         <p><strong>Senior Software Engineer</strong></p>
     </header>
 
@@ -40,13 +44,13 @@
                 <h2>Work Experience</h2>
                 
                 <article>
-                    <h3>Senior Software Engineer</h3>
-                    <p><strong>Peloton</strong> · January 2019 - Present · New York, NY</p>
+                    <h3>Peloton</h3>
+                    <p><strong>Senior Software Engineer</strong> <time datetime="2019-01">2019-01</time> ~ <time datetime="2022-12">2022-12</time></p>
                     <ul>
-                        <li>Led backend development for fitness streaming platform serving millions of users</li>
-                        <li>Architected scalable microservices using Go and Python</li>
-                        <li>Implemented real-time data processing systems for live fitness classes</li>
-                        <li>Optimized performance achieving 99.9% uptime across critical services</li>
+                        <li><strong>Led backend development</strong> for fitness streaming platform serving millions of users</li>
+                        <li><strong>Architected scalable microservices</strong> using Go and Python</li>
+                        <li><strong>Implemented real-time data processing systems</strong> for live fitness classes</li>
+                        <li><strong>Optimized performance</strong> achieving 99.9% uptime across critical services</li>
                     </ul>
                 </article>
 
@@ -89,27 +93,31 @@
         <aside role="complementary">
             <section>
                 <h2>Contact</h2>
+                <article>
                 <address>
                     <p><a href="mailto:luozhaoyu90@gmail.com" aria-label="Email Zhaoyu Luo">📧 luozhaoyu90@gmail.com</a></p>
                     <p><a href="https://www.linkedin.com/in/luozhaoyu/" aria-label="View LinkedIn Profile" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a></p>
                     <p><a href="tel:+19062001000" aria-label="Call Zhaoyu Luo">🇺🇸 +1 (906) 200-1000</a></p>
                     <p><a href="https://github.com/luozhaoyu" aria-label="View GitHub Profile" target="_blank" rel="noopener noreferrer">🐱 GitHub</a></p>
                 </address>
+                </article>
             </section>
             <section>
-                <h2>Professional Summary</h2>
+                <h2>About Me</h2>
+                <article>
                 <p>
                     <strong>Experienced Senior Software Engineer</strong> with 8+ years in backend development, DevOps, and SRE. 
                     Proven track record at top-tier companies including Peloton, Facebook, and Uber. Expert in <em>Go, Python, 
                     and distributed systems</em>. Strong background in scalable architecture, real-time systems, and infrastructure automation.
                 </p>
+                </article>
             </section>
 
             <section>
                 <h2>Education</h2>
                 <article>
                     <h6>University of Wisconsin-Madison</h6>
-                    <p><strong>Master: Computer Science</strong></p>
+                    <p><strong>Master: Computer Sciences</strong></p>
                     <p>Network Security, NLP. Contributor to Python Requests library.</p>
                 </article>
 
@@ -121,7 +129,8 @@
             </section>
 
             <section>
-                <h2>Technical Skills</h2>
+                <h2>Technical Skill</h2>
+                <article>
                 <dl>
                     <dt>TypeScript/Go/Python/Java</dt>
                     <dd><progress value="95" max="100" aria-label="TypeScript/Go/Python/Java proficiency: 95%"></progress></dd>
@@ -144,22 +153,13 @@
                     <dt>Monitoring & Observability</dt>
                     <dd><progress value="85" max="100" aria-label="Monitoring & Observability proficiency: 85%"></progress></dd>
                 </dl>
-            </section>
-
-            <section>
-                <h2>Additional Information</h2>
-                <ul>
-                    <li><strong>Open Source Contributor:</strong> Python Requests library</li>
-                    <li><strong>Multilingual:</strong> English, Chinese, learning Portuguese</li>
-                    <li><strong>Interests:</strong> Handstand practice, Aikido, Libertarianism</li>
-                    <li><strong>Active blogger and technical writer</strong></li>
-                </ul>
+                </article>
             </section>
         </aside>
     </div>
 
     <footer role="contentinfo" style="text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--pico-muted-border-color); font-size: 0.9rem; color: var(--pico-muted-color);">
-        <p>Last updated: <time datetime="2024-01-15">January 2024</time> | Available online at <a href="http://joeylol.im/" aria-label="View online resume">joeylol.im</a></p>
+        <p>Last updated: <time datetime="2025-07-12">2025-07-12</time> | Available online at <a href="http://joeylol.im/" aria-label="View online resume">joeylol.im</a></p>
     </footer>
 </body>
 </html>

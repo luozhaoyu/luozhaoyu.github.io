@@ -10,26 +10,47 @@
             text-align: center;
         }
 
+        /* leave some gap to the left and right border */
+        main article {
+            margin-left: 5px;
+        }
+        aside article {
+            margin-right: 5px;
+        }
+
+        article {
+            border: 3px solid var(--pico-muted-border-color);
+            border-radius: 30px;
+        }
+        /* end */
+
         h1, h3, h5 {
             color: var(--pico-primary-background);
         }
 
         /* Grid column sizing for two-column layout */
         .grid {
-            grid-template-columns: 70% 30%;
+            grid-template-columns: 2.5fr 1fr;
         }
 
         @media print {
-            body {
-                /* This is to make the print version more compact */
-                font-size: 10px !important;
+            @page {
+                margin: 0;  /* it is better to set margin to 0 for print */
             }
 
-            h6 {
+            /* This is to make the print version more compact */
+            body, h6 {
                 font-size: 12px !important;
-                margin-top: 0.5rem !important;
-                margin-bottom: 0.5rem !important;
             }
+
+            h3, h5, h6, p, article {
+                margin-bottom: 1px !important;
+            }
+
+            article {
+                padding: 10px !important;
+            }
+            /* end */
 
             progress {
                 /* This is to make the progress bar color correct in print */
@@ -47,8 +68,6 @@
              */
             article {
                 box-shadow: none !important;
-                border: 3px solid var(--pico-muted-border-color) !important;
-                border-radius: 30px !important;
             }
         }
     </style>
@@ -135,13 +154,13 @@
                 </article>
 
                 <article>
-                    <h3>LinkedIn</h3>
+                    <h5>LinkedIn</h5>
                     <h6><strong>Site Reliability Engineer Intern</strong> · <time datetime="2015-06">2015-06</time> - <time datetime="2015-08">2015-08</time></h6>
                     <p>Streamed Linux CPU performance profile FlameGraph to frontend UI</p>
                 </article>
 
                 <article>
-                    <h3>Jiepang.com / Guohe Ad</h3>
+                    <h5>Jiepang.com / Guohe Ad</h5>
                     <h6><strong>Software Engineer, Infrastructure / Lead Database Administrator</strong> · <time datetime="2012-05">2012-05</time> - <time datetime="2014-06">2014-06</time></h6>
                     <ul>
                         <li>Migrated <strong>50M photo metadata</strong> from MongoDB to MySQL with 0 downtime.</li>
@@ -150,7 +169,7 @@
                 </article>
 
                 <article>
-                    <h3>Nomura Research Institute</h3>
+                    <h5>Nomura Research Institute</h5>
                     <h6><strong>System Engineer</strong> · <time datetime="2011-07">2011-07</time> - <time datetime="2012-04">2012-04</time></h6>
                     <ul>
                         <li>Managed 7-Eleven's IT infrastructure including: Apache, DNS, DHCP, Squid, Mail, Sphinx.</li>
@@ -221,13 +240,13 @@
             <section>
                 <h2>Education</h2>
                 <article>
-                    <h3>University of Wisconsin-Madison</h3>
+                    <h5>University of Wisconsin-Madison</h5>
                     <h6><strong>M.S. in Computer Sciences</strong></h6>
                     <p>Network Security, NLP. Contributor to Python Requests library.</p>
                 </article>
 
                 <article>
-                    <h3>University of International Relations</h3>
+                    <h5>University of International Relations</h5>
                     <h6><strong>B.S. in Management Information Systems</strong></h6>
                     <p>Ranked 3rd out of 60 students. Won the first prize in the "China Undergraduate Mathematical Contest in Modeling".</p>
                 </article>

@@ -30,10 +30,25 @@
                 margin-top: 0.5rem !important;
                 margin-bottom: 0.5rem !important;
             }
-            
+
             progress {
                 /* This is to make the progress bar color correct in print */
                 -webkit-print-color-adjust: exact !important;
+            }
+
+            /**
+             * Fix for macOS Preview PDF rendering issue:
+             *
+             * Root cause: macOS Preview's PDFKit misinterprets PDF transparency group stacking order.
+             * Chrome converts box-shadow → PDF transparency groups → Chrome/PDFium renders correctly (shadow behind).
+             * Preview/PDFKit renders shadow as foreground layer → covers text/content (z-order bug).
+             *
+             * Solution: Remove shadows entirely, use borders for visual separation instead.
+             */
+            article {
+                box-shadow: none !important;
+                border: 3px solid var(--pico-muted-border-color) !important;
+                border-radius: 30px !important;
             }
         }
     </style>
@@ -41,7 +56,7 @@
 <body>
     <header role="banner">
         <h1>Zhaoyu (Joey) Luo</h1>
-        <p><strong>Staff Software Engineer</strong></p>
+        <p>observability infra -> SRE -> data engineer -> datastore infra -> security -> what's the next?</p>
     </header>
 
     <div class="grid">

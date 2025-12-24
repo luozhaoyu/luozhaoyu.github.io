@@ -10,6 +10,11 @@
             text-align: center;
         }
 
+        /* Grid column sizing for two-column layout */
+        .grid {
+            grid-template-columns: 2.5fr 1fr;
+        }
+
         /* leave some gap to the left and right border */
         main article {
             margin-left: 5px;
@@ -28,9 +33,9 @@
             color: var(--pico-primary-background);
         }
 
-        /* Grid column sizing for two-column layout */
-        .grid {
-            grid-template-columns: 2.5fr 1fr;
+        aside article dd {
+            /* ensure progress bar start from the left edge */
+            margin-inline-start: 0 !important;
         }
 
         @media print {
@@ -161,7 +166,7 @@
 
                 <article>
                     <h5>Jiepang.com / Guohe Ad</h5>
-                    <h6><strong>Software Engineer, Infrastructure / Lead Database Administrator</strong> · <time datetime="2012-05">2012-05</time> - <time datetime="2014-06">2014-06</time></h6>
+                    <h6><strong>Software Engineer, Infrastructure / Lead Database Admin</strong> · <time datetime="2012-05">2012-05</time> - <time datetime="2014-06">2014-06</time></h6>
                     <ul>
                         <li>Migrated <strong>50M photo metadata</strong> from MongoDB to MySQL with 0 downtime.</li>
                         <li>Migrated <strong>50M photo content</strong> with a high performance file replication service in C (uses Linux syscall inotify and epoll).</li>

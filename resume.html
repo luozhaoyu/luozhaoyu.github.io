@@ -15,6 +15,13 @@
             grid-template-columns: 2.5fr 1fr;
         }
 
+        /* Single column layout for mobile/narrow screens */
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr;  /* Stack to single column */
+            }
+        }
+
         /* leave some gap to the left and right border */
         main article {
             margin-left: 5px;

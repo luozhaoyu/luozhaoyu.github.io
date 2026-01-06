@@ -1,6 +1,7 @@
 Creating `resume.html` to generate resume based on HTML/CSS with a modern view.
 
 ### High Level Requirements
+- Review the resume grammar and spelling issues to make it smooth and concise
 - Use modern HTML/CSS best practice to generate a responsive page
   - It would fully leverage modern HTML elements with correct semantics, see examples below (but not limited to these)
 - CSS: It must use modern CSS frameworks for color selection and semantic HTML
